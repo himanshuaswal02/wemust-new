@@ -1,0 +1,35 @@
+<article class="custom-review-card" {{ block.shopify_attributes }}>
+  <div class="custom-review-card__header">
+    {%- if block.settings.avatar != blank -%}
+      {{ block.settings.avatar | image_url: width: 120 | image_tag: widths: '60, 120', sizes: '60px', class: 'custom-review-card__avatar', loading: 'lazy' }}
+    {%- else -%}
+      <div class="custom-review-card__avatar custom-review-card__avatar--placeholder" aria-hidden="true">
+        {{ block.settings.author | slice: 0 | upcase }}
+      </div>
+    {%- endif -%}
+
+    <div>
+      {%- if block.settings.author != blank -%}
+        <h3 class="custom-review-card__author">{{ block.settings.author | escape }}</h3>
+      {%- endif -%}
+
+      {%- if block.settings.author_title != blank -%}
+        <div class="custom-review-card__title">{{ block.settings.author_title | escape }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if block.settings.review != blank -%}
+    <p class="custom-review-card__text">{{ block.settings.review | escape }}</p>
+  {%- endif -%}
+
+  <div class="custom-review-card__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+    {%- for i in (1..block.settings.rating) -%}
+      <span class="custom-review-card__star">
+        <svg viewBox="0 0 19 18" aria-hidden="true" focusable="false">
+          <path d="M9.041 1.058c.174-.402.744-.402.918 0l2.139 4.934a.5.5 0 0 0 .411.298l5.354.51c.435.042.611.583.283.873l-4.031 3.559a.5.5 0 0 0-.157.484l1.169 5.249c.095.427-.365.761-.742.539l-4.631-2.734a.5.5 0 0 0-.508 0l-4.631 2.734c-.377.222-.837-.112-.742-.539l1.169-5.249a.5.5 0 0 0-.157-.484L.854 7.673C.526 7.383.702 6.842 1.137 6.8l5.354-.51a.5.5 0 0 0 .411-.298l2.139-4.934Z" />
+        </svg>
+      </span>
+    {%- endfor -%}
+  </div>
+</article>

@@ -1,0 +1,109 @@
+{% case block.type %}
+  {% when '@app' %}
+    <div class="footer-column footer-column--app" {{ block.shopify_attributes }}>
+      {% render block %}
+    </div>
+
+  {% when 'menu' %}
+    <div class="footer-column footer-column--menu" {{ block.shopify_attributes }}>
+      {% if block.settings.title != blank %}
+        <h4 class="footer-column-title">{{ block.settings.title | escape }}</h4>
+      {% endif %}
+
+      {% if block.settings.menu != blank %}
+        <ul class="footer-list">
+          {% for link in linklists[block.settings.menu].links %}
+            <li>
+              <a class="footer-link" href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+  {% when 'text' %}
+    <div class="footer-column footer-column--text" {{ block.shopify_attributes }}>
+      {% if block.settings.title != blank %}
+        <h4 class="footer-column-title">{{ block.settings.title | escape }}</h4>
+      {% endif %}
+
+      {% if block.settings.text != blank %}
+        <div class="footer-richtext rte">
+          {{ block.settings.text }}
+        </div>
+      {% endif %}
+
+      {% if block.settings.image != blank %}
+        <span class="footer-block-image" style="max-width: {{ block.settings.image_width }}px">
+          {%- liquid
+            assign image_sizes = block.settings.image_width | append: 'px'
+            assign image_width_2x = block.settings.image_width | times: 2
+            assign image_widths = block.settings.image_width | append: ', ' | append: image_width_2x
+          -%}
+          {%- render 'image' with block.settings.image,
+            sizes: image_sizes,
+            widths: image_widths,
+            loading: 'lazy'
+          -%}
+        </span>
+      {% endif %}
+
+      {% if block.settings.show_social_icons %}
+        <div class="footer-social-icons footer-block-social">
+          {%- liquid
+            if block.settings.soc_icons_large
+              assign icon_height = 23
+            else
+              assign icon_height = 15
+            endif
+            render 'social-media', icon: settings.social_custom_icon, icon_height: icon_height
+          -%}
+        </div>
+      {% endif %}
+
+      {%- if shop.features.follow_on_shop? and block.settings.enable_follow_on_shop -%}
+        <div class="footer-follow-shop">
+          {{ shop | login_button: action: 'follow' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+  {% when 'newsletter' %}
+    <div class="footer-column footer-column--newsletter" {{ block.shopify_attributes }}>
+      {% if block.settings.title != blank %}
+        <h4 class="footer-column-title">{{ block.settings.title | escape }}</h4>
+      {% endif %}
+
+      {% if block.settings.text != blank %}
+        <div class="footer-richtext rte">
+          {{ block.settings.text }}
+        </div>
+      {% endif %}
+
+      {% render 'newsletter-signup', id: 'footer_newsletter_signup', tags: 'newsletter, footer', block: block %}
+
+      {% if block.settings.show_social_icons %}
+        <div class="footer-social-icons footer-block-social">
+          {%- liquid
+            if block.settings.soc_icons_large
+              assign icon_height = 23
+            else
+              assign icon_height = 15
+            endif
+            render 'social-media', icon: settings.social_custom_icon, icon_height: icon_height
+          -%}
+        </div>
+      {% endif %}
+    </div>
+
+  {% when 'custom-liquid' %}
+    <div class="footer-column footer-column--custom-liquid" {{ block.shopify_attributes }}>
+      {% if block.settings.title != blank %}
+        <h4 class="footer-column-title">{{ block.settings.title | escape }}</h4>
+      {% endif %}
+
+      <div class="footer-custom-liquid">
+        {{ block.settings.code }}
+      </div>
+    </div>
+{% endcase %}

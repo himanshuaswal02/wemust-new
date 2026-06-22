@@ -1,0 +1,278 @@
+.custom-started-section {
+  padding: 60px 20px;
+}
+
+.started-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #E6E6E6;
+  border-radius: 100px;
+  padding: 54px 20px;
+  width: 90%;
+  margin: 0px auto;
+}
+
+/* GLOW EFFECT */
+
+/* .started-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  left: -180px;
+  bottom: -180px;
+  background: radial-gradient(circle, #ff000075, #008cff00 70%);
+  pointer-events: none;
+} */
+
+.started-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.started-heading {
+  color: #000000;
+  line-height: 1;
+  margin: 0 0 15px;
+  font-size: 64px;
+  font-weight: 700;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+.started-text {
+  max-width: 710px;
+  margin-right: auto;
+  margin-left: auto;
+  color: #000;
+  font-size: 24px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.started-text p {
+  margin: 0;
+  color:#fff;
+}
+
+/* BUTTONS */
+
+.started-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 60px;
+}
+
+.started-btn {
+  background-color: #fff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  color: #97001B;
+  display: flex;
+  border: 1px solid #fff;
+  align-items: center;
+  gap: 8px;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  margin-top: 0px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.started-btn:hover {
+  background-color: #861528;
+  color: #fff;
+}
+
+/* FEATURES */
+
+.started-features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.started-feature {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 767px) {
+  .custom-started-section {
+    padding: 40px 0px;
+  }
+
+  .started-wrapper {
+    border-radius: 30px;
+    padding: 30px 20px;
+  }
+
+  .started-heading {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .started-buttons {
+    flex-wrap: wrap;
+    gap: 0px;
+    margin-bottom: 40px;
+  }
+
+  .started-btn {
+    width: 100%;
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  .started-feature {
+    width: 100%;
+    justify-content: start;
+    font-size: 18px;
+  }
+
+  .started-features {
+    gap: 20px;
+  }
+
+  .feature-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+    .started-text p {
+      margin: 0;
+      color: #fff;
+      font-size: 20px;
+    }
+}
+
+/* PROCESS SECTION STYLES */
+
+.started-text p {
+  color: #000;
+  font-size: 24px;
+  line-height: 1.5;
+  text-transform: capitalize;
+}
+
+.started-buttons {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.started-btn {
+  background: #97001B;
+  color: #fff;
+  border-color: #97001B;
+  padding: 10px 40px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.started-btn svg{
+  width: 20px;
+  height: 20px;
+}
+
+.started-btn:hover {
+  background: #8a0018;
+  border-color: #8a0018;
+  color: #fff;
+}
+
+/* make features look like 3 columns */
+.started-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  align-items: start;
+}
+
+.started-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+}
+
+/* red circle */
+.feature-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #97001B;
+}
+
+.feature-icon svg {
+  display: none;
+}
+
+.started-feature span:last-child {
+  font-size: 28px;
+  font-weight: 700;
+  color: #000;
+}
+
+@media screen and (max-width: 767px) {
+  .started-heading {
+    font-size: 34px;
+  }
+
+  .started-text p {
+    font-size: 16px;
+  }
+
+  .started-features {
+    grid-template-columns: 1fr;
+    gap: 0px;
+    margin-top: 20px;
+  }
+
+  .started-feature span:last-child {
+    font-size: 22px;
+  }
+
+  .started-btn {
+    font-size: 20px;
+    padding: 14px 28px;
+  }
+}
+
+.feature-text h1,
+.feature-text h2,
+.feature-text h3,
+.feature-text h4,
+.feature-text h5,
+.feature-text h6{
+  color: #000000;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.feature-text p{
+  color: #000000;
+  font-weight: 400;
+  font-size: 15px;
+  text-transform: capitalize;
+}

@@ -11,11 +11,17 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .collapsible-tabs__tab .disclosure__title {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: 0;
-  font-size: 1.3em;
+  font-size: 1rem;
+  color: #171717;
 }
+
+.collapsible-tabs__tab details[open] .disclosure__title{
+  font-weight: 700;
+}
+
 .collapsible-tabs__tab p:first-child {
   margin-top: 0;
 }
@@ -24,8 +30,10 @@
 }
 
 .collapsible-tabs__heading {
-  margin-top: 40px;
+  /* margin-top: 40px; */
   margin-bottom: 20px;
+  font-size: 32px;
+  text-align: center;
 }
 
 .collapsible-tabs__text {
@@ -36,4 +44,9 @@
 .collapsible-tabs__button {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+@media (max-width: 767.98px) {
+  .collapsible-tabs__heading {
+    font-size: 24px;
+  }
 }

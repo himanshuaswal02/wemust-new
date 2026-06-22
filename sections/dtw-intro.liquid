@@ -1,0 +1,32 @@
+<section class="dtw-intro">
+  <div class="dtw-intro__container">
+
+    {% if section.settings.content != blank %}
+      <div class="dtw-intro__content rte">
+        {{ section.settings.content }}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DTW Intro",
+  "tag": "section",
+  "class": "section-dtw-intro",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>After extensive product development and testing, We Must is proud to introduce <strong>Digital Transfers We Must™</strong> as our newest direct-to-film (DTF) transfers. With a hand-feel comparable to screen print, this transfer technology is lightweight, with grain-free detail—developed for professional decorators focused on comfort, detail, and durability.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DTW Intro"
+    }
+  ]
+}
+{% endschema %}

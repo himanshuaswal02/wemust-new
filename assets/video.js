@@ -1,5 +1,3 @@
-/* global YT, Vimeo */
-
 if (!customElements.get('video-component')) {
   class Video extends HTMLElement {
     constructor() {

@@ -1,0 +1,394 @@
+{%- liquid
+  case section.settings.image_shape
+    when 'portrait-45'
+      assign image_aspect_ratio = 0.8
+    when 'landscape-54'
+      assign image_aspect_ratio = 1.25
+    when 'square'
+      assign image_aspect_ratio = 1.0
+    else
+      assign image_aspect_ratio = nil
+  endcase
+
+  assign cards_per_row_mobile = section.settings.cards_per_row_mobile | plus: 0
+-%}
+
+<div id="section-id-{{ section.id }}" class="">
+  {%- style -%}
+   #section-id-{{ section.id }} {
+    padding-top: {{ section.settings.desktop-padding-top }}px;
+    padding-bottom: {{ section.settings.desktop-padding-bottom }}px;
+   }
+    #section-id-{{ section.id }} .top-categories__grid {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.cards_per_row }}, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+    #section-id-{{ section.id }} .hometitle{
+      color: #222;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+
+    }
+    #section-id-{{ section.id }} .top-categories__card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      transform-origin: bottom center;
+    }
+
+    #section-id-{{ section.id }} .top-categories__card:hover {
+      transform: scale(1.04);
+    }
+
+    #section-id-{{ section.id }} .top-categories__media {
+      margin-bottom: 14px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    #section-id-{{ section.id }} .top-categories__media .theme-img,
+    #section-id-{{ section.id }} .top-categories__media .placeholder-svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #section-id-{{ section.id }} .top-categories__line {
+      width: 100%;
+      height: 1px;
+      margin: 0 0 12px;
+      background: currentColor;
+      opacity: 0.2;
+    }
+
+    #section-id-{{ section.id }} .top-categories__title {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    #section-id-{{ section.id }} .top-categories__description {
+      margin: 8px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color:#696969;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #section-id-{{ section.id }} .top-categories__card:hover .top-categories__description,
+    #section-id-{{ section.id }} .top-categories__card:focus-visible .top-categories__description {
+      opacity: 0.72;
+      visibility: visible;
+    }
+
+    @media (max-width: 991px) {
+      #section-id-{{ section.id }} .top-categories__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 767px) {
+      #section-id-{{ section.id }} {
+        padding-top: {{ section.settings.mobile-padding-top }}px;
+        padding-bottom: {{ section.settings.mobile-padding-bottom }}px;
+        background: #f5f5f5;
+      }
+      #section-id-{{ section.id }} .hometitle{
+    font-size: 24px;
+    margin-bottom: 40px;
+
+    }
+      #section-id-{{ section.id }} .top-categories__grid {
+        grid-template-columns: repeat({{ cards_per_row_mobile }}, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      #section-id-{{ section.id }} .top-categories__grid:has(.top-categories__card:nth-child(odd):last-child) .top-categories__card:last-child {
+        grid-column: 1 / -1;
+        justify-self: center;
+      }
+
+      #section-id-{{ section.id }} .top-categories__card:hover {
+        transform: none;
+      }
+
+      #section-id-{{ section.id }} .top-categories__title {
+        font-size: 14px;
+      }
+
+      #section-id-{{ section.id }} .top-categories__description {
+        opacity: 0.72;
+        visibility: visible;
+        font-size: 12px;
+        display:none;
+      }
+    }
+  {%- endstyle -%}
+
+  <div class="container{% if section.settings.full_width %} container--no-max{% endif %}">
+    {% if section.settings.title != blank %}
+      <h2 class="hometitle h4 align-center spaced-row" data-cc-animate>
+        {{ section.settings.title | escape }}
+      </h2>
+    {% endif %}
+
+    <div class="top-categories__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign category_collection = collections[block.settings.collection]
+          assign card_link = block.settings.link | default: category_collection.url
+          assign card_image = block.settings.image | default: category_collection.featured_image
+          assign card_title = block.settings.title | default: category_collection.title
+          assign card_description = block.settings.description
+
+          if card_description == blank and category_collection != blank and category_collection.description != blank
+            assign card_description = category_collection.description | strip_html | truncate: 110
+          endif
+        -%}
+
+        {%- if card_link != blank -%}
+          <a class="top-categories__card fade-in-up" href="{{ card_link }}" {{ block.shopify_attributes }} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
+        {%- else -%}
+          <div class="top-categories__card fade-in-up" {{ block.shopify_attributes }} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
+        {%- endif -%}
+
+          <div class="top-categories__media">
+            {%- if card_image != blank -%}
+              {%- render 'image', image: card_image, custom_aspect_ratio: image_aspect_ratio, size_cols_desktop: section.settings.cards_per_row, size_cols_mobile: cards_per_row_mobile -%}
+            {%- else -%}
+              <div class="placeholder-image">
+                {{- 'collection-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="top-categories__line"></div>
+
+          {% if card_title != blank %}
+            <h3 class="top-categories__title">{{ card_title | escape }}</h3>
+          {% endif %}
+
+          {% if card_description != blank %}
+            <div class="top-categories__description rte">
+              {{ card_description }}
+            </div>
+          {% endif %}
+
+        {%- if card_link != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {% if section.blocks.size == 0 %}
+        {%- for i in (1..4) -%}
+          <div class="top-categories__card">
+            <div class="top-categories__media">
+              <div class="placeholder-image">
+                {{- 'collection-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+              </div>
+            </div>
+            <div class="top-categories__line"></div>
+            <h3 class="top-categories__title">{{ 'Category' | append: ' ' | append: forloop.index }}</h3>
+            <div class="top-categories__description rte">
+              {{ 'Add a collection, image, and description from the theme editor.' }}
+            </div>
+          </div>
+        {%- endfor -%}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Top categories",
+  "class": "section-top-categories",
+  "disabled_on": {
+    "templates": [
+      "password"
+    ],
+    "groups": [
+      "aside"
+    ]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Our top categories"
+    },
+    {
+      "id": "full_width",
+      "type": "checkbox",
+      "label": "Full page width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "label": "Cards per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "cards_per_row_mobile",
+      "label": "Cards per row on mobile",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "label": "Image shape",
+      "default": "portrait-45",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait-45",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "landscape-54",
+          "label": "Landscape (5:4)"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop-padding-top",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop-padding-bottom",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom title",
+          "info": "Optional. Defaults to the collection title."
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "info": "Optional. Defaults to the collection description."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom link",
+          "info": "Optional. Defaults to the collection link."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top categories",
+      "blocks": [
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

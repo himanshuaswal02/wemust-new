@@ -2049,6 +2049,29 @@ const MainNavigation = class extends HTMLElement {
     theme.addDelegateEventListener(this.mobileDrawer, 'click', '.navigation__tier-1 > .navigation__item > .navigation__children-toggle', (evt, delEl) => {
       evt.preventDefault();
 
+      if (window.innerWidth <= 990) {
+        const parentItem = delEl.parentElement;
+        const tierContainer = delEl.nextElementSibling;
+        const parentLink = delEl.previousElementSibling;
+        const doOpen = !parentItem.classList.contains('navigation__item--open');
+
+        if (doOpen) {
+          parentItem.classList.add('navigation__item--open');
+          tierContainer.style.height = `${tierContainer.scrollHeight}px`;
+          if (parentLink) {
+            parentLink.setAttribute('aria-expanded', 'true');
+          }
+        } else {
+          parentItem.classList.remove('navigation__item--open');
+          tierContainer.style.height = '';
+          if (parentLink) {
+            parentLink.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        return;
+      }
+
       // set text in header
       delEl.parentElement.classList.add('navigation__item--open');
       this.mobileDrawer.classList.add('mobile-navigation-drawer--child-open');
@@ -2076,6 +2099,22 @@ const MainNavigation = class extends HTMLElement {
     // event: close second tier
     theme.addDelegateEventListener(this.mobileDrawer, 'click', '.mobile-nav-back', (evt) => {
       evt.preventDefault();
+
+      if (window.innerWidth <= 990) {
+        this.mobileDrawer.querySelectorAll('.navigation__tier-1 > .navigation__item--open').forEach((el) => {
+          el.classList.remove('navigation__item--open');
+          const tierContainer = el.querySelector(':scope > .navigation__tier-2-container');
+          const parentLink = el.querySelector(':scope > .navigation__link');
+          if (tierContainer) {
+            tierContainer.style.height = '';
+          }
+          if (parentLink) {
+            parentLink.setAttribute('aria-expanded', 'false');
+          }
+        });
+        return;
+      }
+
       this.mobileDrawer.classList.remove('mobile-navigation-drawer--child-open');
       this.mobileDrawer.querySelectorAll('.navigation__tier-1 > .navigation__item--open').forEach((el) => {
         el.classList.remove('navigation__item--open');
@@ -2086,6 +2125,7 @@ const MainNavigation = class extends HTMLElement {
     theme.addDelegateEventListener(this.mobileDrawer, 'click', '.navigation__tier-2 > .navigation__item > .navigation__children-toggle', (evt, delEl) => {
       evt.preventDefault();
       const doOpen = !delEl.parentElement.classList.contains('navigation__item--open');
+      const parentTierTwoContainer = delEl.closest('.navigation__tier-2-container');
 
       if (doOpen) {
         delEl.parentElement.classList.add('navigation__item--open');
@@ -2093,6 +2133,12 @@ const MainNavigation = class extends HTMLElement {
       } else {
         delEl.parentElement.classList.remove('navigation__item--open');
         delEl.nextElementSibling.style.height = '';
+      }
+
+      if (window.innerWidth <= 990 && parentTierTwoContainer) {
+        window.requestAnimationFrame(() => {
+          parentTierTwoContainer.style.height = `${parentTierTwoContainer.scrollHeight}px`;
+        });
       }
     });
   }

@@ -1,0 +1,198 @@
+{{ 'blur-video-banner.css' | asset_url | stylesheet_tag }}
+<section class="custom-video-banner">
+  <!-- BACKGROUND IMAGE -->
+  {% if section.settings.bg_image != blank %}
+    <div class="video-banner-bg">
+      {{
+        section.settings.bg_image
+        | image_url: width: 2200
+        | image_tag:
+          loading: 'lazy',
+          class: 'video-banner-image'
+      }}
+    </div>
+  {% endif %}
+
+  <!-- OVERLAY -->
+  <div class="video-banner-overlay"></div>
+
+  <!-- CONTENT -->
+  <div class="video-banner-content">
+
+    <!-- PLAY BUTTON -->
+    <button class="video-play-btn" type="button">
+
+      {% if section.settings.custom_svg != blank %}
+        {{ section.settings.custom_svg }}
+      {% else %}
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+          <circle cx="45" cy="45" r="45" fill="#E31937"/>
+          <path d="M60 45L36 59V31L60 45Z" fill="white"/>
+        </svg>
+      {% endif %}
+
+    </button>
+
+    <!-- HEADING -->
+    {% if section.settings.heading != blank %}
+      <h2 class="video-banner-heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <!-- TEXT -->
+    {% if section.settings.text != blank %}
+      <div class="video-banner-text">
+        {{ section.settings.text }}
+      </div>
+    {% endif %}
+
+  </div>
+
+  <!-- VIDEO POPUP -->
+  <div class="custom-video-modal">
+
+    <div class="custom-video-overlay"></div>
+
+    <div class="custom-video-inner">
+
+      <button class="custom-video-close" type="button">
+        ×
+      </button>
+
+      <!-- DESKTOP VIDEO -->
+      {% if section.settings.desktop_video != blank %}
+        <div class="desktop-video">
+          {{
+            section.settings.desktop_video
+            | video_tag:
+              controls: true,
+              autoplay: false,
+              loop: false,
+              muted: false,
+              playsinline: true,
+              class: 'popup-video'
+          }}
+        </div>
+      {% endif %}
+
+      <!-- MOBILE VIDEO -->
+      {% if section.settings.mobile_video != blank %}
+        <div class="mobile-video">
+          {{
+            section.settings.mobile_video
+            | video_tag:
+              controls: true,
+              autoplay: false,
+              loop: false,
+              muted: false,
+              playsinline: true,
+              class: 'popup-video'
+          }}
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  const playBtn = document.querySelector('.video-play-btn');
+  const modal = document.querySelector('.custom-video-modal');
+  const closeBtn = document.querySelector('.custom-video-close');
+  const overlay = document.querySelector('.custom-video-overlay');
+
+  const allVideos = document.querySelectorAll('.popup-video');
+
+  function stopVideos() {
+    allVideos.forEach(video => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  }
+
+  if(playBtn) {
+
+    playBtn.addEventListener('click', function() {
+
+      modal.classList.add('active');
+
+      const activeVideo = window.innerWidth <= 767
+        ? document.querySelector('.mobile-video video')
+        : document.querySelector('.desktop-video video');
+
+      if(activeVideo) {
+        activeVideo.play();
+      }
+
+    });
+
+  }
+
+  function closePopup() {
+
+    modal.classList.remove('active');
+    stopVideos();
+
+  }
+
+  if(closeBtn) {
+    closeBtn.addEventListener('click', closePopup);
+  }
+
+  if(overlay) {
+    overlay.addEventListener('click', closePopup);
+  }
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "Blur Video Banner",
+  "class": "blur-video-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "video",
+      "id": "desktop_video",
+      "label": "Desktop Video"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "Mobile Video"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We Understand Consistency, Quality, And Speed Matters Most"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Consistency is built into everything we do.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_svg",
+      "label": "Custom SVG"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blur Video Banner"
+    }
+  ]
+}
+{% endschema %}

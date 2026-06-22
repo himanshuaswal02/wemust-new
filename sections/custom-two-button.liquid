@@ -1,0 +1,106 @@
+{{ 'custom-started-section.css' | asset_url | stylesheet_tag }}
+<section class="custom-started-section">
+  <div class="page-width">
+    <div class="started-wrapper">
+      <!-- CONTENT -->
+      <div class="started-content">
+        {% if section.settings.heading != blank %}
+          <h2 class="started-heading">
+            {{ section.settings.heading }}
+          </h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <div class="started-text">
+            {{ section.settings.text }}
+          </div>
+        {% endif %}
+        
+        <!-- FEATURES -->
+        <div class="started-features">
+          {% if section.settings.feature_1 != blank %}
+            <div class="started-feature">
+              <span class="feature-icon"></span>
+              <div class="feature-text feature-one">{{ section.settings.feature_1 }}</div>
+            </div>
+          {% endif %}
+          {% if section.settings.feature_2 != blank %}
+            <div class="started-feature">
+              <span class="feature-icon"></span>
+              <div class="feature-text feature-second">{{ section.settings.feature_2 }}</div>
+            </div>
+          {% endif %}
+          {% if section.settings.feature_3 != blank %}
+            <div class="started-feature">
+              <span class="feature-icon"></span>
+              <div class="feature-text feature-third">{{ section.settings.feature_3 }}</div>
+            </div>
+          {% endif %}
+        </div>
+        <!-- BUTTONS -->
+        <div class="started-buttons">
+          {% if section.settings.button_label_1 != blank %}
+            <a href="{{ section.settings.button_link_1 }}" class="started-btn">
+              <span>{{ section.settings.button_label_1 }}</span>
+              <svg width="40" height="59" viewBox="0 0 40 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="4.21181" y1="3.00022" x2="36.4895" y2="28.2989" stroke="white" stroke-width="6" stroke-linecap="round"/>
+                <line x1="3" y1="-3" x2="44.0106" y2="-3" transform="matrix(0.787056 -0.616882 -0.616882 -0.787056 0 54.5107)" stroke="white" stroke-width="6" stroke-linecap="round"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Started Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Let's Get Started"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Print any design with our DTF transfers on any product, material or color with incredible durability.</p>"
+    },
+
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Button Label 1",
+      "default": "Order Transfers By Size"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Button Link 1"
+    },
+    {
+      "type": "richtext",
+      "id": "feature_1",
+      "label": "Feature 1"
+    },
+    {
+      "type": "richtext",
+      "id": "feature_2",
+      "label": "Feature 2"
+    },
+    {
+      "type": "richtext",
+      "id": "feature_3",
+      "label": "Feature 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Started Section"
+    }
+  ]
+}
+{% endschema %}

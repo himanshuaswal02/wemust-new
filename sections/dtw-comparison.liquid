@@ -1,0 +1,168 @@
+<section class="dtw-comparison">
+
+  <!-- Mobile Cards -->
+  <div class="dtw-comparison-cards">
+
+    <article class="dtw-comparison-card traditional-dtf">
+      <div class="dtw-comparison-card-header dtw-comparison-card-header--dtf">
+        <span class="dtw-comparison-card-icon">
+          {% render "mb-white-tick-svg" %}
+        </span>
+        <h3>{{ section.settings.left_heading }}</h3>
+      </div>
+
+      <ul class="dtw-comparison-card-list">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <span class="dtw-comparison-list-icon dtw-comparison-list-icon--dtf">
+              {% render "mb-tick-svg" %}
+            </span>
+            <span>{{ block.settings.left_text }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </article>
+
+    <article class="dtw-comparison-card dtw-digital-transfer">
+      <div class="dtw-comparison-card-header dtw-comparison-card-header--dtw">
+        <span class="dtw-comparison-card-icon">
+          {% render "mb-white-star-svg" %}
+        </span>
+        <h3>{{ section.settings.right_heading }}</h3>
+      </div>
+
+      <ul class="dtw-comparison-card-list">
+        {% for block in section.blocks %}
+          <li>
+            <span class="dtw-comparison-list-icon dtw-comparison-list-icon--dtw">
+              {% render "mb-start-svg" %}
+            </span>
+            <span>{{ block.settings.right_text }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </article>
+
+  </div>
+
+  <!-- Desktop Table -->
+  <table class="dtw-comparison-table dtw-comparison-table--desktop">
+    <thead>
+      <tr>
+        <th>
+          <div class="dtw-comparison-header">
+            <span class="dtw-comparison-icon">
+               {% render "white-tick-svg" %}
+            </span>
+            <span>{{ section.settings.left_heading }}</span>
+          </div>
+        </th>
+
+        <th>
+          <div class="dtw-comparison-header">
+            <span class="dtw-comparison-icon">
+              {% render "white-star-svg" %}
+            </span>
+            <span>{{ section.settings.right_heading }}</span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for block in section.blocks %}
+        <tr {{ block.shopify_attributes }}>
+            <td>
+                {% render "tick-svg" %}
+                {{ block.settings.left_text }}
+            </td>
+            <td>
+                {% render "start-svg" %}
+                {{ block.settings.right_text }}
+            </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</section>
+
+{% schema %}
+{
+  "name": "DTW Comparison",
+  "settings": [
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Left Heading",
+      "default": "Traditional DTF"
+    },
+    {
+      "type": "text",
+      "id": "right_heading",
+      "label": "Right Heading",
+      "default": "DTW – Digital Transfers We Must"
+    }    
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "left_text",
+          "label": "Traditional DTF"
+        },
+        {
+          "type": "text",
+          "id": "right_text",
+          "label": "DTW"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DTW Comparison",
+      "blocks": [
+        {
+          "type": "comparison_row",
+          "settings": {
+            "left_text": "Has a more noticeable hand-feel",
+            "right_text": "Highly refined hand-feel"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "left_text": "Good gradient capability",
+            "right_text": "Smoother colour transitions and blends with zero graininess"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "left_text": "Good stretch performance",
+            "right_text": "Excellent flexibility and complete recovery"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "left_text": "Industry standard colour consistency",
+            "right_text": "Unmatched fidelity and vibrancy"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "left_text": "Consistent colour output",
+            "right_text": "Enhanced colour fidelity and vibrancy"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
