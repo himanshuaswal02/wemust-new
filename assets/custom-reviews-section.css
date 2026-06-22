@@ -24,9 +24,8 @@
   max-width: 820px;
   margin: 0 auto;
   color: var(--crs-heading-color);
-  font-size: 32px;
-  /* font-weight: 700; */
-  line-height: 1.1;
+  font-weight: 400;
+    text-transform: uppercase;
 }
 
 .custom-reviews-section__subheading {

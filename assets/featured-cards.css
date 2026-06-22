@@ -18,6 +18,9 @@
 .featured-cards-section .featured-cards__heading {
   margin: 0 0 14px;
   color: var(--featured-cards-heading-color, #000000);
+    font-size: 32px;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 
 .featured-cards-section .featured-cards__subheading {
