@@ -1,0 +1,16 @@
+{%- if variant.unit_price_measurement -%}
+  {%- capture unit_price_base_unit -%}
+    {%- if variant.unit_price_measurement -%}
+      {%- if variant.unit_price_measurement.reference_value != 1 -%}
+        {{- variant.unit_price_measurement.reference_value -}}
+      {%- endif -%}
+      {{- variant.unit_price_measurement.reference_unit -}}
+    {%- endif -%}
+  {%- endcapture -%}
+  <div class="unit-price {{ class }}">
+    <span class="unit-price__price theme-money">{{ variant.unit_price | money }}</span>
+    <span class="unit-price__separator">{% comment %}start YMQ ltsp{% endcomment %}{% assign ymqltspp = item | default: line_item | default: prod | default: product %}{% capture ymqltspop %}<span data-ymq-item-key="{{ product.key }}" class='ymq_item_price'>{{ 'products.product.price.unit_price_separator' | t }}</span>{% endcapture %}{% capture include_ymq_lock_login_to_see_price %}{% render 'ymq_lock_login_to_see_price', ymq_product: ymqltspp, old_price: ymqltspop %}{% endcapture %}{% unless include_ymq_lock_login_to_see_price contains 'Liquid error' %}{% render 'ymq_lock_login_to_see_price', ymq_product: ymqltspp, old_price: ymqltspop %}{% else %}<span data-ymq-item-key="{{ product.key }}" class='ymq_item_price'>{{ 'products.product.price.unit_price_separator' | t }}</span>{% endunless %}{% comment %}end YMQ ltsp{% endcomment %}</span>
+    <span class="unit-price__unit">{{ unit_price_base_unit }}</span>
+  </div>
+{%- endif -%}
+{% comment %}<!-- ymq lock done -->{% endcomment %}{% comment %}<!-- ymq option done -->{% endcomment %}

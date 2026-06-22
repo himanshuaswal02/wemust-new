@@ -1,0 +1,173 @@
+<link rel="stylesheet" href="{{ 'image-link-buttons.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+
+<div class="section-id-{{ section.id }} image-link-buttons-section{% if section.settings.color_scheme != 'default' %} use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% endif %}">
+  {%- style -%}
+    #section-id-{{ section.id }} {
+      --image-link-buttons-tile-size: {{ section.settings.image_size }}px;
+    }
+  {%- endstyle -%}
+
+  <div class="container page-header--with-upper-spacing{% if section.settings.full_width %} container--no-max{% endif %}" data-cc-animate>
+    {%- if section.settings.title != blank -%}
+      <div class="image-link-buttons__header align-{{ section.settings.heading_alignment }}">
+        <h2 class="hometitle h4 image-link-buttons__heading">{{ section.settings.title | escape }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="image-link-buttons image-link-buttons--{{ section.settings.button_alignment }}">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign collection = collections[block.settings.collection]
+          assign button_image = block.settings.image | default: collection.featured_image
+        -%}
+
+        <a
+          class="image-link-buttons__item"
+          href="{{ collection.url | default: '#' }}"
+          {{ block.shopify_attributes }}
+          data-cc-animate
+          data-cc-animate-delay="{{ forloop.index | times: 0.08 }}s"
+          aria-label="{{ collection.title | default: 'Collection link' | escape }}">
+          {%- if button_image != blank -%}
+            <span class="image-link-buttons__image">
+              {%- render 'image',
+                image: button_image,
+                sizes: '(max-width: 767px) 44vw, 220px',
+                widths: '180, 220, 280, 360, 440',
+                class: 'image-link-buttons__image-asset'
+              -%}
+            </span>
+          {%- else -%}
+            <span class="image-link-buttons__placeholder placeholder-image">
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </span>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image link buttons",
+  "class": "section-image-link-buttons",
+  "disabled_on": {
+    "groups": [
+      "aside"
+    ]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop by category"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "label": "Square image size",
+      "min": 80,
+      "max": 260,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full page width",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "paragraph",
+          "content": "The button links to the selected collection automatically."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image link buttons"
+    }
+  ]
+}
+{% endschema %}

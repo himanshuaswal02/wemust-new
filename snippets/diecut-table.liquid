@@ -1,0 +1,709 @@
+<div class="append_table"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  jQuery(document).ready(function () {
+    // Use event delegation for dynamically loaded elements
+    jQuery(document).on("click", ".cl-po--quantity-btn", function () {
+      // Retrieve input values
+      let inputWidth = jQuery("#option_9849392529709_1-x").val();
+      let inputHeight = jQuery("#option_9849392529709_1-y").val();
+
+      // Calculate area
+      var area = inputWidth * inputHeight;
+      var quantity = Number(document?.querySelector("#quantity")?.value || 0);
+
+      // Generate table HTML
+      var html =
+        '<table class="price-table" style="width: 100%; border-collapse: collapse;"><thead><tr><th style="border: 1px solid #000; padding: 8px; text-align: center;">Quantity</th><th style="border: 1px solid #000; padding: 8px; text-align: center;">Price per sticker</th></tr></thead><tbody>' +
+        getPrice(area, quantity) +
+        " </tbody></table>";
+
+      // Update table in the DOM
+      jQuery(".append_table").empty();
+      jQuery(".append_table").append(html);
+    });
+
+    // Bind change event to the input fields
+     jQuery(document).on("change", "#option_9849392529709_1-x, #option_9849392529709_1-y", function () {
+      console.log("Value changed");
+
+      // Retrieve input values
+      let inputWidth = jQuery("#option_9849392529709_1-x").val();
+      let inputHeight = jQuery("#option_9849392529709_1-y").val();
+
+      // Calculate area
+      var area = inputWidth * inputHeight;
+      var quantity = Number(document?.querySelector("#quantity")?.value || 0);
+
+      // Generate table HTML
+      var html =
+        '<table class="price-table" style="width: 100%; border-collapse: collapse;"><thead><tr><th style="border: 1px solid #000; padding: 8px; text-align: center;">Quantity</th><th style="border: 1px solid #000; padding: 8px; text-align: center;">Price per sticker</th></tr></thead><tbody>' +
+        getPrice(area, quantity) +
+        " </tbody></table>";
+
+      // Update table in the DOM
+      jQuery(".append_table").empty();
+      jQuery(".append_table").append(html);
+    });
+  });
+
+
+    function updatePriceBasedOnDimensions() {
+      let width = jQuery("#option_9849392529709_1-x").val(); // Get width from selected option
+      let height = jQuery("#option_9849392529709_1-y").val(); // Get height from selected option
+
+      if (width && height) {
+        // Calculate price based on dimensions
+        let totalPrice = calculatePrice(parseFloat(width), parseFloat(height));
+
+        variant.price = totalPrice;
+      }
+    }
+
+    jQuery("input#quantity").on("change", function () {
+      var check = jQuery('input[name="properties[option_3]"]:checked').val();
+      if (check === "Gloss") {
+        jQuery("#option_9849392529709_3-0").click();
+
+        jQuery("#option_9849392529709_3-1").click();
+      } else {
+        jQuery("#option_9849392529709_3-1").click();
+        jQuery("#option_9849392529709_3-0").click();
+      }
+    });
+
+    updatePriceBasedOnDimensions();
+
+    function getPrice(area, quantity) {
+      // calculate price
+      var price = 0;
+      var row = "";
+      if (area >= 0 && area <= 2) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.72)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.77)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.82)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.94)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.96)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.97)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 2.01 && area <= 4) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$5.58</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.69)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.79)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.94)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.95)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 4.01 && area <= 6) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$5.58</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.67)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.77)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.86)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.93)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.94)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 6.01 && area <= 9) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$5.58</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.68)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.75)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.8)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.84)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.94)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (5.58 * (1 - 0.95)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 9.01 && area <= 12) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$7.07</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.67)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.72)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.78)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.88)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (7.07 * (1 - 0.93)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 12.01 && area <= 16) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$8.61</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.70)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.73)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.79)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.88)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (8.61 * (1 - 0.93)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 16.01 && area <= 20) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$10.15</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.75)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.89)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (10.15 * (1 - 0.92)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 20.01 && area <= 24) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$11.41</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.72)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.75)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.88)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (11.41 * (1 - 0.92)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 24.01 && area <= 28) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$12.04</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.75)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.88)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.04 * (1 - 0.92)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 28.01 && area <= 32) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$12.81</td></tr>';
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (12.81 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 32.01 && area <= 41) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$' +
+          (area * 0.38).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.38 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 41.01 && area <= 51 ) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$' +
+          (area * 0.35).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500</td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.35 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 51.01 && area <= 61) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$' +
+          (area * 0.33).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500</td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.33 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 61.01 && area <= 71) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$' +
+          (area * 0.3).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500</td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.3 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 71.01 && area <= 81) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$' +
+          (area * 0.28).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500</td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.28 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      } if (area >= 81.01 && area <= 93.5) {
+        row =
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1 - 9 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$' +
+          (area * 0.25).toFixed(2) +
+          "</td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">10 - 24 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.71)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">25 - 49 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.74)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">50 - 99 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.80)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">100 - 249 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.85)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">250 - 499 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.87)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">500 - 999 </td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.90)).toFixed(2) +
+          " </td></tr>";
+
+        row +=
+          '<tr><td style="border: 1px solid #000; padding: 8px; text-align: center;">1000 - 2500</td><td style="border: 1px solid #000; padding: 8px; text-align: center;">$ ' +
+          (area * 0.25 * (1 - 0.91)).toFixed(2) +
+          " </td></tr>";
+      }
+
+      // return the calculated price
+      return row;
+    }
+</script>

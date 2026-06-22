@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      * { box-sizing: border-box }
+      body { font-family: "Lato", sans-serif; overflow: auto; }
+      #shopify-section-template--22658710012205__faq_homepage_jhXAky,
+      #shopify-section-template--22658696479021__faq_homepage_mEhFeb,
+      #shopify-section-template--22658709913901__faq_homepage_6wmrrk,
+      #shopify-section-template--22658709913901__faq_homepage_6wmrrk {
+        overflow: auto;
+      }
+      @media (max-width: 768px) {
+        .tab { width: 36% !important; margin-left: 15px; }
+        .tabcontent { width: 50% !important; }
+      }
+      .tab-wrap-parent {
+        display: block;
+        max-width: 800px;
+        width:100%;
+        margin-inline: auto;
+      }
+      .tab-wrap {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .tab {
+        border: 0.5px solid #ccc;
+        background-color: #f1f1f1;
+        flex-basis: 30%;
+        height: auto;
+        border-right-width: 0;
+      }
+      .tab button {
+        display: block;
+        background-color: inherit;
+          color: black;
+          padding: 15px 15px;
+          width: 100%;
+          border: none;
+          outline: none;
+          text-align: left;
+          cursor: pointer;
+          transition: 0.3s;
+          font-size: 15px;
+          border-bottom: 1px solid #fff;
+        border-inline-start: 3px solid transparent;
+      }
+        .tab button:last-child {
+            border-bottom: none;
+         }
+      .tab button:hover {
+        background-color: #ddd;
+      }
+      .tab button.active {
+        background-color: white;
+        border-inline-start-color: rgb(var(--link-color));
+      }
+      .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #ccc;
+        flex: 1;
+        border-left: none;
+        height: auto;
+           padding-inline: 5%;
+        padding-block: 2%;
+      }
+      .tabcontent ul {
+        list-style-type: disc;
+        padding: 0;
+        margin-left: 15px;
+      }
+      .tabcontent li {
+        padding: 8px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      .tabcontent li:last-child {
+        border-bottom: none;
+      }
+      .tabcontent h3 {
+        margin-top: 10px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="tab-wrap-parent">
+    <div class="tab-wrap">
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'tab1')" id="defaultOpen">
+        {{ section.settings.tab_1_title }}
+      </button>
+      <button class="tablinks" onclick="openTab(event, 'tab2')">{{ section.settings.tab_2_title }}</button>
+      <button class="tablinks" onclick="openTab(event, 'tab3')">{{ section.settings.tab_3_title }}</button>
+      <button class="tablinks" onclick="openTab(event, 'tab4')">{{ section.settings.tab_4_title }}</button>
+      <button class="tablinks" onclick="openTab(event, 'tab5')">{{ section.settings.tab_5_title }}</button>
+    </div>
+
+    <div id="tab1" class="tabcontent">
+      <ul>
+        {% assign items = section.settings.tab_1_content | split: ';' %}
+        {% for item in items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div id="tab2" class="tabcontent">
+      <ul>
+        {% assign items = section.settings.tab_2_content | split: ';' %}
+        {% for item in items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div id="tab3" class="tabcontent">
+      <ul>
+        {% assign items = section.settings.tab_3_content | split: ';' %}
+        {% for item in items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div id="tab4" class="tabcontent">
+      <ul>
+        {% assign items = section.settings.tab_4_content | split: ';' %}
+        {% for item in items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div id="tab5" class="tabcontent">
+      <ul>
+        {% assign items = section.settings.tab_5_content | split: ';' %}
+        {% for item in items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    </div>
+    </div>
+    <script>
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      document.getElementById("defaultOpen").click();
+    </script>
+  </body>
+</html>
+
+{% schema %}
+{
+  "name": "Vertical Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_1_title",
+      "label": "Tab 1 Title",
+      "default": "Artwork Instructions"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_1_content",
+      "label": "Tab 1 Content (each item on a new line)",
+      "default": "File format accepted: .AI, .PDF, .PNG, .EPS, .SVG, .TIF, or .PSD.\nMinimum 300 dpi. Higher dpi is for better color vibrancy and definition.\nMention the size of a design file by width and height without the empty space around the design in the artboard.\nEnsure there are no transparent pixels in the design.\nAll files are printed as uploaded."
+    },
+    {
+      "type": "text",
+      "id": "tab_2_title",
+      "label": "Tab 2 Title",
+      "default": "Delivery Timeline"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_2_content",
+      "label": "Tab 2 Content (each item on a new line)",
+      "default": "Your orders are ready within 24 hours.\nIn case you need multiple orders shipped together at one shipping charge, please place them within the same day before they are scheduled for shipment."
+    },
+    {
+      "type": "text",
+      "id": "tab_3_title",
+      "label": "Tab 3 Title",
+      "default": "Pricing"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_3_content",
+      "label": "Tab 3 Content (each item on a new line)",
+      "default": "Our DTF Transfer pricing is at $0.025 per sq inch.\nThe minimum charge is $0.20 per piece.\nWe ship for free for orders over $250.\nNo Hidden Fees, No Minimum Order\nYour transfers come in a roll or we can have them pre-cut for $0.20 each."
+    },
+    {
+      "type": "text",
+      "id": "tab_4_title",
+      "label": "Tab 4 Title",
+      "default": "Must Know"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_4_content",
+      "label": "Tab 4 Content (each item on a new line)",
+      "default": "If your artwork doesn't match the size asked to print, we will only go by the width of the artwork. No refunds will be offered for smaller prints. Extra charges applicable for bigger sizes than paid for.\nExact color matching is not provided.\nFor gang sheets, our maximum printable width is 22.5” and you may go any length.\nNo change would be made to any order 4 hours after placing it."
+    },
+    {
+      "type": "text",
+      "id": "tab_5_title",
+      "label": "Tab 5 Title",
+      "default": "How to Order"
+    },
+    {
+      "type": "textarea",
+      "id": "tab_5_content",
+      "label": "Tab 5 Content (each item on a new line)",
+      "default": "Please read the artwork instructions properly before uploading.\nClick on the “Drag and Drop your Files” button to upload your design.\nChoose the size you want your artwork or proceed with the detected size.\nSelect the quantity you need.\nSelect add to cart to browse more and add more products/designs or select “Buy with Shop Pay” to place the order."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vertical Tabs",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

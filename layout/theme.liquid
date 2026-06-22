@@ -1,0 +1,661 @@
+{%- liquid
+  assign rtl_langs = 'ar,arc,dv,fa,ha,he,khw,ks,ku,ps,ur,yi' | split: ','
+  assign current_lang = localization.language.iso_code | split: '-' | first
+  if rtl_langs contains current_lang
+    assign lang_dir = 'rtl'
+  else
+    assign lang_dir = 'ltr'
+  endif
+-%}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] =
+        c[a] ||
+        function () {
+          (c[a].q = c[a].q || []).push(arguments);
+        };
+      t = l.createElement(r);
+      t.async = 1;
+      t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0];
+      y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', 'mvliuqcwnj');
+  </script>
+  <script>
+    function initApollo() {
+      var n = Math.random().toString(36).substring(7),
+        o = document.createElement('script');
+      (o.src = 'https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=' + n),
+        (o.async = !0),
+        (o.defer = !0),
+        (o.onload = function () {
+          window.trackingFunctions.onLoad({ appId: '663a9eea708e7401c7206979' });
+        }),
+        document.head.appendChild(o);
+    }
+    initApollo();
+  </script>
+  <script src="https://cdn-ca.pagesense.io/js/wemust638/5690964a1a024796b0229663d62a6ba1.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16638094449"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16638094449');
+  </script>
+  <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-MBM6GSRV');
+    </script>
+    <!-- End Google Tag Manager -->
+    {%- render 'doc-head-core' -%}
+    {%- render 'doc-head-social' -%}
+
+    {%- liquid
+      assign base_font = settings.type_base_font
+      assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
+      assign base_font_medium = base_font | font_modify: 'weight', '500'
+      assign base_font_italic = base_font | font_modify: 'style', 'italic'
+      assign base_font_bold_italic = base_font_bold | font_modify: 'style', 'italic'
+      assign heading_font = settings.type_heading_font
+      assign logo_font = settings.type_logo_font
+      assign nav_font = settings.type_nav_font
+      assign nav_font_600 = nav_font | font_modify: 'weight', '600'
+    -%}
+
+    <style>
+            {{- base_font | font_face: font_display: 'fallback' -}}
+            {{- base_font_bold | font_face: font_display: 'fallback' -}}
+            {{- base_font_medium | font_face: font_display: 'fallback' -}}
+            {{- base_font_italic | font_face: font_display: 'fallback' -}}
+            {{- base_font_bold_italic | font_face: font_display: 'fallback' -}}
+            {{- heading_font | font_face: font_display: 'fallback' -}}
+            {{- logo_font | font_face: font_display: 'fallback' -}}
+            {{- nav_font | font_face: font_display: 'fallback' -}}
+            {{- nav_font_600 | font_face: font_display: 'fallback' -}}
+
+            {%- render 'doc-head-styles' -%}
+
+       .filepond--progress-indicator.filepond--process-indicator{
+           position: relative ;
+       }
+
+            .filepond--progress-indicator.filepond--process-indicator::after {
+          content: ""; // ::before and ::after both require content
+          position: absolute ;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: linear-gradient(120deg, #eaee44, #33d0ff);
+          opacity: .7;
+      }
+    </style>
+
+    {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {%- if settings.swatch_enabled and settings.swatch_value_list != blank -%}
+      <link rel="stylesheet" href="{{ 'swatches.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript><link rel="stylesheet" href="{{ 'swatches.css' | asset_url }}"></noscript>
+    {%- endif -%}
+
+    {%- unless base_font.system? -%}
+      <link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {%- unless heading_font.system? -%}
+      <link rel="preload" as="font" href="{{ heading_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+      window.theme = {
+        info: {
+          name: 'Symmetry',
+          version: '7.1.2'
+        },
+        device: {
+          hasTouch: window.matchMedia('(any-pointer: coarse)').matches,
+          hasHover: window.matchMedia('(hover: hover)').matches
+        },
+        mediaQueries: {
+          md: '(min-width: 768px)',
+          productMediaCarouselBreak: '(min-width: 1041px)'
+        },
+        routes: {
+          base: '{{ shop.url }}',
+          cart: '{{ routes.cart_url }}',
+          cartAdd: '{{ routes.cart_add_url }}.js',
+          cartUpdate: '{{ routes.cart_update_url }}.js',
+          predictiveSearch: '{{ routes.predictive_search_url }}'
+        },
+        strings: {
+          cartTermsConfirmation: {{ 'cart.terms.confirmation' | t | json }},
+          cartItemsQuantityError: {{ 'cart.items.quantity_error' | t: quantity: '[QUANTITY]' | json }},
+          generalSearchViewAll: {{ 'general.search.view_all' | t | json }},
+          noStock: {{ 'products.variant.no_stock' | t | json }},
+          noVariant: {{ 'products.variant.non_existent' | t | json }},
+          productsProductChooseA: {{ 'products.product.choose_a' | t | json }},
+          generalSearchPages: {{ 'general.search.pages' | t | json }},
+          generalSearchNoResultsWithoutTerms: {{ 'general.search.no_results_without_terms' | t | json }},
+          shippingCalculator: {
+            singleRate: {{ 'cart.shipping_calculator.single_rate' | t | json }},
+            multipleRates: {{ 'cart.shipping_calculator.multiple_rates' | t | json }},
+            noRates: {{ 'cart.shipping_calculator.no_rates' | t | json }}
+          }
+        },
+        settings: {
+          moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+          cartType: {{ settings.cart_type | json }},
+          afterAddToCart: {{ settings.after_add_to_cart | json }},
+          quickbuyStyle: {{ settings.quickbuy_style | json }},
+          externalLinksNewTab: {{ settings.external_links_new_tab | json }},
+          internalLinksSmoothScroll: {{ settings.internal_links_smooth_scroll | json }}
+        }
+      }
+
+      theme.inlineNavigationCheck = function() {
+        var pageHeader = document.querySelector('.pageheader'),
+            inlineNavContainer = pageHeader.querySelector('.logo-area__left__inner'),
+            inlineNav = inlineNavContainer.querySelector('.navigation--left');
+        if (inlineNav && getComputedStyle(inlineNav).display != 'none') {
+          var inlineMenuCentered = document.querySelector('.pageheader--layout-inline-menu-center'),
+              logoContainer = document.querySelector('.logo-area__middle__inner');
+          if(inlineMenuCentered) {
+            var rightWidth = document.querySelector('.logo-area__right__inner').clientWidth,
+                middleWidth = logoContainer.clientWidth,
+                logoArea = document.querySelector('.logo-area'),
+                computedLogoAreaStyle = getComputedStyle(logoArea),
+                logoAreaInnerWidth = logoArea.clientWidth - Math.ceil(parseFloat(computedLogoAreaStyle.paddingLeft)) - Math.ceil(parseFloat(computedLogoAreaStyle.paddingRight)),
+                availableNavWidth = logoAreaInnerWidth - Math.max(rightWidth, middleWidth) * 2 - 40;
+            inlineNavContainer.style.maxWidth = availableNavWidth + 'px';
+          }
+
+          var firstInlineNavLink = inlineNav.querySelector('.navigation__item:first-child'),
+              lastInlineNavLink = inlineNav.querySelector('.navigation__item:last-child');
+          if (lastInlineNavLink) {
+            var inlineNavWidth = null;
+            if(document.querySelector('html[dir=rtl]')) {
+              inlineNavWidth = firstInlineNavLink.offsetLeft - lastInlineNavLink.offsetLeft + firstInlineNavLink.offsetWidth;
+            } else {
+              inlineNavWidth = lastInlineNavLink.offsetLeft - firstInlineNavLink.offsetLeft + lastInlineNavLink.offsetWidth;
+            }
+            if (inlineNavContainer.offsetWidth >= inlineNavWidth) {
+              pageHeader.classList.add('pageheader--layout-inline-permitted');
+              var tallLogo = logoContainer.clientHeight > lastInlineNavLink.clientHeight + 20;
+              if (tallLogo) {
+                inlineNav.classList.add('navigation--tight-underline');
+              } else {
+                inlineNav.classList.remove('navigation--tight-underline');
+              }
+            } else {
+              pageHeader.classList.remove('pageheader--layout-inline-permitted');
+            }
+          }
+        }
+      };
+
+      theme.setInitialHeaderHeightProperty = () => {
+        const section = document.querySelector('.section-header');
+        if (section) {
+          document.documentElement.style.setProperty('--theme-header-height', Math.ceil(section.clientHeight) + 'px');
+        }
+      };
+    </script>
+
+    <script src="{{ 'main.js' | asset_url }}" defer></script>
+    <script src="{{ 'quantity-lpo.js' | asset_url }}" defer></script>
+    {%- if request.design_mode -%}
+      <script src="{{ 'theme-editor.js' | asset_url }}" defer></script>
+    {%- endif -%}
+
+    {% if settings.animations_enabled_desktop %}
+      <script src="{{ 'animate-on-scroll.js' | asset_url }}" defer></script>
+      {{ 'animate-on-scroll.css' | asset_url | stylesheet_tag: preload: true }}
+    {% endif %}
+
+    {{ content_for_header }}
+
+    {%- if settings.custom_html_head -%}
+      <!-- CC Custom Head Start -->
+      {{- settings.custom_html_head -}}
+      <!-- CC Custom Head End -->
+    {%- endif -%}
+
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', 'mvliuqcwnj');
+    </script>
+    <script>
+      !(function () {
+        var reb2b = (window.reb2b = window.reb2b || []);
+        if (reb2b.invoked) return;
+        reb2b.invoked = true;
+        reb2b.methods = ['identify', 'collect'];
+        reb2b.factory = function (method) {
+          return function () {
+            var args = Array.prototype.slice.call(arguments);
+            args.unshift(method);
+            reb2b.push(args);
+            return reb2b;
+          };
+        };
+        for (var i = 0; i < reb2b.methods.length; i++) {
+          var key = reb2b.methods[i];
+          reb2b[key] = reb2b.factory(key);
+        }
+        reb2b.load = function (key) {
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.async = true;
+          script.src = 'https://s3-us-west-2.amazonaws.com/b2bjsstore/b/' + key + '/reb2b.js.gz';
+          var first = document.getElementsByTagName('script')[0];
+          first.parentNode.insertBefore(script, first);
+        };
+        reb2b.SNIPPET_VERSION = '1.0.1';
+        reb2b.load('7R6G5YHWRV65');
+      })();
+    </script>
+
+    <script>
+      (function (e, t, o, n, p, r, i) {
+        e.visitorGlobalObjectAlias = n;
+        e[e.visitorGlobalObjectAlias] =
+          e[e.visitorGlobalObjectAlias] ||
+          function () {
+            (e[e.visitorGlobalObjectAlias].q = e[e.visitorGlobalObjectAlias].q || []).push(arguments);
+          };
+        e[e.visitorGlobalObjectAlias].l = new Date().getTime();
+        r = t.createElement('script');
+        r.src = o;
+        r.async = true;
+        i = t.getElementsByTagName('script')[0];
+        i.parentNode.insertBefore(r, i);
+      })(window, document, 'https://diffuser-cdn.app-us1.com/diffuser/diffuser.js', 'vgo');
+      vgo('setAccount', '255403719');
+      vgo('setTrackByDefault', true);
+
+      vgo('process');
+    </script>
+  </head>
+
+  <body
+    class="
+      template-{{ template | split: '.' | first | handle }}
+      {%- if template.suffix %} template-suffix-{{ template.suffix }}{% endif -%}
+      {%- if settings.swatch_enabled %} swatch-method-{{ settings.swatch_method }} swatch-style-{{ settings.swatch_style }}{% endif -%}
+      {%- if settings.animations_enabled_desktop %} cc-animate-enabled{% endif -%}
+    "
+  >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-MBM6GSRV"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <a class="skip-link visually-hidden" href="#content">{{ 'accessibility.skip_to_content' | t }}</a>
+
+    {%- sections 'header-group' -%}
+
+    <main id="content" role="main">
+      <div class="container cf">
+        {{ content_for_layout }}
+      </div>
+    </main>
+
+    {%- if request.path != '/challenge' -%}
+      <div id="pagefooter">
+        {%- sections 'footer-group' -%}
+      </div>
+
+      {%- sections 'overlay-group' -%}
+    {%- endif -%}
+
+    <a href="#" class="page-shade" aria-label="{{ 'general.navigation.close' | t }}"></a>
+    <div class="overlay fixed top-0 right-0 bottom-0 left-0 js-overlay"></div>
+
+    {%- if settings.after_add_to_cart == 'notification' -%}
+      <script src="{{ 'added-notification.js' | asset_url }}" defer></script>
+      <template id="AddedNotification">
+        <added-notification class="added-notification added-notification--hidden">
+          <div class="added-notification__message-area">
+            <div class="added-notification__message-title"></div>
+            <div class="added-notification__message-text underline-child">
+              {{ 'products.product.added_to_cart_with_link_html' | t: cart_url: routes.cart_url }}
+            </div>
+          </div>
+          <div class="added-notification__button-area">
+            <button
+              type="button"
+              class="added-notification__close"
+              aria-label="{{ 'general.icon_labels.close' | t | escape }}"
+            >
+              {%- render 'icon-close' -%}
+            </button>
+          </div>
+        </added-notification>
+      </template>
+    {%- endif -%}
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === 'childList' || mutation.type === 'subtree') {
+              applyQuantityControls(); // Reapply the event listeners whenever the DOM is modified
+            }
+          });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        function applyQuantityControls() {
+          let quantityContainers = document.querySelectorAll('.cart-item__quantity.disabled');
+
+          if (quantityContainers) {
+            quantityContainers.forEach(function (container) {
+              let decreaseBtn = container.querySelector('a.quantity-down');
+              let increaseBtn = container.querySelector('a.quantity-up');
+              let quantityInput = container.querySelector('.cart-item__quantity-input');
+
+              function updateButtonStates() {
+                alert('dasdasd');
+                if (quantityInput.value < 12) {
+                  quantityInput.value = 12; // Reset to 12 if the value is lower
+                }
+
+                if (quantityInput.value <= 12) {
+                  decreaseBtn?.classList.add('disabled');
+                } else {
+                  decreaseBtn?.classList.remove('disabled');
+                }
+
+                console.log('Triggered in the function!!');
+              }
+
+              if (decreaseBtn && increaseBtn && quantityInput) {
+                updateButtonStates();
+
+                quantityInput.addEventListener('input', function () {
+                  setTimeout(() => {
+                    updateButtonStates();
+                    console.log('Triggered on the input!!');
+                  }, 100);
+                });
+
+                decreaseBtn.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  setTimeout(() => {
+                    updateButtonStates();
+                    console.log('Click on prev');
+                  }, 100);
+                });
+
+                increaseBtn.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  setTimeout(() => {
+                    updateButtonStates();
+                    console.log('Click on Next');
+                  }, 100);
+                });
+              }
+            });
+          }
+        }
+
+        applyQuantityControls(); // Initial application of the event listeners
+      });
+    </script>
+
+    {% if template.name == 'product' %}
+      <!--
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/exifreader@3.6.0/dist/exif-reader.js" defer></script>
+      -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/tiff@6.1.0/lib/index.min.js"></script> -->
+
+      {% unless product.title == 'Die-Cut Stickers'
+        or product.title == 'Kiss-Cut Stickers'
+        or product.title == 'Clear Die Cut stickers'
+        or product.title == 'Glitter Die Cut Stickers'
+        or product.title == 'Holographic Die Cut stickers'
+        or product.title == 'DTF Transfers by Gang Sheet'
+        or product.title == 'Bumper Sticker'
+        or product.title == 'Permanent Wall Stickers'
+        or product.title == 'Water Bottle Stickers'
+        or product.title == 'Removable Wall Stickers'
+        or product.title == 'Textured Stickers'
+        or product.title == '3d Embroidered Patches'
+        or product.title == 'Faux Leather Patches'
+        or product.title == 'Flex Cover Sheet'
+        or product.title == 'Pre Cut Numbers'
+        or product.title == 'Hybrid Patch'
+        or product.title == 'Digital Print Patch'
+        or product.title == 'Reflective Patches'
+        or product.title == '3D Silicone Badges'
+      %}
+        <script src="{{ 'custom-file-upload.js' | asset_url }}" defer></script>
+      {% endunless %}
+
+      {% if product.title == 'Embroidered Iron On Patches'
+        or product.title == '3D Silicone Badges'
+        or product.title == 'DTF Embroidered Patches'
+        or product.title == '3D Embroidered Patches'
+        or product.title == 'Faux Leather Patches'
+        or product.title == 'Hybrid Patch'
+        or product.title == 'Digital Print Patch'
+        or product.title == 'Reflective Patches'
+      %}
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // --- Configuration ---
+            const minQuantity = 12;
+
+            // --- Select Elements ---
+            const quantityInput = document.querySelector(".quantity-wrapper [name='quantity']");
+            const decreaseBtn = document.querySelector(".quantity-wrapper [data-quantity='down']");
+            const increaseBtn = document.querySelector(".quantity-wrapper [data-quantity='up']"); // We still need it for one check
+
+            if (!quantityInput || !decreaseBtn || !increaseBtn) {
+              console.warn('Quantity control elements not found for this product.');
+              return;
+            }
+
+            /**
+             * This single function reads the current quantity and enforces all our rules.
+             * It doesn't change the quantity itself, it just validates and updates the UI.
+             */
+            function validateQuantityAndUpdateUI() {
+              // Use a slight delay to ensure the theme's script has updated the value first.
+              setTimeout(function () {
+                let currentValue = parseInt(quantityInput.value, 10);
+
+                // RULE 1: If the value is invalid or below the minimum, force it to the minimum.
+                if (isNaN(currentValue) || currentValue < minQuantity) {
+                  quantityInput.value = minQuantity;
+                  currentValue = minQuantity; // Update our variable to match
+                }
+
+                // RULE 2: Disable or enable the decrease button based on the value.
+                if (currentValue <= minQuantity) {
+                  decreaseBtn.classList.add('disabled');
+                } else {
+                  decreaseBtn.classList.remove('disabled');
+                }
+
+                // RULE 3: Check the specific radio button if at minimum quantity.
+                if (currentValue <= minQuantity) {
+                  const radioOption = document.querySelector('input[type="radio"][id="option_9502584144173_7-0"]');
+                  if (radioOption) {
+                    radioOption.checked = true;
+                  }
+                }
+
+                // ✅ ADD THIS LINE - always trigger recalculation
+                quantityInput.dispatchEvent(new Event('change', { bubbles: true }));
+              }, 5); // A tiny delay is often enough.
+            }
+
+            // --- Event Listeners ---
+
+            // We listen for ANY change to the input, whether by typing, pasting, or the theme's buttons.
+            // 'change' and 'input' cover all cases.
+            quantityInput.addEventListener('blur', validateQuantityAndUpdateUI);
+
+            // We add a "click" listener to the buttons ONLY to trigger our validation function.
+            // We are NOT preventing the default action anymore. We let the theme do its work.
+            decreaseBtn.addEventListener('click', validateQuantityAndUpdateUI);
+            increaseBtn.addEventListener('click', validateQuantityAndUpdateUI);
+
+            // --- Initial Setup ---
+            // Run once on page load to set the correct state.
+            validateQuantityAndUpdateUI();
+          });
+        </script>
+      {% endif %}
+
+      {% if product.title == 'Bumper Sticker' %}
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            let decreaseBtn = document.querySelector(".quantity-wrapper [data-quantity='down']");
+            let increaseBtn = document.querySelector(".quantity-wrapper [data-quantity='up']");
+            let quantityInput = document.querySelector(".quantity-wrapper [name='quantity']");
+            let submitBtn = document.querySelector('.quantity-submit-row__submit.input-row');
+
+            function updateSubmitButtonState() {
+              let currentValue = parseInt(quantityInput.value, 10);
+
+              // If the value is less than 10, disable the submit button
+              if (currentValue < 10 || isNaN(currentValue)) {
+                submitBtn?.setAttribute('disabled', 'true');
+              } else {
+                submitBtn?.removeAttribute('disabled');
+              }
+            }
+
+            function updateButtonStates() {
+              let currentValue = parseInt(quantityInput.value, 10);
+
+              // Disable the decrease button if the value is 10 or less
+              if (currentValue <= 10 || isNaN(currentValue)) {
+                decreaseBtn?.setAttribute('disabled', 'true');
+              } else {
+                decreaseBtn?.removeAttribute('disabled');
+              }
+            }
+
+            if (decreaseBtn && increaseBtn && quantityInput && submitBtn) {
+              // Set initial state
+              updateSubmitButtonState();
+              updateButtonStates();
+
+              quantityInput.addEventListener('keydown', function (event) {
+                // Ensure only valid numbers are typed
+                let currentValue = parseInt(quantityInput.value, 10);
+
+                // Update button states based on current value
+                updateSubmitButtonState();
+                updateButtonStates();
+              });
+
+              quantityInput.addEventListener('input', function () {
+                let currentValue = parseInt(quantityInput.value, 10);
+
+                // Update button states based on current value
+                updateSubmitButtonState();
+                updateButtonStates();
+              });
+
+              decreaseBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                let currentValue = parseInt(quantityInput.value, 10);
+                if (currentValue > 10) {
+                  quantityInput.value = currentValue - 1; // Decrease by 1
+                }
+                updateSubmitButtonState();
+                updateButtonStates();
+              });
+
+              increaseBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                let currentValue = parseInt(quantityInput.value, 10) || 0;
+                quantityInput.value = currentValue + 1; // Increase by 1
+                updateSubmitButtonState();
+                updateButtonStates();
+              });
+            }
+          });
+        </script>
+      {% endif %}
+    {% endif %}
+
+    {% render 'mws_fee_helper' %}
+    <script>
+      document.addEventListener(
+        'click',
+        function (e) {
+          if (e.target.closest('button[name="add"]')) {
+            gtag('event', 'conversion', {
+              send_to: 'AW-16638094449/3Yn_COrQ4sEZEPHY1P09',
+            });
+          }
+          if (e.target.closest('a[href="/account/register"]')) {
+            gtag('event', 'conversion', {
+              send_to: 'AW-16638094449/HdvTCP3f18EZEPHY1P09',
+            });
+          }
+        },
+        true
+      );
+    </script>
+    <script>
+      window.addEventListener('load', function () {
+        if (window.location.href.includes('?contact_posted=true')) {
+          gtag('event', 'conversion', {
+            send_to: 'AW-16638094449/yx4hCIbLiMIZEPHY1P09',
+          });
+        }
+      });
+    </script>
+ 
+      <script>
+     document.addEventListener('DOMContentLoaded', function () {
+  const path = window.location.pathname;
+  if (path === '/cart') window.location.href = '/';
+});
+
+    </script>
+
+  </body>
+</html>

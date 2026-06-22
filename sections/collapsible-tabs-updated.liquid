@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="{{ 'collapsible-tabs.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+
+<div class="container" data-cc-animate>
+  <div class="collapsible-tabs-layout">
+    {% if section.settings.title != blank %}
+      <div class="collapsible-tabs__heading-container">
+        <h3 class="collapsible-tabs__heading" id="faq-{{ section.settings.title | handle }}">
+          {{ section.settings.title | escape }}
+        </h3>
+      </div>
+    {% endif %}
+
+    <div class="collapsible-tabs__content-container">
+      <div class="collapsible-tabs__image collapsible-tabs__image--left">
+        <img style="border-radius:15px;" src="{{ section.settings.image_left | img_url: '500x' }}" alt="Left Image">
+      </div>
+      <div class="collapsible-tabs">
+        {%- for block in section.blocks -%}
+          <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
+            {% if block.type == 'content' %}
+              <div class="collapsible-tabs__text collapsible-tabs__content rte">{{ block.settings.content }}</div>
+
+            {% elsif block.type == 'button' %}
+              <div class="collapsible-tabs__button collapsible-tabs__content">
+                <a class="btn btn--primary btn--link" href="{{ block.settings.link }}">
+                  <span class="btn__text">{{ block.settings.title | escape }}</span>
+                </a>
+              </div>
+
+            {% elsif block.type == 'question' %}
+              <div class="collapsible-tabs__tab">
+                <details-disclosure>
+                  <details class="disclosure">
+                    <summary class="disclosure__title">
+                      {{- block.settings.title | escape -}}
+                    </summary>
+                    <div class="disclosure__panel has-motion">
+                      <div class="disclosure__content rte">
+                        {{- block.settings.answer -}}
+                      </div>
+                    </div>
+                  </details>
+                </details-disclosure>
+              </div>
+            {% endif %}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collapsible tabs images",
+  "class": "section-collapsible-tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collapsible tabs"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_left",
+      "label": "Left Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_right",
+      "label": "Right Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer</p>"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible tabs images",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+     .collapsible-tabs-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .collapsible-tabs__heading-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .collapsible-tabs__content-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  }
+
+  .collapsible-tabs__image--left {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  .collapsible-tabs {
+    flex: 2;
+  }
+
+  /* Mobile view adjustments */
+  @media (max-width: 768px) {
+    .collapsible-tabs__content-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .collapsible-tabs__image--left {
+      margin-right: 0;
+      margin-bottom: 20px; /* Add some space below the image */
+    }
+  }
+</style>

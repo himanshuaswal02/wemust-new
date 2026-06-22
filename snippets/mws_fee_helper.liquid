@@ -1,0 +1,30 @@
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof mwFees === undefined) {
+    return;
+  }
+
+    const btns = document.querySelectorAll('.cart-item__remove');
+
+    btns.forEach(element => {
+      element.addEventListener('click', event => {   
+        setTimeout(function () {
+          document.querySelector('#cartform').submit();
+        }, 100);
+      })
+    })
+  
+    setTimeout(() => {
+
+       const quantityBtns = document.querySelectorAll(".cart-item__quantity-input");
+        quantityBtns.forEach( element =>{
+            if(element.hasAttribute("disabled")){
+             element.removeAttribute("disabled")
+             } 
+          } 
+        )
+      
+    }, 100);
+});
+  
+</script>

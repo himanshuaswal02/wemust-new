@@ -1,0 +1,169 @@
+<link rel="stylesheet" href="{{ 'collapsible-tabs.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+
+<div class="container" data-cc-animate>
+  <div class="collapsible-tabs-layout">
+    {% if section.settings.title != blank %}
+      <h3 class="collapsible-tabs__heading" id="faq-{{ section.settings.title | handle }}">
+        {{ section.settings.title | escape }}
+      </h3>
+    {% endif %}
+
+    <div class="collapsible-tabs__content-container">
+      <div class="collapsible-tabs__column collapsible-tabs__column--left">
+        {% assign left_faqs = section.blocks | where: 'type', 'left_faq' %}
+        {% for block in left_faqs %}
+          <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
+            <div class="collapsible-tabs__tab">
+              <details-disclosure>
+                <details class="disclosure">
+                  <summary class="disclosure__title">
+                    {{- block.settings.title | escape -}}
+                  </summary>
+                  <div class="disclosure__panel has-motion">
+                    <div class="disclosure__content rte">
+                      {{- block.settings.answer -}}
+                    </div>
+                  </div>
+                </details>
+              </details-disclosure>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="collapsible-tabs__column collapsible-tabs__column--right">
+        {% assign right_faqs = section.blocks | where: 'type', 'right_faq' %}
+        {% for block in right_faqs %}
+          <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
+            <div class="collapsible-tabs__tab">
+              <details-disclosure>
+                <details class="disclosure">
+                  <summary class="disclosure__title">
+                    {{- block.settings.title | escape -}}
+                  </summary>
+                  <div class="disclosure__panel has-motion">
+                    <div class="disclosure__content rte">
+                      {{- block.settings.answer -}}
+                    </div>
+                  </div>
+                </details>
+              </details-disclosure>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collapsible tabs 2 side",
+  "class": "section-collapsible-tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collapsible tabs"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left_faq",
+      "name": "Left FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer</p>"
+        }
+      ]
+    },
+    {
+      "type": "right_faq",
+      "name": "Right FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible tabs 2 side",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "left_faq"
+        },
+        {
+          "type": "right_faq"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .collapsible-tabs-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .collapsible-tabs__heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .collapsible-tabs__content-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .collapsible-tabs__column {
+    flex: 1;
+  }
+
+  .collapsible-tabs__column--left {
+    margin-right: 20px;
+  }
+
+  .collapsible-tabs__column--right {
+    margin-left: 20px;
+  }
+
+  /* Mobile view adjustments */
+  @media (max-width: 768px) {
+    .collapsible-tabs__content-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .collapsible-tabs__column--left,
+    .collapsible-tabs__column--right {
+      margin: 0;
+      width: 100%;
+    }
+  }
+</style>
