@@ -136,18 +136,13 @@
 
             <div class="custom-apparel-banner__inner">
               <div class="custom-apparel-banner__content custom-apparel-banner__content--{{ block.settings.content_alignment }}">
-                {%- if block.settings.subheading != blank -%}
-                  <div class="custom-apparel-banner__subheading">{{ block.settings.subheading | escape }}</div>
-                {%- endif -%}
-
                 {%- if block.settings.heading != blank -%}
                   <h2 class="custom-apparel-banner__heading">{% render 'multiline-text' with block.settings.heading %}</h2>
                 {%- endif -%}
-
-                {%- if block.settings.text != blank -%}
-                  <div class="custom-apparel-banner__text rte">{{ block.settings.text }}</div>
+                {%- if block.settings.subheading != blank -%}
+                  <div class="custom-apparel-banner__subheading">{{ block.settings.subheading | escape }}</div>
                 {%- endif -%}
-
+                
                 {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
                   <div class="custom-apparel-banner__actions">
                     <a class="custom-apparel-banner__button" href="{{ block.settings.button_link }}">
@@ -293,7 +288,7 @@
       "label": "Desktop heading size",
       "min": 32,
       "max": 100,
-      "step": 2,
+      "step": 1,
       "unit": "px",
       "default": 64
     },
@@ -303,7 +298,7 @@
       "label": "Mobile heading size",
       "min": 24,
       "max": 56,
-      "step": 2,
+      "step": 1,
       "unit": "px",
       "default": 34
     },
@@ -478,13 +473,7 @@
           "type": "image_picker",
           "id": "mobile_image",
           "label": "Mobile image"
-        },
-        {
-          "type": "text",
-          "id": "subheading",
-          "label": "Subheading",
-          "default": "Custom Apparel Decoration Solutions"
-        },
+        },        
         {
           "type": "text",
           "id": "heading",
@@ -493,11 +482,11 @@
           "default": "FOR EVERY BUSINESS"
         },
         {
-          "type": "richtext",
-          "id": "text",
-          "label": "Text",
-          "default": "<p>Wholesale tees, hoodies and more for your brand.</p>"
-        },
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Custom Apparel Decoration Solutions"
+        },        
         {
           "type": "text",
           "id": "button_label",
@@ -538,7 +527,6 @@
           "settings": {
             "subheading": "Custom Apparel Decoration Solutions",
             "heading": "FOR EVERY BUSINESS",
-            "text": "<p>Wholesale tees, hoodies and more for your brand.</p>",
             "button_label": "Order now",
             "content_alignment": "left"
           }
@@ -548,7 +536,6 @@
           "settings": {
             "subheading": "Print-Ready Blank Apparel",
             "heading": "BLANK APPAREL<br>READY TO GO",
-            "text": "<p>Wholesale tees, hoodies & more.</p>",
             "button_label": "Order blank apparel",
             "content_alignment": "left"
           }
