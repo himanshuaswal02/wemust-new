@@ -27,11 +27,11 @@
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
         <div class="featured-cards__header" data-cc-animate>
           {%- if section.settings.heading != blank -%}
-            <h2 class="featured-cards__heading h1">{{ section.settings.heading | escape }}</h2>
+            <h2 class="featured-cards__heading h1 section-heading">{{ section.settings.heading | escape }}</h2>
           {%- endif -%}
 
           {%- if section.settings.subheading != blank -%}
-            <p class="featured-cards__subheading">{{ section.settings.subheading | escape }}</p>
+            <p class="featured-cards__subheading section-content__text">{{ section.settings.subheading | escape }}</p>
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -126,6 +126,14 @@
           {%- endfor -%}
         {%- endif -%}
       </div>
+      <div class="featured-cards__button">
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="featured-cards-btn">
+          <span>{{ section.settings.button_label }}</span>
+        </a>
+
+      {% endif %}
+    </div>
     </div>
   </div>
 
@@ -241,6 +249,17 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "No more second guessing your artwork, style, or colors. Our premium DTF transfers are brighter, sharper, stretchier, and more durable than any other company."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
     },
     {
       "type": "checkbox",

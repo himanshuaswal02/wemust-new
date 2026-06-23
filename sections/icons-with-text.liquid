@@ -23,9 +23,9 @@
   <div class="container">
     <div class="icons-with-text-section__inner">
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-        <div class="icons-with-text-section__header{% if section.settings.heading_alignment == 'left' %} icons-with-text-section__header--left{% endif %}" data-cc-animate>
+        <div class="icons-with-text-section__header {% if section.settings.heading_alignment == 'left' %} icons-with-text-section__header--left{% endif %}" data-cc-animate>
           {%- if section.settings.heading != blank -%}
-            <h2 class="icons-with-text-section__heading">{{ section.settings.heading | escape }}</h2>
+            <h2 class="icons-with-text-section__heading section-heading">{{ section.settings.heading | escape }}</h2>
           {%- endif -%}
 
           {%- if section.settings.subheading != blank -%}

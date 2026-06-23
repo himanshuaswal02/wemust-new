@@ -23,17 +23,11 @@
 .custom-reviews-section__heading {
   max-width: 820px;
   margin: 0 auto;
-  color: var(--crs-heading-color);
-  font-weight: 400;
-    text-transform: uppercase;
 }
 
 .custom-reviews-section__subheading {
   max-width: 620px;
   margin: 24px auto 0;
-  color: var(--crs-muted-color);
-  font-size: clamp(18px, 2vw, 24px);
-  line-height: 1.4;
 }
 
 .custom-reviews-section__marquees {

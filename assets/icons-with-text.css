@@ -24,8 +24,7 @@
 .icons-with-text-section__heading {
   margin: 0;
   color: var(--icons-with-text-heading-color);
-  font-size: 30px;
-  font-weight: 400;
+  
   /* text-transform: uppercase; */
 }
 
@@ -90,6 +89,8 @@
 
 .icons-with-text-section__icon-image {
   object-fit: contain;
+  height: 40px;
+    width: 40px;
 }
 
 .icons-with-text-section__icon-placeholder {

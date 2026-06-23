@@ -18,9 +18,7 @@
 .featured-cards-section .featured-cards__heading {
   margin: 0 0 14px;
   color: var(--featured-cards-heading-color, #000000);
-    font-size: 32px;
-    font-weight: 400;
-    text-transform: uppercase;
+
 }
 
 .featured-cards-section .featured-cards__subheading {
@@ -158,6 +156,22 @@
 .featured-cards-section .featured-cards__placeholder svg {
   max-width: 180px;
   max-height: 180px;
+}
+.featured-cards__button {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+      margin-bottom: 0;
+}
+.featured-cards__button .featured-cards-btn{
+  background: #97001b;
+    color: #fff;
+    border-color: #97001b;
+    border-radius: 12px;
+    padding: 10px 40px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 @media (max-width: 991px) {

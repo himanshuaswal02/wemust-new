@@ -13798,3 +13798,12 @@ span.cl-po--input.cl-po--input-addon {
     margin-top: 8px;
   }
 }
+.section-heading{
+  font-size: 30px;
+    font-weight: 700;
+}
+.section-content__text {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(48, 48, 48, 1);
+}
