@@ -1,0 +1,28 @@
+# Ignore Shopify CLI theme settings
+shopify.theme.toml
+
+# Ignore all JSON templates (client edited content)
+templates/*.json
+templates/**/*.json 
+
+# Ignore all JSON section files
+sections/*.json
+sections/**/*.json
+
+# Ignore all JSON locales files
+locales/*.json
+locales/**/*.json
+
+# Ignore config JSON (if client edits inside Online Store > Customize)
+config/*.json
+config/**/*.json
+
+# Node dependencies (if using Tailwind/Build tools)
+node_modules/
+
+# OS / Editor files
+.DS_Store
+.vscode/
+
+# Theme zip files
+*.zip

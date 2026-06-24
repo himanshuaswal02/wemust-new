@@ -5,7 +5,7 @@
   .logo-area__middle--logo-image {
     max-width: {{ section.settings.logo_img_width_int }}px;
   }
-  @media (max-width: 767.98px) {
+  @media (max-width: 990px) {
     .logo img {
       width: {{ section.settings.mobile_logo_img_width_int }}px;
     }
@@ -70,7 +70,7 @@
       id="pageheader"
       class="pageheader pageheader--layout-{{ section.settings.menu_layout }}{% if section.settings.enable_transparent and template.name == 'index' %} pageheader--transparent-permitted pageheader--transparent{% endif %}{% if section.settings.enable_sticky %} pageheader--sticky{% endif %}"
     >
-      <div class="logo-area container container--no-max">
+      <div class="logo-area container">
         <div class="logo-area__left">
           <div class="logo-area__left__inner">
             <button class="mobile-nav-toggle" aria-label="{{ 'general.navigation.menu' | t }}" aria-controls="main-nav">
@@ -209,7 +209,7 @@
                   aria-label="{{ 'sections.header.account' | t | escape }}"
                 >
                   <span class="header-account-link__text {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
-                    {{- 'sections.header.account' | t -}}
+                    Sign in
                   </span>
                   <span class="header-account-link__icon{% if section.settings.icon_strategy == 'icons_cart_search' %} mobile-only{% endif %}">
                     {%- render 'icon-user' -%}
@@ -228,9 +228,9 @@
               </a>
             {% endif %}
             <a href="{{ routes.cart_url }}" class="cart-link">
-              <span class="cart-link__label {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
+              {% comment %} <span class="cart-link__label {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
                 {{- 'sections.header.cart' | t | escape -}}
-              </span>
+              </span> {% endcomment %}
               <span class="cart-link__icon">
                 {%- liquid
                   if section.settings.cart_icon == 'basket'
@@ -248,14 +248,14 @@
                 {%- endif -%}
               </span>
             </a>
-            <a
+            {% comment %} <a
               style="margin-left:24px;"
               class="header-account-link"
               href="https://wemustus.myshopify.com/products/we-must-sample-pack"
               aria-label="Account"
             >
               <span class="header-account-link__text desktop-only">Order a Sample Kit</span>
-            </a>
+            </a> {% endcomment %}
           </div>
         </div>
       </div>
@@ -472,10 +472,10 @@
             <div class="navigation__tier-1-container">
               <div class="navigation__mobile-header">
                 <a href="#" class="mobile-nav-back has-ltr-icon" aria-label="{{ 'general.navigation.back' | t }}">{% render 'icon-chevron-left', stroke_width: 1.3 %}</a>
-                <span class="mobile-nav-title"></span>
-                <a href="#" class="mobile-nav-toggle"  aria-label="{{ 'general.navigation.close' | t }}">{% render 'icon-close', stroke_width: 1.3 %}</a>
+                <span class="mobile-nav-title">Products Menu</span>
+                <a href="#" class="mobile-nav-toggle"  aria-label="{{ 'general.navigation.close' | t }}">{% render 'icon-close', stroke_width: 2.3 %}</a>
               </div>
-              {% render 'main-nav-links', link_list: mobile_linklist, mobile: true, featured_links: featured_links %}
+              {% render 'mobile-main-nav-links', link_list: mobile_linklist, mobile: true, featured_links: featured_links %}
               {% if section.settings.enable_nav_mob_products %}
                 <div class="navigation__mobile-products">
                   <div class="navigation__mobile-products-title">{{ section.settings.nav_mob_products_title | escape }}</div>
@@ -575,6 +575,25 @@
       "id": "enable_sticky",
       "label": "Enable sticky header",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Split Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_split_navigation",
+      "label": "Enable split navigation",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "split_navigation_count",
+      "label": "Right side navigation count",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 2
     },
     {
       "type": "header",

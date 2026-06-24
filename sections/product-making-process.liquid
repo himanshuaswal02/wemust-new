@@ -1,0 +1,277 @@
+{%- liquid
+  assign section_heading = section.settings.title
+  assign section_description = section.settings.description
+-%}
+
+<link rel="stylesheet" href="{{ 'product-making-process.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+
+<div
+  id="section-id-{{ section.id }}"
+  class="product-making-process-section{% if section.settings.color_scheme != 'default' %} use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% endif %}">
+  {%- style -%}
+    #section-id-{{ section.id }} {
+      --product-process-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+      --product-process-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+      --product-process-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+      --product-process-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      --product-process-image-height: {{ section.settings.card_image_height }}px;
+      --product-process-line-color: {{ section.settings.line_color }};
+      --product-process-card-radius: 16px;
+      --product-process-card-border: #e7e2df;
+      --product-process-card-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+      padding-top: var(--product-process-desktop-padding-top);
+      padding-bottom: var(--product-process-desktop-padding-bottom);
+    }
+    @media (max-width: 767px) {
+      #section-id-{{ section.id }} {
+        padding-top: var(--product-process-mobile-padding-top);
+        padding-bottom: var(--product-process-mobile-padding-bottom);
+      }
+    }
+  {%- endstyle -%}
+
+  <section class="product-making-process">
+    <div class="container{% if section.settings.full_width %} container--no-max{% endif %}">
+      {%- if section_heading != blank or section_description != blank -%}
+        <div class="product-making-process__header product-making-process__header--{{ section.settings.heading_alignment }}" data-cc-animate>
+          {%- if section_heading != blank -%}
+            <h2 class="product-making-process__title">{{ section_heading | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section_description != blank -%}
+            <div class="product-making-process__description rte">{{ section_description }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="product-making-process__cards{% if section.settings.show_connector and section.blocks.size > 1 %} product-making-process__cards--connector{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign card_title = block.settings.title
+            assign card_text = block.settings.text
+          -%}
+
+          <article
+            class="product-making-process__card"
+            {{ block.shopify_attributes }}
+            data-cc-animate
+            data-cc-animate-delay="{{ forloop.index | times: 0.1 }}s">
+            <div class="product-making-process__media">
+              {%- if block.settings.image != blank -%}
+                {%- render 'image',
+                  image: block.settings.image,
+                  sizes: '(max-width: 767px) 100vw, (min-width: 1200px) 380px, 33vw',
+                  widths: '360, 480, 600, 720, 840',
+                  class: 'product-making-process__image'
+                -%}
+              {%- elsif fallback_image != blank -%}
+                <img
+                  class="product-making-process__image"
+                  src="{{ fallback_image }}"
+                  alt="{{ card_title | escape }}"
+                  loading="lazy"
+                  width="720"
+                  height="474">
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg product-making-process__image' }}
+              {%- endif -%}
+            </div>
+
+            <div class="product-making-process__content">
+              {%- if card_title != blank -%}
+                <h3 class="product-making-process__card-title">{{ card_title | escape }}</h3>
+              {%- endif -%}
+
+              {%- if card_text != blank -%}
+                <p class="product-making-process__card-text">{{ card_text | escape }}</p>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Product making process",
+  "class": "section-product-making-process",
+  "disabled_on": {
+    "groups": [
+      "aside"
+    ]
+  },
+
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "The WeMust Transfers DTF Process"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>We Must DTF transfers are designed to make production easier &mdash; fast turnaround, reliable quality, and press-ready results you can count on. Upload your design, place your order, and keep your workflow moving.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_image_height",
+      "label": "Card image height",
+      "min": 180,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 240
+    },
+    {
+      "type": "checkbox",
+      "id": "show_connector",
+      "label": "Show dashed connector line",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Connector line color",
+      "default": "#d1a3aa"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full page width",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product making process",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

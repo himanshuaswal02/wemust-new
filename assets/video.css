@@ -5,7 +5,15 @@ video-component {
 .video-section .height--adapt {
   --aspect-ratio: 1.778;
 }
-
+.section-content {
+  text-align: center;
+}
+.section-content .section-content__title {
+  margin-bottom: 40px;
+}
+.section-content .section-content__text {
+  margin-bottom: 40px;
+}
 .video-section video-component,
 .video-section deferred-media {
   position: absolute;

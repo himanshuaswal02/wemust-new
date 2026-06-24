@@ -1,0 +1,211 @@
+<section class="dtw-science">
+  <div class="dtw-science-inner">
+
+    <div class="dtw-science-content">
+
+      {% if section.settings.title != blank %}
+        <h2 class="dtw-science-title">
+          {{ section.settings.title }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="dtw-science-text">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}      
+
+    </div>
+
+    <div class="dtw-science-media">
+
+      <div
+        class="dtw-before-after"
+        id="beforeAfterSlider"
+        role="slider"
+        aria-label="Before and after comparison"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="50"
+      >
+
+        <div class="dtw-before-after-stage">
+
+          {% if section.settings.before_image_desktop != blank %}
+            <img
+              src="{{ section.settings.before_image_desktop | image_url }}"
+              alt=""
+              class="dtw-before-after-image dtw-before-after-image--before dtw-desktop-image"
+              loading="lazy"
+            >
+          {% endif %}
+
+          {% if section.settings.before_image_mobile != blank %}
+            <img
+              src="{{ section.settings.before_image_mobile | image_url }}"
+              alt=""
+              class="dtw-before-after-image dtw-before-after-image--before dtw-mobile-image"
+              loading="lazy"
+            >
+          {% endif %}
+
+          <div class="dtw-before-after-overlay" id="beforeAfterOverlay">
+
+            {% if section.settings.after_image_desktop != blank %}
+              <img
+                src="{{ section.settings.after_image_desktop | image_url }}"
+                alt=""
+                class="dtw-before-after-image dtw-before-after-image--after dtw-desktop-image"
+                loading="lazy"
+              >
+            {% endif %}
+
+            {% if section.settings.after_image_mobile != blank %}
+              <img
+                src="{{ section.settings.after_image_mobile | image_url }}"
+                alt=""
+                class="dtw-before-after-image dtw-before-after-image--after dtw-mobile-image"
+                loading="lazy"
+              >
+            {% endif %}
+
+          </div>
+
+        </div>
+
+        <div
+          class="dtw-before-after-handle"
+          id="beforeAfterHandle"
+          aria-hidden="true"
+        >
+          <span class="dtw-before-after-handle-line"></span>
+          <span class="dtw-before-after-handle-grip">
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+function initBeforeAfterSlider() {
+  document.querySelectorAll('.dtw-before-after').forEach((slider) => {
+
+    const overlay = slider.querySelector('.dtw-before-after-overlay');
+    const handle = slider.querySelector('.dtw-before-after-handle');
+
+    if (!overlay || !handle) return;
+
+    let position = 50;
+    let isDragging = false;
+
+    function setPosition(value) {
+      position = Math.min(100, Math.max(0, value));
+
+      overlay.style.width = `${position}%`;
+      handle.style.left = `${position}%`;
+
+      slider.setAttribute(
+        'aria-valuenow',
+        Math.round(position)
+      );
+    }
+
+    function updatePosition(clientX) {
+      const rect = slider.getBoundingClientRect();
+
+      const value =
+        ((clientX - rect.left) / rect.width) * 100;
+
+      setPosition(value);
+    }
+
+    slider.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+
+      slider.setPointerCapture(e.pointerId);
+
+      updatePosition(e.clientX);
+    });
+
+    slider.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+
+      updatePosition(e.clientX);
+    });
+
+    slider.addEventListener('pointerup', (e) => {
+      isDragging = false;
+
+      if (slider.hasPointerCapture(e.pointerId)) {
+        slider.releasePointerCapture(e.pointerId);
+      }
+    });
+
+    slider.addEventListener('pointercancel', (e) => {
+      isDragging = false;
+
+      if (slider.hasPointerCapture(e.pointerId)) {
+        slider.releasePointerCapture(e.pointerId);
+      }
+    });
+
+    setPosition(50);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initBeforeAfterSlider);
+
+document.addEventListener('shopify:section:load', initBeforeAfterSlider);
+</script>
+
+{% schema %}
+{
+  "name": "DTW Science",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "The Science Behind Softer Prints"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image_desktop",
+      "label": "Before Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image_desktop",
+      "label": "After Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image_mobile",
+      "label": "Before Image Mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image_mobile",
+      "label": "After Image Mobile"
+    }
+  ],
+  "blocks": [    
+  ],
+  "presets": [
+    {
+      "name": "DTW Science"      
+    }
+  ]
+}
+{% endschema %}

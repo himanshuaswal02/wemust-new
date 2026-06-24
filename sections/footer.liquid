@@ -1,222 +1,218 @@
-{% if section.blocks != blank %}
-  <div class="container container--no-max section-footer__row-container">
-    <div class="section-footer__row section-footer__row--blocks" data-num-blocks="{{ section.blocks.size }}">
-      {% for block in section.blocks %}
-        {% case block.type %}
-          {% when '@app' %}
-            <div class="section-footer__row__col">
-              {% render block %}
-            </div>
-
-          {% when 'menu' %}
-            <div
-              class="section-footer__row__col section-footer__menu-block"
-              role="navigation"
-              aria-label="{{ 'accessibility.secondary_navigation' | t }}"
-              {{ block.shopify_attributes }}
-            >
-              {% if block.settings.title != blank %}
-                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
-                <div class="section-footer__title heading-font h6{% if title_word_count < 4 %} no-wrap{% endif %}">
-                  {{- block.settings.title | escape -}}
-                </div>
-              {% endif %}
-
-              {% if block.settings.menu != blank %}
-                <ul class="section-footer__menu-block__menu" {{ block.shopify_attributes }}>
-                  {% for link in linklists[block.settings.menu].links %}
-                    <li>
-                      <a
-                        href="{{ link.url }}"
-                        {% if link.title.size < 25 %}
-                          class="no-wrap"
-                        {% endif %}
-                      >
-                        {{- link.title -}}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
-            </div>
-
-          {% when 'text' %}
-            <div
-              class="section-footer__row__col section-footer__text-block {% if block.settings.text != blank %}section-footer__text-block--with-text{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {% if block.settings.title != blank %}
-                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
-                <div class="section-footer__title heading-font h6{% if title_word_count < 4 %} no-wrap{% endif %}">
-                  {{- block.settings.title | escape -}}
-                </div>
-              {% endif %}
-
-              {% if block.settings.text != blank %}
-                <div class="section-footer__text rte">
-                  {{- block.settings.text -}}
-                </div>
-              {% endif %}
-
-              {% if block.settings.image != blank %}
-                <span class="section-footer__text-block__image" style="max-width: {{ block.settings.image_width }}px">
-                  {%- liquid
-                    assign image_sizes = block.settings.image_width | append: 'px'
-                    assign image_widths = block.settings.image_width | times: 2 | prepend: ', ' | prepend: block.settings.image_width
-                  -%}
-                  {%- render 'image' with block.settings.image,
-                    sizes: image_sizes,
-                    widths: image_widths,
-                    loading: 'lazy'
-                  -%}
-                </span>
-              {% endif %}
-
-              {% if block.settings.show_social_icons != blank %}
-                <div class="section-footer__text-block__social">
-                  {%- liquid
-                    if block.settings.soc_icons_large
-                      assign icon_height = 23
-                    else
-                      assign icon_height = 15
-                    endif
-                    if block.settings.soc_icons_large
-                      assign container_class = 'social--large'
-                    else
-                      assign container_class = ''
-                    endif
-
-                    render 'social-media', icon: settings.social_custom_icon, icon_height: icon_height, class: container_class
-                  -%}
-                </div>
-              {% endif %}
-
-              {%- if shop.features.follow_on_shop? and block.settings.enable_follow_on_shop -%}
-                <div class="section-footer__follow-on-shop">
-                  {{- shop | login_button: action: 'follow' -}}
-                </div>
-              {%- endif -%}
-            </div>
-
-          {% when 'newsletter' %}
-            <div class="section-footer__row__col section-footer__newsletter-block" {{ block.shopify_attributes }}>
-              {% if block.settings.title != blank %}
-                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
-                <div class="section-footer__title heading-font h6{% if title_word_count < 4 %} no-wrap{% endif %}">
-                  {{- block.settings.title | escape -}}
-                </div>
-              {% endif %}
-
-              {% if block.settings.text != blank %}
-                <div class="section-footer__text rte">
-                  {{ block.settings.text }}
-                </div>
-              {% endif %}
-
-              {% render 'newsletter-signup', id: 'footer_newsletter_signup', tags: 'newsletter, footer', block: block %}
-
-              {% if block.settings.show_social_icons != blank %}
-                <div class="section-footer__newsletter-block__social">
-                  {%- liquid
-                    if block.settings.soc_icons_large
-                      assign icon_height = 23
-                    else
-                      assign icon_height = 15
-                    endif
-                    if block.settings.soc_icons_large
-                      assign container_class = 'social--large'
-                    else
-                      assign container_class = ''
-                    endif
-
-                    render 'social-media', icon: settings.social_custom_icon, icon_height: icon_height, class: container_class
-                  -%}
-                </div>
-              {% endif %}
-            </div>
-
-          {% when 'custom-liquid' %}
-            <div class="section-footer__row__col section-footer__custom-liquid-block" {{ block.shopify_attributes }}>
-              {% if block.settings.title != blank %}
-                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
-                <div class="section-footer__title heading-font h6{% if title_word_count < 4 %} no-wrap{% endif %}">
-                  {{- block.settings.title | escape -}}
-                </div>
-              {% endif %}
-
-              <div class="section-footer__custom-liquid">
-                {{- block.settings.code -}}
-              </div>
-            </div>
-        {% endcase %}
-      {% endfor %}
-    </div>
-  </div>
-{% endif %}
-
 {%- liquid
   assign showing_localization = false
+  assign has_contact_block = false
+  assign non_contact_total = 0
+
   if section.settings.enable_language_selector and localization.available_languages.size > 1
     assign showing_localization = true
   endif
   if section.settings.enable_country_selector and localization.available_countries.size > 1
     assign showing_localization = true
   endif
+
+  for block in section.blocks
+    if block.type == 'contact'
+      assign has_contact_block = true
+    else
+      assign non_contact_total = non_contact_total | plus: 1
+    endif
+  endfor
 -%}
-<div class="container container--no-max section-footer__row-container {% if showing_localization %}section-footer__row-container--with-localization{% endif %}">
-  <div class="section-footer__row section-footer__row-lower">
-    <div class="section-footer__row__col">
-      {% if section.settings.show_payment_icons %}
-        <div class="section-footer__payment-icons">
-          {% for type in shop.enabled_payment_types %}
-            {{ type | payment_type_svg_tag: class: 'section-footer__payment-icon' }}
+
+<footer
+  class="wemust-footer section-footer__inner"
+  style="--footer-logo-width: {{ section.settings.footer_logo_width }}px; --footer-logo-width-mobile: {{ section.settings.footer_logo_width_mobile }}px; --footer-bg-color: {{ section.settings.footer_bg_color }};"
+>
+  <div class="footer-container">
+    <div class="footer-logo">
+      {% if section.settings.footer_logo != blank %}
+        {%- assign footer_logo_width_2x = section.settings.footer_logo_width | times: 2 -%}
+        <img
+          class="footer-logo-img"
+          src="{{ section.settings.footer_logo | image_url: width: footer_logo_width_2x }}"
+          alt="{{ section.settings.footer_logo.alt | default: shop.name | escape }}"
+          width="{{ section.settings.footer_logo.width }}"
+          height="{{ section.settings.footer_logo.height }}"
+          loading="lazy"
+        >
+      {% else %}
+        <p class="footer-logo-text">{{ shop.name }}</p>
+      {% endif %}
+    </div>
+
+    <div class="footer-content">
+      {% if non_contact_total > 0 %}
+        <div class="footer-top-desktop">
+          {%- assign content_index = 0 -%}
+          {% for block in section.blocks %}
+            {% unless block.type == 'contact' %}
+              {%- assign content_index = content_index | plus: 1 -%}
+              {% if content_index <= 4 %}
+                {% render 'footer-block-wemust', block: block %}
+              {% endif %}
+            {% endunless %}
           {% endfor %}
         </div>
       {% endif %}
-      {% if section.settings.lower_menu != blank %}
-        <div class="section-footer__lower-menu" role="navigation">
-          <ul class="section-footer__lower-menu__list" aria-label="{{ 'accessibility.secondary_navigation' | t }}">
-            {% for link in linklists[section.settings.lower_menu].links %}
-              <li>
-                <a href="{{ link.url }}">
-                  {{- link.title -}}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
+
+      {% if non_contact_total > 4 or has_contact_block %}
+        <div class="footer-bottom-section-desktop">
+          {% if non_contact_total > 4 %}
+            <div class="footer-bottom-left">
+              {%- assign content_index = 0 -%}
+              {% for block in section.blocks %}
+                {% unless block.type == 'contact' %}
+                  {%- assign content_index = content_index | plus: 1 -%}
+                  {% if content_index > 4 %}
+                    {% render 'footer-block-wemust', block: block %}
+                  {% endif %}
+                {% endunless %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% for block in section.blocks %}
+            {% if block.type == 'contact' %}
+              <div class="footer-contact-box-right" {{ block.shopify_attributes }}>
+                {% if block.settings.title != blank %}
+                  <h4 class="footer-column-title">{{ block.settings.title | escape }}</h4>
+                {% endif %}
+
+                <div class="footer-contact-details-3">
+                  <div class="footer-contact-section">
+                    {% if block.settings.email != blank %}
+                      <a class="footer-email" href="mailto:{{ block.settings.email | escape }}">
+                        {{- block.settings.email | escape -}}
+                      </a>
+                    {% endif %}
+
+                    {% if block.settings.phone != blank %}
+                      <a
+                        class="footer-phone"
+                        href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}"
+                      >
+                        {{- block.settings.phone | escape -}}
+                      </a>
+                    {% endif %}
+
+                    {% if block.settings.text != blank %}
+                      <div class="footer-richtext rte">
+                        {{ block.settings.text }}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  {% if block.settings.show_social_icons %}
+                    <div class="footer-contact-section">
+                      <div class="footer-social-icons">
+                        {%- render 'social-media', icon: settings.social_custom_icon, icon_height: 18 -%}
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.show_payment_icons and section.settings.show_payment_icons %}
+                    <div class="footer-contact-section">
+                      <div class="footer-payment-logos">
+                        {% for type in shop.enabled_payment_types %}
+                          {{ type | payment_type_svg_tag: class: 'section-footer__payment-icon' }}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.company_name != blank %}
+                    <p class="footer-enterprise-name">{{ block.settings.company_name | escape }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
       {% endif %}
     </div>
-    <div class="section-footer__row__col">
-      {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
-        <div class="section-footer__localization">
-          {% render 'localization-form', id: 'footer-localization', hide_labels: true, promote_popular: true %}
+
+    <div class="footer-copyright">
+      <div class="footer-copyright-content">
+        <div class="footer-copyright-left">
+          {%- assign copyright_year = 'now' | date: '%Y' -%}
+          <p class="footer-copyright-text">
+            {% comment %} {{-
+              'sections.footer.copyright_html'
+              | t: year: copyright_year, shop_url: routes.root_url, shop_name: shop.name
+            -}} {% endcomment %}
+              We Must Copyright © 2026 All rights reserved.
+          </p>
+
+          {% if section.settings.show_powered_by %}
+            <div class="footer-powered-by">
+              {{ powered_by_link }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
 
-      <div class="copyright">
-        {%- assign copyright_year = 'now' | date: '%Y' -%}
-        <span class="copy">
-          {{-
-            'sections.footer.copyright_html'
-            | t: year: copyright_year, shop_url: routes.root_url, shop_name: shop.name
-          -}}
-        </span>
+        <div class="footer-copyright-right">
+          {% if showing_localization %}
+            <div class="footer-localization-wrap">
+              {% render 'localization-form', id: 'footer-localization', hide_labels: true, promote_popular: true %}
+            </div>
+          {% endif %}
 
-        {% if section.settings.show_powered_by %}
-          <a href="https://bsmnconsultancy.com">Powered by BSMN Consultancy Inc..</a>
-        {% endif %}
+          {% if section.settings.show_payment_icons and has_contact_block == false %}
+            <div class="footer-payment-logos footer-payment-logos--lower">
+              {% for type in shop.enabled_payment_types %}
+                {{ type | payment_type_svg_tag: class: 'section-footer__payment-icon' }}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.lower_menu != blank %}
+            <div class="footer-legal-links" role="navigation" aria-label="{{ 'accessibility.secondary_navigation' | t }}">
+              {% for link in linklists[section.settings.lower_menu].links %}
+                <a class="footer-legal-link" href="{{ link.url }}">{{ link.title }}</a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
-</div>
+</footer>
 
 {% schema %}
 {
   "name": "Footer",
   "class": "section-footer",
-  "max_blocks": 4,
+  "max_blocks": 7,
   "settings": [
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "range",
+      "id": "footer_logo_width",
+      "min": 60,
+      "max": 320,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "footer_logo_width_mobile",
+      "min": 50,
+      "max": 240,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile logo width",
+      "default": 110
+    },
     {
       "type": "link_list",
       "id": "lower_menu",
@@ -232,7 +228,7 @@
     {
       "type": "header",
       "content": "Social media links",
-      "info": "These are shown inside text and newsletter blocks. Add to the footer and enable inside."
+      "info": "These are shown inside text, newsletter, and contact blocks."
     },
     {
       "type": "header",
@@ -265,6 +261,12 @@
       "id": "enable_language_selector",
       "label": "Enable language selector",
       "default": true
+    },
+    {
+      "type": "color",
+      "id": "footer_bg_color",
+      "label": "Footer background color",
+      "default": "#f8f8f8"
     }
   ],
   "blocks": [
@@ -369,7 +371,7 @@
         },
         {
           "type": "paragraph",
-          "content": "Customers who subscribe will have their email address added to the “accepts marketing” [customer list](/admin/customers?query=&accepts_marketing=1)"
+          "content": "Customers who subscribe will have their email address added to the accepts marketing customer list."
         },
         {
           "type": "select",
@@ -415,6 +417,50 @@
           "type": "liquid",
           "id": "code",
           "label": "Liquid code"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "limit": 1,
+      "name": "Contact card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social_icons",
+          "label": "Show social media links",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_payment_icons",
+          "label": "Show payment icons",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "company_name",
+          "label": "Company name"
         }
       ]
     }

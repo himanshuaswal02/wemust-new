@@ -1,0 +1,156 @@
+
+
+.product-making-process-section .product-making-process {
+  position: relative;
+}
+
+.product-making-process-section .product-making-process__header {
+  margin: 0 auto 40px;
+  max-width: 840px;
+}
+
+.product-making-process-section .product-making-process__header--left {
+  text-align: left;
+}
+
+.product-making-process-section .product-making-process__header--center {
+  text-align: center;
+}
+
+.product-making-process-section .product-making-process__header--right {
+  text-align: right;
+}
+
+.product-making-process-section .product-making-process__title {
+  margin: 0;
+  color: #222;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.product-making-process-section .product-making-process__description {
+  margin: 16px auto 0;
+  max-width: 760px;
+  color: #4b5563;
+  font-size: 1.125rem;
+  line-height: 1.65;
+
+}
+
+.product-making-process-section .product-making-process__description p {
+  margin: 0;
+}
+
+.product-making-process-section .product-making-process__header--left .product-making-process__description,
+.product-making-process-section .product-making-process__header--right .product-making-process__description {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.product-making-process-section .product-making-process__cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.product-making-process-section .product-making-process__cards--connector::before {
+  content: "";
+  position: absolute;
+  top: 42%;
+  left: 9%;
+  right: 9%;
+  border-top: 2px dashed var(--product-process-line-color);
+  z-index: 0;
+}
+
+.product-making-process-section .product-making-process__card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--product-process-card-border);
+  border-radius: var(--product-process-card-radius);
+  box-shadow: var(--product-process-card-shadow);
+  transform 0.3s ease;
+}
+.product-making-process-section .product-making-process__card:hover{
+        box-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -1px #0000000f;
+    transform: translateY(-4px);
+
+}
+
+.product-making-process-section .product-making-process__media {
+  height: var(--product-process-image-height);
+  background: #eef2f7;
+}
+
+.product-making-process-section .product-making-process__media .img-ar,
+.product-making-process-section .product-making-process__media img,
+.product-making-process-section .product-making-process__media .placeholder-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.product-making-process-section .product-making-process__media img {
+  display: block;
+  object-fit: cover;
+}
+
+.product-making-process-section .product-making-process__content {
+  padding: 26px 24px 24px;
+}
+
+.product-making-process-section .product-making-process__card-title {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+}
+
+.product-making-process-section .product-making-process__card-text {
+  margin: 0;
+  color: #4b5563;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+@media (min-width: 768px) {
+  
+  .product-making-process-section .product-making-process__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .product-making-process-section {
+      padding: 0 16px;
+    }
+    .product-making-process-section .product-making-process__title {
+      font-size: 28px;
+    }
+  .product-making-process-section .product-making-process__header {
+    margin-bottom: 28px;
+  }
+
+  .product-making-process-section .product-making-process__description {
+    font-size: 14px;
+  }
+
+  .product-making-process-section .product-making-process__cards--connector::before {
+    display: none;
+  }
+
+  .product-making-process-section .product-making-process__content {
+    padding: 22px 20px 20px;
+  }
+
+  .product-making-process-section .product-making-process__card-text {
+    font-size: 1rem;
+  }
+}

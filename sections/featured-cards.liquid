@@ -1,0 +1,473 @@
+<link rel="stylesheet" href="{{ 'featured-cards.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+
+<div
+  id="section-id-{{ section.id }}"
+  class="featured-cards-section"
+  style="
+    --featured-cards-bg: {{ section.settings.background | default: '#ffffff' }};
+    --featured-cards-padding-top: {{ section.settings.padding_top }}px;
+    --featured-cards-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --featured-cards-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --featured-cards-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --featured-cards-content-max-width: {{ section.settings.content_max_width }}px;
+    --featured-cards-columns: {{ section.settings.cards_per_row }};
+    --featured-cards-columns-mobile: {{ section.settings.cards_per_row_mobile }};
+    --featured-cards-card-height-desktop: {{ section.settings.card_height_desktop }}px;
+    --featured-cards-card-height-mobile: {{ section.settings.card_height_mobile }}px;
+    --featured-cards-radius: {{ section.settings.card_radius }}px;
+    --featured-cards-heading-color: {{ section.settings.heading_color }};
+    --featured-cards-subheading-color: {{ section.settings.subheading_color }};
+    --featured-cards-overlay-color: {{ section.settings.overlay_color }};
+    --featured-cards-card-title-color: {{ section.settings.card_title_color }};
+    --featured-cards-card-text-color: {{ section.settings.card_text_color }};
+  "
+>
+  <div class="container{% if section.settings.full_width %} container--no-max{% endif %}">
+    <div class="featured-cards">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="featured-cards__header" data-cc-animate>
+          {%- if section.settings.heading != blank -%}
+            <h2 class="featured-cards__heading h1 section-heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.subheading != blank -%}
+            <p class="featured-cards__subheading section-content__text">{{ section.settings.subheading | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="featured-cards__grid">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign has_video = false
+              assign card_image = block.settings.image
+              assign autoplay_video = false
+              if block.settings.video != blank or block.settings.external_video_url != blank
+                assign has_video = true
+              endif
+
+              if card_image == blank and block.settings.video != blank
+                assign card_image = block.settings.video.preview_image
+              endif
+
+              if has_video and block.settings.image == blank
+                assign autoplay_video = true
+              endif
+            -%}
+
+            {%- if block.settings.link != blank -%}
+              <a
+                class="featured-cards__card{% if has_video %} featured-cards__card--has-video{% endif %}{% if autoplay_video %} featured-cards__card--video-only is-active{% endif %} fade-in-up"
+                href="{{ block.settings.link }}"
+                {{ block.shopify_attributes }}
+                data-cc-animate
+                data-cc-animate-delay="{{ forloop.index | times: 0.12 }}s"
+              >
+            {%- else -%}
+              <div
+                class="featured-cards__card{% if has_video %} featured-cards__card--has-video{% endif %}{% if autoplay_video %} featured-cards__card--video-only is-active{% endif %} fade-in-up"
+                {{ block.shopify_attributes }}
+                data-cc-animate
+                data-cc-animate-delay="{{ forloop.index | times: 0.12 }}s"
+              >
+            {%- endif -%}
+
+              <div class="featured-cards__media">
+                {%- if card_image != blank -%}
+                  {%- render 'image',
+                    image: card_image,
+                    class: 'featured-cards__image',
+                    size_cols_desktop: section.settings.cards_per_row,
+                    size_cols_mobile: section.settings.cards_per_row_mobile
+                  -%}
+                {%- else -%}
+                  <div class="featured-cards__placeholder">
+                    {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.video != blank -%}
+                  {{
+                    block.settings.video
+                    | video_tag:
+                      class: 'featured-cards__video',
+                      loop: true,
+                      muted: true,
+                      playsinline: true,
+                      preload: 'metadata'
+                  }}
+                {%- elsif block.settings.external_video_url != blank -%}
+                  <video class="featured-cards__video" loop muted playsinline preload="metadata">
+                    <source src="{{ block.settings.external_video_url }}" type="video/mp4">
+                  </video>
+                {%- endif -%}
+              </div>
+
+              <div class="featured-cards__overlay"></div>
+
+              <div class="featured-cards__content">
+                <div class="featured-cards__text">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="featured-cards__title">{{ block.settings.title | escape }}</h3>
+                  {%- endif -%}
+
+                  {%- if block.settings.description != blank -%}
+                    <p class="featured-cards__description">{{ block.settings.description | escape | newline_to_br }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      <div class="featured-cards__button">
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="featured-cards-btn">
+          <span>{{ section.settings.button_label }}</span>
+        </a>
+
+      {% endif %}
+    </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var section = document.getElementById('section-id-{{ section.id }}');
+
+      if (!section) {
+        return;
+      }
+
+      var cards = section.querySelectorAll('.featured-cards__card');
+
+      function resetCard(card) {
+        card.classList.remove('is-active');
+
+        var video = card.querySelector('video');
+        if (!video) {
+          return;
+        }
+
+        video.pause();
+        video.currentTime = 0;
+      }
+
+      function activateCard(card) {
+        var video = card.querySelector('video');
+
+        card.classList.add('is-active');
+
+        if (!video) {
+          return;
+        }
+
+        var playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function() {});
+        }
+      }
+
+      cards.forEach(function(card) {
+        if (card.dataset.featuredCardsReady === 'true') {
+          return;
+        }
+
+        card.dataset.featuredCardsReady = 'true';
+
+        if (card.classList.contains('featured-cards__card--video-only')) {
+          activateCard(card);
+        }
+
+        card.addEventListener('mouseenter', function() {
+          if (!window.matchMedia('(min-width: 750px)').matches || !card.classList.contains('featured-cards__card--has-video') || card.classList.contains('featured-cards__card--video-only')) {
+            return;
+          }
+
+          activateCard(card);
+        });
+
+        card.addEventListener('mouseleave', function() {
+          if (!window.matchMedia('(min-width: 750px)').matches || !card.classList.contains('featured-cards__card--has-video') || card.classList.contains('featured-cards__card--video-only')) {
+            return;
+          }
+
+          resetCard(card);
+        });
+
+        card.addEventListener('click', function(event) {
+          if (!window.matchMedia('(max-width: 749px)').matches || !card.classList.contains('featured-cards__card--has-video') || card.classList.contains('featured-cards__card--video-only')) {
+            return;
+          }
+
+          var shouldActivate = !card.classList.contains('is-active');
+
+          if (shouldActivate) {
+            event.preventDefault();
+          }
+
+          cards.forEach(function(otherCard) {
+            resetCard(otherCard);
+          });
+
+          if (shouldActivate) {
+            activateCard(card);
+          }
+        });
+      });
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Featured cards",
+  "class": "section-featured-cards",
+  "disabled_on": {
+    "templates": [
+      "password"
+    ],
+    "groups": [
+      "aside"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Features of our DTF Transfers"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "No more second guessing your artwork, style, or colors. Our premium DTF transfers are brighter, sharper, stretchier, and more durable than any other company."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full page width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "label": "Cards per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "cards_per_row_mobile",
+      "label": "Cards per row on mobile",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_height_desktop",
+      "label": "Card height on desktop",
+      "min": 240,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Card height on mobile",
+      "min": 180,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Section background",
+      "default": "#f2f2f2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding on mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding on mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify-hosted video"
+        },
+        {
+          "type": "url",
+          "id": "external_video_url",
+          "label": "External MP4 URL"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Describe this feature."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured cards",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card",
+         
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

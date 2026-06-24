@@ -1,5 +1,5 @@
 .collapsible-tabs {
-  max-width: var(--reading-container-width, 800px);
+  max-width: 100%;
   margin: var(--section-padding) auto;
 }
 .collapsible-tabs .disclosure {
@@ -11,11 +11,17 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .collapsible-tabs__tab .disclosure__title {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: 0;
-  font-size: 1.3em;
+  font-size: 1rem;
+  color: #171717;
 }
+
+.collapsible-tabs__tab details[open] .disclosure__title{
+  font-weight: 700;
+}
+
 .collapsible-tabs__tab p:first-child {
   margin-top: 0;
 }
@@ -24,8 +30,9 @@
 }
 
 .collapsible-tabs__heading {
-  margin-top: 40px;
+  /* margin-top: 40px; */
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .collapsible-tabs__text {
@@ -36,4 +43,31 @@
 .collapsible-tabs__button {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+@media (max-width: 767.98px) {
+  .collapsible-tabs__heading {
+    font-size: 24px;
+  }
+}
+
+.collapsible-tabs {
+  display: block;
+}
+
+.collapsible-tabs__columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.collapsible-tabs__column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media screen and (max-width: 749px) {
+  .collapsible-tabs__columns {
+    grid-template-columns: 1fr;
+  }
 }

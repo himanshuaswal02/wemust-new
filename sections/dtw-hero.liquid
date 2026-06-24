@@ -1,0 +1,154 @@
+<section class="dtw-hero">
+
+  {% if section.settings.desktop_video != blank %}
+    {{
+      section.settings.desktop_video
+      | video_tag:
+      class: 'dtw-hero-video dtw-hero-video--desktop',
+      autoplay: true,
+      loop: true,
+      muted: true,
+      controls: false,
+      playsinline: true
+    }}
+  {% endif %}
+
+  {% if section.settings.mobile_video != blank %}
+    {{
+      section.settings.mobile_video
+      | video_tag:
+      class: 'dtw-hero-video dtw-hero-video--mobile',
+      autoplay: true,
+      loop: true,
+      muted: true,
+      controls: false,
+      playsinline: true
+    }}
+  {% endif %}
+
+  <div class="dtw-hero-inner">
+
+    {% if section.settings.heading != blank %}
+      <h1 class="dtw-hero-title">
+        <span class="dtw-hero-title-white">
+          {{ section.settings.heading }}
+        </span>
+        <br>
+        <span class="dtw-hero-title-brand">
+          {{ section.settings.brand_text }}
+        </span>
+      </h1>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <p class="dtw-hero-subtitle">
+        {{ section.settings.subtitle }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.button_text != blank %}
+      <a
+        href="{{ section.settings.button_link }}"
+        class="dtw-hero-cta"
+      >
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DTW Hero",
+  "tag": "section",
+  "class": "section-dtw-hero",
+  "settings": [
+    {
+      "type": "video",
+      "id": "desktop_video",
+      "label": "Desktop Video"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "Mobile Video"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Digital Transfers"
+    },
+    {
+      "type": "text",
+      "id": "brand_text",
+      "label": "Brand Text",
+      "default": "We Must™"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The premium evolution of DTF — engineered for softer prints, brighter color, and a cleaner finish on every garment."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Launching Soon!"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Brand Color",
+      "default": "#9a1231"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#9a1231"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DTW Hero"
+    }
+  ]
+}
+{% endschema %}

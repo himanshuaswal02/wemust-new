@@ -24,13 +24,12 @@
         --announcement-font-size: {{ section.settings.message_font_size }}px;
       }
     {% endstyle %}
-
-    <div class="container container--no-max">
-      <div class="announcement-bar__left desktop-only">
-        {% if section.settings.show_social_icons %}
+    <div class="container">
+      {% if section.settings.show_social_icons %}
+        <div class="announcement-bar__left desktop-only">
           {%- render 'social-media', icon: settings.social_custom_icon, icon_height: 20 -%}
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
 
       <div class="announcement-bar__middle">
         {%- if section.blocks.size > 0 -%}
@@ -86,7 +85,7 @@
         {% if section.settings.menu != blank %}
           <span class="inline-menu">
             {% for link in linklists[section.settings.menu].links %}
-              <a class="inline-menu__link announcement-bar__link" href="{{ link.url }}">{{ link.title }}</a>
+              <a class="inline-menu__link announcement-bar__link{% if request.path == link.url %} active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
             {% endfor %}
           </span>
         {% endif %}
