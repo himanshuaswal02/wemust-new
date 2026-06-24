@@ -30,11 +30,11 @@
     {%- endif -%}
 
     {%- if section.settings.heading != blank -%}
-      <h2 class="custom-reviews-section__heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="custom-reviews-section__heading section-heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
 
     {%- if section.settings.subheading != blank -%}
-      <div class="custom-reviews-section__subheading">{{ section.settings.subheading | escape }}</div>
+      <div class="custom-reviews-section__subheading section-content__text">{{ section.settings.subheading | escape }}</div>
     {%- endif -%}
   </div>
 

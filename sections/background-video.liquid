@@ -16,6 +16,14 @@
 <script src="{{ 'video.js' | asset_url }}" defer></script>
 
 <div id="section-id-{{ section.id }}" class="{% unless section.settings.full_width %}container fully-spaced-row{% endunless %} video-section video-section--background" data-cc-animate>
+  <div class="section-content">
+    {%if section.settings.video_section_heading  != blank%}
+    <h2 class="section-content__title section-heading">{{ section.settings.video_section_heading }}</h2>
+    {%endif %}
+    {%if section.settings.video_section_subheading  != blank%}
+    <div class="section-content__text">{{ section.settings.video_section_subheading }}</div>
+  {%endif %}
+  </div>
   {% style %}
     #section-id-{{ section.id }} .height--fixed {
       --image-height: {{ section.settings.height_mobile }}px;
@@ -165,6 +173,25 @@
     ]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "video_section_heading",
+      "label": "Section Heading",
+
+    },
+    {
+      "type": "header",
+      "content": "Section Subheading"
+    },
+    {
+      "type":"richtext",
+      "id": "video_section_subheading",
+      "label": "Section Subheading"
+    },
     {
       "type": "paragraph",
       "content": "Background videos play on loop, with no sound. If you need a video with sound use the Video section."
