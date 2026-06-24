@@ -1,5 +1,5 @@
 .collapsible-tabs {
-  max-width: var(--reading-container-width, 800px);
+  max-width: 100%;
   margin: var(--section-padding) auto;
 }
 .collapsible-tabs .disclosure {
@@ -47,5 +47,27 @@
 @media (max-width: 767.98px) {
   .collapsible-tabs__heading {
     font-size: 24px;
+  }
+}
+
+.collapsible-tabs {
+  display: block;
+}
+
+.collapsible-tabs__columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.collapsible-tabs__column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media screen and (max-width: 749px) {
+  .collapsible-tabs__columns {
+    grid-template-columns: 1fr;
   }
 }

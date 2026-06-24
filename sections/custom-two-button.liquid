@@ -1,54 +1,71 @@
 {{ 'custom-started-section.css' | asset_url | stylesheet_tag }}
+
 <section class="custom-started-section">
-  <div class="page-width">
-    <div class="started-wrapper">
-      <!-- CONTENT -->
-      <div class="started-content">
-        {% if section.settings.heading != blank %}
-          <h2 class="started-heading">
-            {{ section.settings.heading }}
-          </h2>
-        {% endif %}
-        {% if section.settings.text != blank %}
-          <div class="started-text">
-            {{ section.settings.text }}
-          </div>
-        {% endif %}
-        
-        <!-- FEATURES -->
-        <div class="started-features">
-          {% if section.settings.feature_1 != blank %}
-            <div class="started-feature">
-              <span class="feature-icon">1</span>
-              <div class="feature-text feature-one">{{ section.settings.feature_1 }}</div>
-            </div>
-          {% endif %}
-          {% if section.settings.feature_2 != blank %}
-            <div class="started-feature">
-              <span class="feature-icon">2</span>
-              <div class="feature-text feature-second">{{ section.settings.feature_2 }}</div>
-            </div>
-          {% endif %}
-          {% if section.settings.feature_3 != blank %}
-            <div class="started-feature">
-              <span class="feature-icon">3</span>
-              <div class="feature-text feature-third">{{ section.settings.feature_3 }}</div>
-            </div>
-          {% endif %}
+  <div class="started-wrapper">
+    <div class="started-content">
+      {% if section.settings.heading != blank %}
+        <h2 class="started-heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="started-text rte">
+          {{ section.settings.text }}
         </div>
-        <!-- BUTTONS -->
-        <div class="started-buttons">
-          {% if section.settings.button_label_1 != blank %}
-            <a href="{{ section.settings.button_link_1 }}" class="started-btn">
-              <span>{{ section.settings.button_label_1 }}</span>
-              <svg width="40" height="59" viewBox="0 0 40 59" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="4.21181" y1="3.00022" x2="36.4895" y2="28.2989" stroke="white" stroke-width="6" stroke-linecap="round"/>
-                <line x1="3" y1="-3" x2="44.0106" y2="-3" transform="matrix(0.787056 -0.616882 -0.616882 -0.787056 0 54.5107)" stroke="white" stroke-width="6" stroke-linecap="round"/>
-              </svg>
-            </a>
-          {% endif %}
-        </div>
+      {% endif %}
+
+      <div class="started-cards">
+        {% for index in (1..3) %}
+          {% liquid
+            assign image_key = 'card_image_' | append: index
+            assign title_key = 'card_title_' | append: index
+            assign text_key = 'card_text_' | append: index
+            assign card_image = section.settings[image_key]
+            assign card_title = section.settings[title_key]
+            assign card_text = section.settings[text_key]
+          %}
+
+          <article class="started-card">
+            <div class="started-card__media">
+              {% if card_image != blank %}
+                {{
+                  card_image
+                  | image_url: width: 900
+                  | image_tag:
+                    widths: '360, 540, 720, 900',
+                    sizes: '(min-width: 990px) 30vw, (min-width: 750px) 45vw, 100vw',
+                    loading: 'lazy',
+                    class: 'started-card__image'
+                }}
+              {% else %}
+                <div class="started-card__placeholder">
+                  <span>{{ index }}</span>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="started-card__body">
+              {% if card_title != blank %}
+                <h3 class="started-card__title">{{ card_title | escape }}</h3>
+              {% endif %}
+
+              {% if card_text != blank %}
+                <div class="started-card__text rte">
+                  {{ card_text }}
+                </div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
       </div>
+
+      {% if section.settings.button_label_1 != blank %}
+        <div class="started-buttons">
+          <a href="{{ section.settings.button_link_1 | default: '#' }}" class="started-btn">
+            <span>{{ section.settings.button_label_1 | escape }}</span>
+            <span aria-hidden="true" class="started-btn__arrow">&gt;</span>
+          </a>
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -61,40 +78,91 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Let's Get Started"
+      "default": "Bring Your Designs To Life"
     },
     {
       "type": "richtext",
       "id": "text",
       "label": "Text",
-      "default": "<p>Print any design with our DTF transfers on any product, material or color with incredible durability.</p>"
+      "default": "<p>Custom DTF Transfers Engineered For Vibrant Colour, Sharp Detail, And Reliable Durability On Virtually Any Fabric.</p>"
     },
-
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_1",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_title_1",
+      "label": "Title",
+      "default": "Upload Your Artwork"
+    },
+    {
+      "type": "richtext",
+      "id": "card_text_1",
+      "label": "Text",
+      "default": "<p>Upload Your Artwork Directly To Our Platform. We Check It For Print Accuracy And Get It Ready For Production.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_2",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_title_2",
+      "label": "Title",
+      "default": "24-48 Hour Print & Ship"
+    },
+    {
+      "type": "richtext",
+      "id": "card_text_2",
+      "label": "Text",
+      "default": "<p>Your Transfers Are Printed In-House With Precision And Shipped Fast, Typically Within 24-48 Hours.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_3",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_title_3",
+      "label": "Title",
+      "default": "Ready To Press"
+    },
+    {
+      "type": "richtext",
+      "id": "card_text_3",
+      "label": "Text",
+      "default": "<p>Transfers Arrive Fully Cured And Ready To Heat-Press For Consistent, Professional Results.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
     {
       "type": "text",
       "id": "button_label_1",
-      "label": "Button Label 1",
-      "default": "Order Transfers By Size"
+      "label": "Button label",
+      "default": "Start Your Order"
     },
     {
       "type": "url",
       "id": "button_link_1",
-      "label": "Button Link 1"
-    },
-    {
-      "type": "richtext",
-      "id": "feature_1",
-      "label": "Feature 1"
-    },
-    {
-      "type": "richtext",
-      "id": "feature_2",
-      "label": "Feature 2"
-    },
-    {
-      "type": "richtext",
-      "id": "feature_3",
-      "label": "Feature 3"
+      "label": "Button link"
     }
   ],
   "presets": [

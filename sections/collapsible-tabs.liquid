@@ -4,35 +4,78 @@
     {% if section.settings.title != blank %}
       <h3 class="collapsible-tabs__heading collapsible-tabs__content section-heading" id="faq-{{ section.settings.title | handle }}">{{ section.settings.title | escape }}</h3>
     {% endif %}
+    <div class="collapsible-tabs__columns">
+      <div class="collapsible-tabs__column">
+        {% assign half_count = section.blocks.size | plus: 1 | divided_by: 2 %}
 
-    {%- for block in section.blocks -%}
-      <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
-        {% if block.type == 'content' %}
-          <div class="collapsible-tabs__text collapsible-tabs__content rte">{{ block.settings.content }}</div>
+        {% for block in section.blocks limit: half_count %}
+          <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
+            {% if block.type == 'content' %}
+              <div class="collapsible-tabs__text collapsible-tabs__content rte">
+                {{ block.settings.content }}
+              </div>
 
-        {% elsif block.type == 'button' %}
-          <div class="collapsible-tabs__button collapsible-tabs__content">
-            <a class="btn btn--primary btn--link" href="{{ block.settings.link }}"><span class="btn__text">{{ block.settings.title | escape }}</span></a>
+            {% elsif block.type == 'button' %}
+              <div class="collapsible-tabs__button collapsible-tabs__content">
+                <a class="btn btn--primary btn--link" href="{{ block.settings.link }}">
+                  <span class="btn__text">{{ block.settings.title | escape }}</span>
+                </a>
+              </div>
+
+            {% elsif block.type == 'question' %}
+              <div class="collapsible-tabs__tab">
+                <details-disclosure>
+                  <details class="disclosure">
+                    <summary class="disclosure__title">
+                      {{ block.settings.title | escape }}
+                    </summary>
+                    <div class="disclosure__panel has-motion">
+                      <div class="disclosure__content rte">
+                        {{ block.settings.answer }}
+                      </div>
+                    </div>
+                  </details>
+                </details-disclosure>
+              </div>
+            {% endif %}
           </div>
-
-        {% elsif block.type == 'question' %}
-          <div class="collapsible-tabs__tab">
-            <details-disclosure>
-              <details class="disclosure">
-                <summary class="disclosure__title">
-                  {{- block.settings.title | escape -}}
-                </summary>
-                <div class="disclosure__panel has-motion">
-                  <div class="disclosure__content rte">
-                    {{- block.settings.answer -}}
-                  </div>
-                </div>
-              </details>
-            </details-disclosure>
-          </div>
-        {% endif %}
+        {% endfor %}
       </div>
-    {%- endfor -%}
+      <div class="collapsible-tabs__column">
+        {% for block in section.blocks offset: half_count %}
+          <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
+            {% if block.type == 'content' %}
+              <div class="collapsible-tabs__text collapsible-tabs__content rte">
+                {{ block.settings.content }}
+              </div>
+
+            {% elsif block.type == 'button' %}
+              <div class="collapsible-tabs__button collapsible-tabs__content">
+                <a class="btn btn--primary btn--link" href="{{ block.settings.link }}">
+                  <span class="btn__text">{{ block.settings.title | escape }}</span>
+                </a>
+              </div>
+
+            {% elsif block.type == 'question' %}
+              <div class="collapsible-tabs__tab">
+                <details-disclosure>
+                  <details class="disclosure">
+                    <summary class="disclosure__title">
+                      {{ block.settings.title | escape }}
+                    </summary>
+                    <div class="disclosure__panel has-motion">
+                      <div class="disclosure__content rte">
+                        {{ block.settings.answer }}
+                      </div>
+                    </div>
+                  </details>
+                </details-disclosure>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 </div>
 
