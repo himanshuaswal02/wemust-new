@@ -8,12 +8,8 @@ video-component {
 .section-content {
   text-align: center;
 }
-.video-section--background{
-  background: #EFEFEF;
-}
 .section-content .section-content__title {
-  margin-bottom: 60px;
-  padding-top: 60px;
+  margin-bottom: 40px;
 }
 .section-content .section-content__text {
   margin-bottom: 40px;
