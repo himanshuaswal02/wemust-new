@@ -165,15 +165,29 @@
       margin-bottom: 0;
 }
 .featured-cards__button .featured-cards-btn{
-  background: #97001b;
-    color: #fff;
-    border-color: #97001b;
-    border-radius: 12px;
-    padding: 10px 40px;
-    font-size: 20px;
-    font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 218px;
+  min-height: 60px;
+  padding: 16px 34px;
+  border-radius: 18px;
+  background: #861528;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 16px 34px #0000002e;
+  transition: transform .18s ease, background-color .18s ease, color .18s ease, box-shadow .18s ease;
 }
-
+.featured-cards__button .featured-cards-btn:hover{
+  background: #fff;
+  color: #861528;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px #00000038;
+}
 @media (max-width: 991px) {
   .featured-cards-section .featured-cards__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
