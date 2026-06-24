@@ -5,9 +5,8 @@
 .started-wrapper {
   max-width: 100%;
   margin: 0 auto;
-  padding: 146px 123px 100px;
+  padding: 50px 123px;
   border-radius: 0;
-  background: #EFEFEF;
 }
 
 .started-content {
@@ -19,7 +18,7 @@
 .started-heading {
   margin: 0;
   color: #000;
-  font-size: 44px;
+  font-size: 30px;
   line-height: 1.08;
   font-weight: 700;
 }
@@ -28,7 +27,7 @@
   max-width: 780px;
   margin: 20px auto 0;
   color: #000;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.12;
   text-transform: capitalize;
 }
@@ -124,33 +123,33 @@
 .started-buttons {
   display: flex;
   justify-content: center;
-  margin-top: 54px;
+  margin-top: 40px;
 }
 
 .started-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 352px;
-  min-height: 70px;
-  padding: 16px 46px;
-  border: 1px solid #ad001f;
-  border-radius: 999px;
-  background: #ad001f;
+  min-width: 218px;
+  min-height: 60px;
+  padding: 16px 34px;
+  border-radius: 18px;
+  background: #861528;
   color: #fff;
-  font-size: 29px;
-  line-height: 1;
+  font-size: 20px;
+  line-height: 1.2;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
-  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  box-shadow: 0 16px 34px #0000002e;
+  transition: transform .18s ease, background-color .18s ease, color .18s ease, box-shadow .18s ease;
 }
 
 .started-btn:hover {
-  border-color: #8f001a;
-  background: #8f001a;
-  color: #fff;
-  transform: translateY(-1px);
+  background: #fff;
+  color: #861528;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px #00000038;
 }
 
 .started-btn__arrow {
