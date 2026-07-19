@@ -13813,7 +13813,9 @@ span.cl-po--input.cl-po--input-addon {
       padding: 0 15px;
     }
     .section-heading{
-      font-size:20px
+      font-size:28px
     }
-    
+    .section-content__text {
+      padding: 0 15px;
     }
+}
