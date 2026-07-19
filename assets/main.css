@@ -13807,3 +13807,13 @@ span.cl-po--input.cl-po--input-addon {
   font-weight: 400;
   color: rgba(48, 48, 48, 1);
 }
+
+@media screen and (max-width: 767px) {
+    .section-content .section-content__title {
+      padding: 0 15px;
+    }
+    .section-heading{
+      font-size:20px
+    }
+    
+    }
