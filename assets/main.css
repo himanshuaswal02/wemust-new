@@ -13973,3 +13973,12 @@ filter-container .filters{
   color: #861528;
   font-weight: 600;
 }
+
+.template-collection .hometitle{
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.template-collection .page-header{
+  padding-bottom: 0px;
+}
