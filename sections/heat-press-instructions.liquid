@@ -1,0 +1,290 @@
+{{ 'heat-press-instructions.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign section_heading = section.settings.heading
+  assign group_metafield_namespace = section.settings.group_metafield_namespace | strip
+  assign group_metafield_key = section.settings.group_metafield_key | strip
+  assign content_metafield = blank
+  assign content_metaobject = blank
+  assign step_titles = blank
+
+  if product != blank and group_metafield_namespace != blank and group_metafield_key != blank
+    assign content_metafield = product.metafields[group_metafield_namespace][group_metafield_key]
+  endif
+
+  if content_metafield != blank
+    assign content_metaobject = content_metafield.value
+  endif
+
+  if content_metaobject != blank
+    if content_metaobject['heading'] != blank and content_metaobject['heading'].value != blank
+      assign section_heading = content_metaobject['heading'].value
+    endif
+
+    if content_metaobject['step_title'] != blank and content_metaobject['step_title'].value != blank
+      assign step_titles = content_metaobject['step_title'].value
+    endif
+  endif
+-%}
+
+<div
+  id="section-id-{{ section.id }}"
+  class="heat-press-instructions"
+  style="
+    --heat-press-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --heat-press-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --heat-press-padding-top-mobile: {{ section.settings.mobile_padding_top }}px;
+    --heat-press-padding-bottom-mobile: {{ section.settings.mobile_padding_bottom }}px;
+    --heat-press-section-bg: {{ section.settings.section_background }};
+    --heat-press-heading-color: {{ section.settings.heading_color }};
+    --heat-press-text-color: {{ section.settings.text_color }};
+    --heat-press-card-bg: {{ section.settings.card_background }};
+    --heat-press-card-border: {{ section.settings.card_border }};
+    --heat-press-accent-color: {{ section.settings.accent_color }};
+  "
+>
+  <div class="container">
+    {%- if section_heading != blank -%}
+      <div class="heat-press-instructions__header" data-cc-animate>
+        <h2 class="heat-press-instructions__title">{{ section_heading | escape }}</h2>
+      </div>
+    {%- endif -%}
+
+    {%- assign has_steps = false -%}
+    {%- for step_index in (1..6) -%}
+      {%- liquid
+        assign title_field = step_titles[forloop.index0]
+        assign description_key = 'step_' | append: step_index | append: '_description'
+        assign description_field = content_metaobject[description_key]
+        assign image_list_field = content_metaobject['image']
+        assign image_field = blank
+        assign step_position = forloop.index0
+
+        if image_list_field != blank and image_list_field.value != blank
+          for image_item in image_list_field.value
+            if forloop.index0 == step_position
+              assign image_field = image_item
+              break
+            endif
+          endfor
+        endif
+      -%}
+      {%- if title_field != blank or description_field != blank or image_field != blank -%}
+        {%- assign has_steps = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_steps -%}
+      <div class="heat-press-instructions__grid">
+        {%- for step_index in (1..6) -%}
+          {%- liquid
+            assign description_key = 'step_' | append: step_index | append: '_description'
+            assign step_title = step_titles[forloop.index0]
+            assign step_content = content_metaobject[description_key]
+            assign image_list_field = content_metaobject['image']
+            assign step_image = blank
+            assign step_render_image = blank
+            assign step_position = forloop.index0
+
+            if image_list_field != blank and image_list_field.value != blank
+              for image_item in image_list_field.value
+                if forloop.index0 == step_position
+                  assign step_image = image_item
+                  break
+                endif
+              endfor
+            endif
+
+            assign step_render_image = step_image
+
+            if step_image != blank and step_image.preview_image != blank
+              assign step_render_image = step_image.preview_image
+            elsif step_image != blank and step_image.value != blank
+              assign step_render_image = step_image.value
+              if step_render_image.preview_image != blank
+                assign step_render_image = step_render_image.preview_image
+              endif
+            endif
+          -%}
+
+          {%- if step_title == blank and step_content == blank and step_image == blank -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- assign step_modulo = step_index | modulo: 2 -%}
+
+          <article
+            class="heat-press-instructions__card{% if step_modulo == 0 %} heat-press-instructions__card--reverse{% endif %}"
+            data-cc-animate
+            data-cc-animate-delay="{{ step_index | times: 0.1 }}s"
+          >
+            <div class="heat-press-instructions__content">
+              {%- if step_title != blank -%}
+                <h3 class="heat-press-instructions__step-title">
+                  <span class="heat-press-instructions__step-label">Step {{ step_index }}</span>
+                  <span> - {{ step_title | escape }}</span>
+                </h3>
+              {%- endif -%}
+
+              {%- if step_content != blank -%}
+                <div class="heat-press-instructions__text rte">{{ step_content | metafield_tag }}</div>
+              {%- endif -%}
+            </div>
+
+            <div class="heat-press-instructions__media">
+              <div class="heat-press-instructions__image-wrap">
+                {%- if step_render_image != blank -%}
+                  {%- render 'image',
+                    image: step_render_image,
+                    sizes: '(max-width: 767px) 170px, 210px',
+                    widths: '170, 210, 260, 320, 420',
+                    class: 'heat-press-instructions__image'
+                  -%}
+                {%- else -%}
+                  <div class="heat-press-instructions__placeholder"></div>
+                {%- endif -%}
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <div class="heat-press-instructions__empty">
+        Add one product metafield with namespace <strong>{{ group_metafield_namespace }}</strong> and key <strong>{{ group_metafield_key }}</strong>,
+        then connect it to one metaobject with <strong>heading</strong>, list fields for <strong>step_title</strong> and <strong>image</strong>, and rich text fields from <strong>step_1_description</strong> through <strong>step_6_description</strong>.
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Heat press instructions",
+  "class": "section-heat-press-instructions",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Fallback heading",
+      "default": "Heat Pressing Instructions"
+    },
+    {
+      "type": "header",
+      "content": "Content metaobject source"
+    },
+    {
+      "type": "text",
+      "id": "group_metafield_namespace",
+      "label": "Content metafield namespace",
+      "default": "custom"
+    },
+    {
+      "type": "text",
+      "id": "group_metafield_key",
+      "label": "Content metafield key",
+      "default": "instruction"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use one product metafield that references one metaobject with `heading`, list fields `step_title` and `image`, plus rich text fields `step_1_description` through `step_6_description`."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#141414"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Step label color",
+      "default": "#9b1c31"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heat press instructions"
+    }
+  ]
+}
+{% endschema %}

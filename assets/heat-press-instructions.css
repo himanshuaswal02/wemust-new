@@ -1,0 +1,159 @@
+.heat-press-instructions {
+  padding-top: var(--heat-press-padding-top, 56px);
+  padding-bottom: var(--heat-press-padding-bottom, 56px);
+  background: var(--heat-press-section-bg, #f5f5f5);
+}
+
+.heat-press-instructions__header {
+  margin-bottom: 2.25rem;
+}
+
+.heat-press-instructions__title {
+  margin: 0;
+  color: var(--heat-press-heading-color, #141414);
+  font-size: 32px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.heat-press-instructions__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+
+.heat-press-instructions__card {
+  display: grid;
+  grid-template-columns: minmax(0, 3.8fr) minmax(132px, 0.85fr);
+  gap: 16px;
+  align-items: start;
+  min-height: 170px;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--heat-press-card-bg, #ffffff);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 #0000000d, 0 0 #0000, 0 0 #0000;
+}
+.heat-press-instructions__content {
+  min-width: 0;
+}
+
+.heat-press-instructions__card--reverse {
+  grid-template-columns: minmax(132px, 0.85fr) minmax(0, 3.8fr);
+}
+
+.heat-press-instructions__card--reverse .heat-press-instructions__content {
+  order: 2;
+}
+
+.heat-press-instructions__card--reverse .heat-press-instructions__media {
+  order: 1;
+}
+
+.heat-press-instructions__step-title {
+  margin: 0 0 12px;
+  color: var(--heat-press-heading-color, #141414);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.heat-press-instructions__step-label {
+  color: var(--heat-press-accent-color, #a1202f);
+}
+
+.heat-press-instructions__text > * {
+  color: var(--heat-press-text-color, #2a2a2a);
+  font-size: 16px;
+  line-height: 27px;
+  margin: 12px 0;
+  font-family: var(--base-font-family);
+}
+
+.heat-press-instructions__text > *:first-child {
+  margin-top: 0;
+}
+
+.heat-press-instructions__text > *:last-child {
+  margin-bottom: 0;
+}
+
+.heat-press-instructions__text ul,
+.heat-press-instructions__text ol {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.heat-press-instructions__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.heat-press-instructions__image-wrap {
+  width: 100%;
+  max-width: 210px;
+}
+
+.heat-press-instructions__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.heat-press-instructions__placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  background: #f6f6f6;
+}
+
+.heat-press-instructions__empty {
+  padding: 22px 24px;
+  border: 1px dashed #d4d4d8;
+  border-radius: 12px;
+  color: #52525b;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 989px) {
+  .heat-press-instructions__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .heat-press-instructions {
+    padding-top: var(--heat-press-padding-top-mobile, 36px);
+    padding-bottom: var(--heat-press-padding-bottom-mobile, 36px);
+  }
+
+  .heat-press-instructions__header {
+    margin-bottom: 18px;
+  }
+
+  .heat-press-instructions__title {
+    font-size: 2.8rem;
+  }
+
+  .heat-press-instructions__card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .heat-press-instructions__card--reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .heat-press-instructions__card--reverse .heat-press-instructions__content,
+  .heat-press-instructions__card--reverse .heat-press-instructions__media {
+    order: initial;
+  }
+
+  .heat-press-instructions__image-wrap {
+    max-width: 170px;
+  }
+}
