@@ -13982,3 +13982,9 @@ filter-container .filters{
 .template-collection .page-header{
   padding-bottom: 0px;
 }
+@media screen and (min-width: 990px) {
+  .template-collection .page-header p {
+    width: 60%;
+    margin: 0;
+  }
+}
