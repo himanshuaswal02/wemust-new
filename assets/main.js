@@ -2964,6 +2964,51 @@ if (!customElements.get('quantity-wrapper')) {
   class QuantityWrapper extends HTMLElement {
     connectedCallback() {
       this.addEventListener('click', this.handleClick.bind(this));
+      const input = this.querySelector('[name="quantity"]');
+      if (input) {
+        ['input', 'change', 'blur'].forEach((eventName) => {
+          input.addEventListener(eventName, () => this.syncQuantityState());
+        });
+        this.syncQuantityState();
+      }
+    }
+
+    syncQuantityState() {
+      const input = this.querySelector('[name="quantity"]');
+      if (!input) return;
+
+      const min = parseInt(input.min || '1', 10) || 1;
+      const max = parseInt(input.max, 10);
+      let nextValue = parseInt(input.value, 10);
+
+      if (Number.isNaN(nextValue) || nextValue < min) {
+        nextValue = min;
+      }
+
+      if (!Number.isNaN(max) && nextValue > max) {
+        nextValue = max;
+      }
+
+      if (parseInt(input.value, 10) !== nextValue) {
+        input.value = nextValue;
+      }
+
+      const decreaseBtn = this.querySelector('[data-quantity="down"]');
+      const increaseBtn = this.querySelector('[data-quantity="up"]');
+
+      if (decreaseBtn) {
+        decreaseBtn.classList.toggle('disabled', nextValue <= min);
+        decreaseBtn.setAttribute('aria-disabled', nextValue <= min ? 'true' : 'false');
+      }
+
+      if (increaseBtn && !Number.isNaN(max)) {
+        increaseBtn.classList.toggle('disabled', nextValue >= max);
+        increaseBtn.classList.toggle('unusable', nextValue >= max);
+        increaseBtn.setAttribute('aria-disabled', nextValue >= max ? 'true' : 'false');
+      } else if (increaseBtn) {
+        increaseBtn.classList.remove('disabled', 'unusable');
+        increaseBtn.setAttribute('aria-disabled', 'false');
+      }
     }
 
     handleClick(evt) {
@@ -2971,11 +3016,25 @@ if (!customElements.get('quantity-wrapper')) {
       if (btn) {
         evt.preventDefault();
         const input = this.querySelector('[name="quantity"]');
+        if (!input) return;
+
+        this.syncQuantityState();
+
         let change = btn.dataset.quantity === 'up' ? 1 : -1;
         if (input.step) {
           change *= parseInt(input.step, 10);
         }
-        input.value = Math.max(1, parseInt(input.value, 10) + change);
+        const min = parseInt(input.min || '1', 10) || 1;
+        const max = parseInt(input.max, 10);
+        const currentValue = parseInt(input.value, 10) || min;
+        let nextValue = Math.max(min, currentValue + change);
+
+        if (!Number.isNaN(max)) {
+          nextValue = Math.min(max, nextValue);
+        }
+
+        input.value = nextValue;
+        this.syncQuantityState();
         input.dispatchEvent(
           new CustomEvent('change', { bubbles: true, cancelable: false })
         );

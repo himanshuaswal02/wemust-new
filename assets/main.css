@@ -76,6 +76,7 @@ p.input-label {
 a.disabled {
   opacity: 0.5;
   pointer-events: none;
+  cursor: not-allowed;
 }
 
 p.area-label {
