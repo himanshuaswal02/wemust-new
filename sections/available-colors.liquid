@@ -1,0 +1,193 @@
+{{ 'section-available-colors.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #section-id-{{ section.id }} {
+    padding-top: {{ section.settings.desktop_padding_top }}px;
+    padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    background: {{ section.settings.section_background }};
+  }
+
+  @media screen and (max-width: 767px) {
+    #section-id-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  id="section-id-{{ section.id }}"
+  class="{% if section.settings.color_scheme != 'default' %}use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% endif %}"
+>
+  <div class="container{% if section.settings.full_width %} container--no-max{% endif %}">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="section-title h4 spaced-row" data-cc-animate data-cc-animate-delay="0.15s">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {% endif %}
+
+    <div class="available-colors-wrapper fade-in-up" data-cc-animate data-cc-animate-delay="0.25s">
+      <div class="color-swatch-grid">
+        {% for block in section.blocks %}
+          <div
+            class="color-swatch{% unless block.settings.white_text %} color-swatch-white{% endunless %}"
+            style="background: {{ block.settings.color }};"
+            {{ block.shopify_attributes }}
+          >
+            <div class="color-swatch-content">
+              <p class="color-swatch-name">{{ block.settings.name }}</p>
+
+              {% if block.settings.code != blank %}
+                <p class="color-swatch-code">{{ block.settings.code }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Available Colors",
+  "tag": "section",
+  "class": "section-available-colors",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Available Colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full page width",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#F2F5F6"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "color",
+      "name": "Color",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Color name"
+        },
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Pantone code"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color"
+        },
+        {
+          "type": "checkbox",
+          "id": "white_text",
+          "label": "Use white text",
+          "default": true
+        }
+      ]
+    }
+  ],
+"presets": [
+  {
+    "name": "Available Colors",
+    "blocks": [
+      { "type": "color", "settings": { "name": "WHITE", "code": "", "color": "#FFFFFF", "white_text":true } },
+      { "type": "color", "settings": { "name": "BLACK", "code": "", "color": "#000000", "white_text": true } },
+      { "type": "color", "settings": { "name": "BRIGHT ORANGE", "code": "021C", "color": "#FE5000", "white_text": true } },
+      { "type": "color", "settings": { "name": "GOLD", "code": "1235C", "color": "#FFB81C", "white_text":true } },
+      { "type": "color", "settings": { "name": "TEXAS ORANGE", "code": "1525C", "color": "#B94700", "white_text": true } },
+      { "type": "color", "settings": { "name": "ORANGE", "code": "172C", "color": "#FA4616", "white_text": true } },
+      { "type": "color", "settings": { "name": "RED", "code": "187C", "color": "#A6192F", "white_text": true } },
+      { "type": "color", "settings": { "name": "PINK", "code": "1905C", "color": "#F59BBB", "white_text":true } },
+      { "type": "color", "settings": { "name": "BURGUNDY", "code": "194C", "color": "#9B2743", "white_text": true } },
+      { "type": "color", "settings": { "name": "FIRE RED", "code": "199C", "color": "#D50032", "white_text": true } },
+      { "type": "color", "settings": { "name": "MAROON", "code": "209C", "color": "#6F263D", "white_text": true } },
+      { "type": "color", "settings": { "name": "HOT PINK", "code": "232C", "color": "#E93CAC", "white_text": true } },
+      { "type": "color", "settings": { "name": "LIGHT PURPLE", "code": "267C", "color": "#5F259F", "white_text": true } },
+      { "type": "color", "settings": { "name": "DARK PURPLE", "code": "2685C", "color": "#330072", "white_text": true } },
+      { "type": "color", "settings": { "name": "POWDER BLUE", "code": "283C", "color": "#92C1E9", "white_text":true } },
+      { "type": "color", "settings": { "name": "ROYAL", "code": "287C", "color": "#003087", "white_text": true } },
+      { "type": "color", "settings": { "name": "DARK NAVY", "code": "289C", "color": "#0C2340", "white_text": true } },
+      { "type": "color", "settings": { "name": "COLUMBIA", "code": "299C", "color": "#00A3E0", "white_text": true } },
+      { "type": "color", "settings": { "name": "BRIGHT BLUE", "code": "306C", "color": "#00B5E2", "white_text": true } },
+      { "type": "color", "settings": { "name": "TEAL", "code": "327C", "color": "#008675", "white_text": true } },
+      { "type": "color", "settings": { "name": "HUNTER GREEN", "code": "3435C", "color": "#154734", "white_text": true } },
+      { "type": "color", "settings": { "name": "KELLY GREEN", "code": "348C", "color": "#00843D", "white_text": true } },
+      { "type": "color", "settings": { "name": "BRIGHT GREEN", "code": "375C", "color": "#97D700", "white_text":true } },
+      { "type": "color", "settings": { "name": "LIGHT GRAY", "code": "428C", "color": "#C1C6C8", "white_text":true } },
+      { "type": "color", "settings": { "name": "VEGAS GOLD", "code": "4505C", "color": "#998542", "white_text": true } },
+      { "type": "color", "settings": { "name": "DARK BROWN", "code": "476C", "color": "#4E3629", "white_text": true } },
+      { "type": "color", "settings": { "name": "DARK GREEN", "code": "5535C", "color": "#183028", "white_text": true } },
+      { "type": "color", "settings": { "name": "NAVY", "code": "654C", "color": "#003A70", "white_text": true } },
+      { "type": "color", "settings": { "name": "CREAM", "code": "7499C", "color": "#F8E08E", "white_text":true } },
+      { "type": "color", "settings": { "name": "DARK GRAY", "code": "7543C", "color": "#98A4AE", "white_text": true } },
+      { "type": "color", "settings": { "name": "COOL GRAY", "code": "9C", "color": "#75787B", "white_text": true } },
+      { "type": "color", "settings": { "name": "NEON BLUE", "code": "", "color": "#298FC2", "white_text": true } },
+      { "type": "color", "settings": { "name": "NEON YELLOW", "code": "", "color": "#D4AF37", "white_text":true } },
+      { "type": "color", "settings": { "name": "NEON GREEN", "code": "", "color": "#36A391", "white_text": true } },
+      { "type": "color", "settings": { "name": "NEON ORANGE", "code": "", "color": "#B15533", "white_text": true } },
+      { "type": "color", "settings": { "name": "NEON PINK", "code": "", "color": "#E88C99", "white_text":false } },
+      { "type": "color", "settings": { "name": "NEON SILVER", "code": "", "color": "#AAA9AD", "white_text":true } },
+      { "type": "color", "settings": { "name": "NEON VIOLET", "code": "", "color": "#7566A0", "white_text": true } },
+      { "type": "color", "settings": { "name": "YELLOW", "code": "C", "color": "#FEDD00", "white_text":true } }
+    ]
+  }
+]
+}
+{% endschema %}

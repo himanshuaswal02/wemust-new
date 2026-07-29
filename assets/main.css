@@ -14146,12 +14146,12 @@ filter-container .filters{
 }
 
 @media (min-width: 767px) {
-  .template-product main .container {
+  /* .template-product main .container {
     max-width: 1400px;
     padding: 0px 20px;
-  }
+  } */
 }
-.template-product .media-gallery .main-image {
+/* .template-product .media-gallery .main-image {
   width: 100%;
   margin-bottom: 16px;
 }
@@ -14202,8 +14202,8 @@ filter-container .filters{
 }
 
 @media (min-width: 767px) {
-  .template-product main .container {
+   .template-product main .container {
     max-width: 1400px;
     padding: 0px 20px;
-  }
-}
+  } 
+} */
