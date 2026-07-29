@@ -282,6 +282,23 @@
     </div>
 
     <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
+      {% if linklists['filter-menu'].links.size > 0 %}
+        <div class="full-menu">
+          <h3>Product Categories</h3>
+          <ul class="filter-menu">
+            {% for link in linklists['filter-menu'].links %}
+              <li class="{% if collection and collection.handle == link.handle %}active{% endif %}">
+                <a
+                  href="{{ link.url }}"
+                  class="{% if collection and collection.handle == link.handle %}active{% endif %}"
+                >
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
       {% if section.settings.show_sort or show_filters %}
         {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort %}
       {% endif %}
