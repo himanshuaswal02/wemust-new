@@ -906,6 +906,11 @@
               </div>
             {% endif %}
 
+          {% when 'feature-highlights' %}
+            <div class="lightly-spaced-row" {{ block.shopify_attributes }}>
+              {% render 'product-feature-highlights', block: block %}
+            </div>
+
           {% when 'pop-up' %}
             {% if block.settings.page != blank %}
               <div
@@ -2732,6 +2737,126 @@
           "id": "show_in_quickbuy",
           "label": "Show in quick buy",
           "default": false
+        }
+      ]
+    },
+    {
+      "type": "feature-highlights",
+      "name": "Feature highlights",
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "No Minimums"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_divider",
+          "label": "Show divider",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_in_quickbuy",
+          "label": "Show in quick buy",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Item 1"
+        },
+        {
+          "type": "text",
+          "id": "item_1_icon",
+          "label": "Icon URL",
+          "default": "https://wemust-nest.s3.ca-central-1.amazonaws.com/1751787883820_svgviewer-png-output.png"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "Heat Press Application"
+        },
+        {
+          "type": "header",
+          "content": "Item 2"
+        },
+        {
+          "type": "text",
+          "id": "item_2_icon",
+          "label": "Icon URL",
+          "default": "https://wemust-nest.s3.ca-central-1.amazonaws.com/1751787877321_svgviewer-png-output_5.png"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "Ready in 2-3 Days"
+        },
+        {
+          "type": "header",
+          "content": "Item 3"
+        },
+        {
+          "type": "text",
+          "id": "item_3_icon",
+          "label": "Icon URL",
+          "default": "https://wemust-nest.s3.ca-central-1.amazonaws.com/1751787871486_svgviewer-png-output_4.png"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "Text",
+          "default": "50+ Wash Tested"
+        },
+        {
+          "type": "header",
+          "content": "Item 4"
+        },
+        {
+          "type": "text",
+          "id": "item_4_icon",
+          "label": "Icon URL",
+          "default": "https://wemust-nest.s3.ca-central-1.amazonaws.com/1751787865127_svgviewer-png-output_3.png"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "Text",
+          "default": "Bulk Order Discounts"
+        },
+        {
+          "type": "header",
+          "content": "Item 5"
+        },
+        {
+          "type": "text",
+          "id": "item_5_icon",
+          "label": "Icon URL",
+          "default": "https://wemust-nest.s3.ca-central-1.amazonaws.com/1751787858705_svgviewer-png-output_2.png"
+        },
+        {
+          "type": "text",
+          "id": "item_5_text",
+          "label": "Text",
+          "default": "Soft Puffy Look & Feel"
+        },
+        {
+          "type": "header",
+          "content": "Item 6"
+        },
+        {
+          "type": "text",
+          "id": "item_6_icon",
+          "label": "Icon URL",
+          "default": "https://wemust-nest.s3.ca-central-1.amazonaws.com/1751787784535_svgviewer-png-output_1.png"
+        },
+        {
+          "type": "text",
+          "id": "item_6_text",
+          "label": "Text",
+          "default": "Wholesale pricing available"
         }
       ]
     },
