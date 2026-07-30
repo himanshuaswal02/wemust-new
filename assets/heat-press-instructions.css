@@ -135,7 +135,8 @@
   }
 
   .heat-press-instructions__title {
-    font-size: 2.8rem;
+    font-size: 22px;
+
   }
 
   .heat-press-instructions__card {
@@ -154,6 +155,9 @@
   }
 
   .heat-press-instructions__image-wrap {
-    max-width: 170px;
+    max-width: 140px;
   }
+    .heat-press-instructions__media{
+      justify-content: flex-start;
+    }
 }

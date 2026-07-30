@@ -6,21 +6,34 @@
   <link rel="stylesheet" href="{{ 'product-faq-image.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
   {{ 'product-faq-image.js' | asset_url | script_tag }}
   {% style %}
-    .product-faq-image-section{
-        padding-top:{{ section.settings.padding_top }}px;
-        padding-bottom:{{ section.settings.padding_bottom }}px;
+    #shopify-section-{{ section.id }} .product-faq-image-section{
+      padding-top:{{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.bg_color }};
+    }
+
+    #shopify-section-{{ section.id }} p,
+    #shopify-section-{{ section.id }} h2,
+    #shopify-section-{{ section.id }} h3,
+    #shopify-section-{{ section.id }} h4,
+    #shopify-section-{{ section.id }} h5,
+    #shopify-section-{{ section.id }} h6,
+    #shopify-section-{{ section.id }} a,
+    #shopify-section-{{ section.id }} span,
+    #shopify-section-{{ section.id }} div{
+      color: {{ section.settings.text_color }};
     }
 
     @media(max-width:767px){
-        .product-faq-image-section{
-            padding-top:{{ section.settings.mobile_padding_top }}px;
-            padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
-        }
+      #shopify-section-{{ section.id }} .product-faq-image-section{
+          padding-top:{{ section.settings.mobile_padding_top }}px;
+          padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
+      }
     }
   {% endstyle %}
 
   <div class="product-faq-image-section">
-    <div class="page-width">
+    <div class="container">
       <div class="product-faq-image">
         {% if faq_section.left_image != blank %}
           <div class="product-faq-image__left">
@@ -295,6 +308,16 @@
       "id": "heading",
       "label": "Heading",
       "default": "FAQ's"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color"
     },
     {
       "type": "range",

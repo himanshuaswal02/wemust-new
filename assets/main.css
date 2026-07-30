@@ -334,9 +334,13 @@ p.area-label {
 
 @media (max-width: 767px) {
   .product-feature-highlights__grid {
-    grid-template-columns: 1fr;
     gap: 0.75rem;
   }
+    .product-feature-highlights__text,
+    .product-feature-highlights__text>* {
+      font-size: 12px;
+    }
+  
 }
 
 .text-center {
