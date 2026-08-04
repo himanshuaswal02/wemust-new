@@ -322,8 +322,6 @@ p.area-label {
     color: #000;
     font-size: 16px;
     line-height: 1.625;
-    margin-bottom: .75rem;
-    margin-top: .75rem;
 }
 
 .product-feature-highlights__divider {
@@ -13906,7 +13904,8 @@ span.cl-po--input.cl-po--input-addon {
     }
 }
 .product-form .lightly-spaced-row {
-  margin-bottom:0.5rem;
+  margin-bottom:0rem;
+  display: inline-block;
 }
 .product-info-block{
   font-weight: 600;
