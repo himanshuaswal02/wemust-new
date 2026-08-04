@@ -1,0 +1,586 @@
+.pod-banner .wemustpod-hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.pod-banner .wemustpod-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.pod-banner .wemustpod-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pod-banner .wemustpod-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.pod-banner .wemustpod-hero-content {
+  max-width: 720px;
+}
+
+.pod-banner .wemustpod-hero-title {
+  font-size: 67px;
+  font-weight: 700;
+  margin: 0 0px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.pod-banner .wemustpod-hero-subtitle {
+  font-size: 42px;
+  margin: 0 0 0px;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.pod-banner .wemustpod-hero-desc {
+  margin-bottom: 30px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #000;
+  max-width: 540px;
+}
+
+.pod-banner .wemustpod-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 218px;
+  min-height: 60px;
+  padding: 16px 34px;
+  border-radius: 18px;
+  background: #861528;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 16px 34px #0000002e;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.pod-banner .wemustpod-hero-btn:hover {
+  background: #fff;
+  color: #861528;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px #00000038;
+}
+
+.pod-banner .mobile-image {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .pod-banner .wemustpod-hero-inner {
+    align-items: flex-start;
+    min-height: 360px;
+  }
+
+  .pod-banner .desktop-image {
+    display: none;
+  }
+
+  .pod-banner .mobile-image {
+    display: block;
+  }
+
+  .pod-banner .wemustpod-hero-title {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+
+  .pod-banner .wemustpod-hero-subtitle {
+    font-size: 22px;
+  }
+
+  .pod-banner .wemustpod-hero-desc {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 14px;
+  }
+  .pod-banner .wemustpod-hero-btn {
+    font-size: 12px;
+    line-height: 1.2;
+    min-width: 162px;
+    min-height: 40px;
+    padding: 0px;
+    border-radius: 5px;
+  }
+}
+
+/* Marquee section styles */
+
+.pod-image-marquee .wm-marquee {
+  overflow: hidden;
+  position: relative;
+}
+.pod-image-marquee .wm-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.pod-image-marquee .wm-marquee-track:hover {
+  animation-play-state: paused;
+}
+.pod-image-marquee .wm-marquee-item {
+  flex: 0 0 auto;
+  margin-right: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pod-image-marquee .wm-marquee-item img {
+  display: block;
+  width: auto;
+  max-width: 200px;
+  max-height: 40px;
+}
+@media screen and (max-width: 749px) {
+  .pod-image-marquee .wm-marquee-item {
+    margin-right: 30px;
+  }
+}
+
+/* Operations section */
+.wemustpod-operations-section {
+  padding-top: var(--desktop-padding-top);
+  padding-bottom: var(--desktop-padding-bottom);
+}
+.wemustpod-operations-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.wemustpod-operations-copy {
+  position: sticky;
+  top: 100px;
+}
+.wemustpod-operations-eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px;
+}
+.wemustpod-operations-title {
+  margin: 0 0 24px;
+  font-size: 48px;
+  line-height: 1.1;
+}
+.wemustpod-gelato-logo {
+  display: block;
+  max-width: 220px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+.wemustpod-operations-text {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.wemustpod-operation-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.wemustpod-operation-card {
+  border-radius: 20px;
+  padding: 32px 24px;
+  height: 100%;
+}
+.wemustpod-operation-card h3 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+}
+.wemustpod-operation-divider {
+  width: 100%;
+  height: 1px;
+  margin: 20px 0 24px;
+  opacity: 1;
+}
+.wemustpod-operation-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.wemustpod-operation-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.wemustpod-operation-card li:last-child {
+  margin-bottom: 0;
+}
+.wemustpod-check-icon {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+}
+.wemustpod-operation-card span {
+  display: block;
+  line-height: 1.6;
+  font-size: 15px;
+}
+.wemustpod-operations-text p:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 1200px) {
+  .wemustpod-operations-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .wemustpod-operations-copy {
+    position: static;
+  }
+  .wemustpod-operation-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .wemustpod-operation-cards {
+    grid-template-columns: 1fr;
+  }
+  .wemustpod-operations-title {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .wemustpod-operations-section {
+    padding-top: var(--mobile-padding-top);
+    padding-bottom: var(--mobile-padding-bottom);
+  }
+  .wemustpod-operations-layout {
+    gap: 30px;
+  }
+  .wemustpod-operations-title {
+    font-size: 32px;
+  }
+  .wemustpod-operation-card {
+    padding: 24px 20px;
+  }
+  .wemustpod-operation-card h3 {
+    font-size: 24px;
+  }
+  .wemustpod-gelato-logo {
+    max-width: 180px;
+  }
+  .wemustpod-operations-text {
+    font-size: 15px;
+  }
+  .wemustpod-operation-card span {
+    font-size: 14px;
+  }
+}
+.wemustpod-operations-section .full-width {
+  padding: 0px 20px;
+}
+@media (min-width: 991px) {
+  .wemustpod-operations-section .full-width {
+    padding: 0px 80px;
+  }
+}
+
+/* How it works section */
+
+.pod-how-it-works__heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pod-how-it-works__heading h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 41px;
+  color: #000000;
+}
+
+.pod-how-it-works__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.pod-how-it-works__card {
+  background: #fff;
+  border-radius: 0px 30px 0px 30px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pod-how-it-works__image {
+  position: relative;
+}
+
+.pod-how-it-works-img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.pod-how-it-works__number {
+  position: absolute;
+  left: 28px;
+  bottom: -18px;
+  width: 70px;
+  height: 70px;
+  background: #8e1730;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  border-radius: 0 12px 0 12px;
+}
+
+.pod-how-it-works__content {
+  padding: 35px 12px 20px;
+}
+
+.pod-how-it-works__content h3 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.pod-how-it-works__content .rte {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 26px;
+  color: #000000;
+}
+
+.pod-how-it-works__content p:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 1199px) {
+  .pod-how-it-works__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  /* .pod-how-it-works__heading {
+    margin-bottom: 30px;
+  }
+
+  .pod-how-it-works__heading h2 {
+    font-size: 32px;
+  }
+
+  
+
+  .pod-how-it-works-img {
+    height: 220px;
+  } */
+
+  .pod-how-it-works__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .pod-how-it-works__content {
+    padding: 42px 20px 60px;
+  }
+
+  /* .pod-how-it-works__content h3 {
+    font-size: 24px;
+  }
+
+  .pod-how-it-works__content .rte {
+    font-size: 16px;
+    line-height: 1.7;
+  } */
+}
+
+/* Why choose */
+
+.wbcu-heading {
+  max-width: 816px;
+  margin: 0 auto 30px;
+  text-align: center;
+}
+
+.wbcu-heading h2 {
+  margin: 0 0 20px;
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.wbcu-description {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: #000000;
+}
+
+.wbcu-card {
+  display: flex;
+  height: 100%;
+}
+
+.wbcu-card-inner {  
+  padding: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.wbcu-icon {
+  margin-bottom: 30px;
+}
+
+.wbcu-icon-image {
+  display: block;
+  width: 65px;
+  height: auto;
+}
+
+.wbcu-content {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+.wbcu-content strong {
+  font-weight: 700;
+}
+
+.wbcu-content p {
+  margin: 0;
+}
+
+.wbcu-content p + p {
+  margin-top: 16px;
+}
+
+.wbcu-content strong {
+  font-weight: 700;
+}
+
+.wbcu-content em {
+  font-style: italic;
+}
+
+
+.wbcu-grid > .wbcu-card:nth-child(4n + 3).wbcu-card--small {
+  order: 3;
+}
+
+.wbcu-grid > .wbcu-card:nth-child(4n + 4).wbcu-card--large {
+  order: 4;
+}
+
+.wbcu-grid > .wbcu-card:nth-child(4n + 1).wbcu-card--large {
+  order: 1;
+}
+
+.wbcu-grid > .wbcu-card:nth-child(4n + 2).wbcu-card--small {
+  order: 2;
+}
+
+.wbcu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.wbcu-card {
+  display: flex;
+}
+
+.wbcu-card--large {
+  width: calc(60% - 12px);
+}
+
+.wbcu-card--small {
+  width: calc(40% - 12px);
+}
+
+.wbcu-icon {
+  margin-bottom: 30px;
+}
+
+.wbcu-card--large .wbcu-card-inner,
+.wbcu-card--small .wbcu-card-inner{
+  min-height: 350px;
+}
+
+@media screen and (max-width: 1199px) {  
+  .wbcu-grid {
+    gap: 20px;
+  }
+  .wbcu-card--large {
+    width: 100%;
+  }
+  .wbcu-card--small {
+    width: calc(50% - 10px);
+  }
+  .wbcu-card-inner {
+    padding: 20px;
+  }  
+}
+
+@media screen and (max-width: 767px) {
+  .wbcu-grid {
+    gap: 20px;
+  }
+
+  .wbcu-card,
+  .wbcu-card--large,
+  .wbcu-card--small {
+    width: 100%;
+  }
+
+  .wbcu-card .wbcu-card-inner {
+    padding: 15px;
+    min-height: auto;
+  }
+  .wbcu-icon {
+    margin-bottom: 20px;
+  }
+  .wbcu-icon-image {
+    width: 60px;
+  }
+  .wbcu-heading h2{
+    font-size: 25px;
+  }  
+  .wbcu-description{
+    font-size: 15px;
+  }
+  .wbcu-content{
+    font-size: 14px;
+  }
+}

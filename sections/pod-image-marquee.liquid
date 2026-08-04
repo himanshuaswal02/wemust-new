@@ -1,0 +1,124 @@
+{% style %}
+#shopify-section-{{ section.id }} .wm-marquee {
+  background: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+}
+#shopify-section-{{ section.id }} .wm-marquee-track {    
+  animation: wmMarquee{{ section.id }} 30s linear infinite;
+}  
+@keyframes wmMarquee{{ section.id }} {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media screen and (max-width: 749px) {
+  #shopify-section-{{ section.id }} .wm-marquee {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }    
+}
+{% endstyle %}
+
+<div class="wm-marquee">
+  <div class="wm-marquee-track">
+    {% for i in (1..2) %}
+      {% for block in section.blocks %}
+        {% if block.settings.image != blank %}
+          <div class="wm-marquee-item" {{ block.shopify_attributes }}>
+            {{
+              block.settings.image
+              | image_url: width: 500
+              | image_tag: loading: 'lazy'
+            }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pod Image Marquee",
+  "tag": "section",
+  "class": "section pod-image-marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pod Image Marquee"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,294 @@
+{% liquid
+  assign pt = section.settings.padding_top
+  assign pb = section.settings.padding_bottom
+  assign ptm = section.settings.padding_top_mobile
+  assign pbm = section.settings.padding_bottom_mobile
+%}
+{% style %}
+  #shopify-section-{{ section.id }} .wbcu-section{
+      background:var(--section-bg);
+      padding-top:var(--ptm);
+      padding-bottom:var(--pbm);
+  }
+
+  @media (min-width: 750px){
+    #shopify-section-{{ section.id }} .wbcu-section{
+        padding-top: var(--pt);
+        padding-bottom: var(--pb);
+    }
+  }
+    {% for block in section.blocks %}
+        #card-{{ block.id }} .wbcu-card-inner {
+            background: var(--card-bg);
+            color: var(--card-color);
+            border-radius: 0px var(--radius) 0px var(--radius);  
+        }
+    {% endfor %}
+{% endstyle %}
+<div
+  class="wbcu-section"
+  style="
+    --pt:{{ pt }}px;
+    --pb:{{ pb }}px;
+    --ptm:{{ ptm }}px;
+    --pbm:{{ pbm }}px;
+    --section-bg:{{ section.settings.bg_color }};
+  "
+>
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="wbcu-heading">
+        <h2>
+          {{ section.settings.heading }}
+        </h2>
+
+        {% if section.settings.text != blank %}
+          <div class="wbcu-description rte">
+            {{ section.settings.text }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="wbcu-grid">
+      {% for block in section.blocks %}
+        {% case block.type %}          
+          {% when 'large_card' %}
+            <div id="card-{{ block.id }}"
+              class="wbcu-card wbcu-card--large"
+              {{ block.shopify_attributes }}
+              style="
+                --card-bg:{{ block.settings.bg }};
+                --card-color:{{ block.settings.color }};
+                --radius:{{ block.settings.radius }}px;
+              "
+            >
+              <div class="wbcu-card-inner">
+                {% if block.settings.icon != blank %}
+                  <div class="wbcu-icon">
+                    {{
+                      block.settings.icon
+                      | image_url: width: 90
+                      | image_tag: loading: 'lazy', widths: '60,90,120', class: 'wbcu-icon-image'
+                    }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.content != blank %}
+                  <div class="wbcu-content rte">
+                    {{ block.settings.content }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+          {% when 'small_card' %}
+            <div id="card-{{ block.id }}"
+              class="wbcu-card wbcu-card--small"
+              {{ block.shopify_attributes }}
+              style="
+                --card-bg:{{ block.settings.bg }};
+                --card-color:{{ block.settings.color }};
+                --radius:{{ block.settings.radius }}px;
+              "
+            >
+              <div class="wbcu-card-inner">
+                {% if block.settings.icon != blank %}
+                  <div class="wbcu-icon">
+                    {{
+                      block.settings.icon
+                      | image_url: width: 90
+                      | image_tag: loading: 'lazy', widths: '60,90,120', class: 'wbcu-icon-image'
+                    }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.content != blank %}
+                  <div class="wbcu-content rte">
+                    {{ block.settings.content }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pod Brands Choose Us",
+  "tag": "section",
+  "class": "section why-brands-choose-us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Brands Choose Us"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Add your section description here.</p>"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "large_card",
+      "name": "Large Card",
+      "limit": 20,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p><strong>Your content goes here.</strong></p>"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Background Color",
+          "default": "#ECECEC"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Text Color",
+          "default": "#1F1F1F"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "label": "Border Radius",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "default": 50
+        }
+      ]
+    },
+    {
+      "type": "small_card",
+      "name": "Small Card",
+      "limit": 20,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p><strong>Your content goes here.</strong></p>"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Background Color",
+          "default": "#8A1538"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "label": "Border Radius",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pod Brands Choose Us",
+      "blocks": [
+        {
+          "type": "large_card"
+        },
+        {
+          "type": "small_card"
+        },
+        {
+          "type": "small_card"
+        },
+        {
+          "type": "large_card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
