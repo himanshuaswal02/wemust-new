@@ -1,0 +1,230 @@
+{{ 'pod.css' | asset_url | stylesheet_tag }}
+<div
+    class="wemustpod-intro-section section section--{{ section.settings.section_spacing }}"
+    style="
+  --intro-section-background: {{ section.settings.background }};
+  --intro-section-color: {{ section.settings.text_color }};
+  --intro-section-padding-top: {{ section.settings.padding_top }}px;
+  --intro-section-padding-bottom: {{ section.settings.padding_bottom }}px;
+"
+  >
+    <div class="container">
+      <div class="wemustpod-intro-copy">
+        {% if section.settings.heading != blank %}
+          <h2 class="wemustpod-intro-title">
+            {{ section.settings.heading }}
+          </h2>
+        {% endif %}
+  
+        {% if section.settings.description != blank %}
+          <div class="wemustpod-intro-text rte">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+  
+      <div class="wemustpod-stats-card">
+  
+        {% if section.settings.eyebrow != blank %}
+          <p class="wemustpod-stats-eyebrow">
+            {{ section.settings.eyebrow }}
+          </p>
+        {% endif %}
+  
+        {% if section.settings.stats_heading != blank %}
+          <h3 class="wemustpod-stats-heading">
+            {{ section.settings.stats_heading }}
+          </h3>
+        {% endif %}
+  
+        <div class="wemustpod-stats-grid">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'stat' %}
+                <div
+                  class="wemustpod-stat-item"
+                  {{ block.shopify_attributes }}
+                >
+                  <p class="wemustpod-stat-value">
+                    {{ block.settings.value }}
+                  </p>
+  
+                  <p class="wemustpod-stat-label">
+                    {{ block.settings.label }}
+                  </p>
+  
+                  <p class="wemustpod-stat-desc">
+                    {{ block.settings.description }}
+                  </p>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+  
+      </div>
+  
+    </div>
+</div>
+ <script src="{{ 'pod.js' | asset_url }}" defer></script>
+  {% schema %}
+  {
+    "name": "POD Intro + Stats",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "heading",
+        "label": "Heading",
+        "default": "We Must gives brands, agencies, resellers, and ecommerce operators a simpler way to run Print on Demand."
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "<p>Connect your store, automate your order flow, source blanks through our supplier network, and ship direct to your customer under your brand. With production support in both Canada and the United States, access to 50,000+ blank SKUs, and 9 product categories under one roof, our POD service is built to support fast-moving businesses that need flexibility and scale.</p>"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Eyebrow",
+        "default": "Seamless order integration"
+      },
+      {
+        "type": "text",
+        "id": "stats_heading",
+        "label": "Stats Heading",
+        "default": "Built To Help You Move Orders Faster."
+      },
+      {
+        "type": "color",
+        "id": "background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#111111"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 80
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 80
+      },
+      {
+        "type": "select",
+        "id": "section_spacing",
+        "label": "Section spacing",
+        "default": "normal",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "stat",
+        "name": "Statistic",
+        "settings": [
+          {
+            "type": "text",
+            "id": "value",
+            "label": "Value",
+            "default": "25,000"
+          },
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Label",
+            "default": "Pieces/Day"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description",
+            "default": "Peak production capacity across categories."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "POD Intro + Stats",
+        "blocks": [
+          {
+            "type": "stat",
+            "settings": {
+              "value": "25,000",
+              "label": "Pieces/Day",
+              "description": "Peak production capacity across categories."
+            }
+          },
+          {
+            "type": "stat",
+            "settings": {
+              "value": "99.85%",
+              "label": "Production Accuracy",
+              "description": "Dependable output, fewer errors, and smoother fulfillment at scale."
+            }
+          },
+          {
+            "type": "stat",
+            "settings": {
+              "value": "24 Hour",
+              "label": "Standard Output",
+              "description": "Designed for faster production and order movement."
+            }
+          },
+          {
+            "type": "stat",
+            "settings": {
+              "value": "9",
+              "label": "Product Categories",
+              "description": "A broader POD offering beyond basic apparel."
+            }
+          },
+          {
+            "type": "stat",
+            "settings": {
+              "value": "2",
+              "label": "Locations",
+              "description": "Canada and US fulfillment support through Hamilton, Ontario and Grand Island, New York."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

@@ -1,0 +1,345 @@
+{{ 'pod.css' | asset_url | stylesheet_tag }}
+<div
+    class="wemustpod-contact-section"
+    id="get-started"
+    style="
+      --contact-section-background: {{ section.settings.background }};
+      --contact-section-padding-top: {{ section.settings.padding_top }}px;
+      --contact-section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    "
+  >
+    <div class="container">
+
+      <div class="wemustpod-contact-layout">
+  
+        <div class="wemustpod-contact-left">
+  
+          {% if section.settings.heading != blank %}
+            <h2 class="wemustpod-contact-title">
+              {{ section.settings.heading }}
+            </h2>
+          {% endif %}
+  
+          {% if section.settings.description != blank %}
+            <div class="wemustpod-contact-text rte">
+              {{ section.settings.description }}
+            </div>
+          {% endif %}
+  
+          <div class="wemustpod-contact-art">
+  
+            <div class="wemustpod-contact-art-col">
+  
+              {% if section.settings.art_image_1 != blank %}
+                {{
+                  section.settings.art_image_1
+                  | image_url: width: 500
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: section.settings.art_image_1.alt
+                }}
+              {% endif %}
+  
+              {% if section.settings.art_image_2 != blank %}
+                {{
+                  section.settings.art_image_2
+                  | image_url: width: 500
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: section.settings.art_image_2.alt
+                }}
+              {% endif %}
+  
+            </div>
+  
+            <div class="wemustpod-contact-art-col">
+  
+              {% if section.settings.art_image_3 != blank %}
+                {{
+                  section.settings.art_image_3
+                  | image_url: width: 500
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: section.settings.art_image_3.alt
+                }}
+              {% endif %}
+  
+              {% if section.settings.art_image_4 != blank %}
+                {{
+                  section.settings.art_image_4
+                  | image_url: width: 500
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: section.settings.art_image_4.alt
+                }}
+              {% endif %}
+  
+            </div>
+  
+            <div class="wemustpod-contact-art-col">
+  
+              {% if section.settings.art_image_5 != blank %}
+                {{
+                  section.settings.art_image_5
+                  | image_url: width: 500
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: section.settings.art_image_5.alt
+                }}
+              {% endif %}
+  
+              {% if section.settings.art_image_6 != blank %}
+                {{
+                  section.settings.art_image_6
+                  | image_url: width: 500
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: section.settings.art_image_6.alt
+                }}
+              {% endif %}
+  
+            </div>
+  
+          </div>
+  
+          {% if section.settings.button_text != blank %}
+            <a
+              href="{{ section.settings.button_link }}"
+              class="wemustpod-contact-cta"
+            >
+              {{ section.settings.button_text }}
+            </a>
+          {% endif %}
+  
+        </div>
+  
+        <div class="wemustpod-contact-offices">
+  
+          {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'office' %}
+  
+            <article
+              class="wemustpod-contact-office"
+              {{ block.shopify_attributes }}
+            >
+  
+              {% if block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: block.settings.title
+                }}
+              {% endif %}
+  
+              <div class="wemustpod-contact-office-meta">
+  
+                {% if block.settings.number != blank %}
+                  <span class="wemustpod-contact-office-number">
+                    {{ block.settings.number }}
+                  </span>
+                {% endif %}
+  
+                <div>
+  
+                  {% if block.settings.title != blank %}
+                    <h3>{{ block.settings.title }}</h3>
+                  {% endif %}
+  
+                  {% if block.settings.address != blank %}
+                    <p>{{ block.settings.address }}</p>
+                  {% endif %}
+  
+                </div>
+  
+              </div>
+  
+            </article>
+  
+            {% endcase %}
+          {% endfor %}
+  
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+  {% schema %}
+{
+  "name": "POD Contact",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Questions about Print on Demand, store setup, or production capacity? Our team is here to help you launch faster — with sourcing, decoration, packing, and shipping under one roof across Canada and the US.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Get Started Today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+
+    {
+      "type": "header",
+      "content": "Artwork Images"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "art_image_1",
+      "label": "Artwork 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "art_image_2",
+      "label": "Artwork 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "art_image_3",
+      "label": "Artwork 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "art_image_4",
+      "label": "Artwork 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "art_image_5",
+      "label": "Artwork 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "art_image_6",
+      "label": "Artwork 6"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "office",
+      "name": "Office",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Office Image"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Office Title",
+          "default": "Head Office"
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "label": "Address"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "POD Contact",
+      "blocks": [
+        {
+          "type": "office",
+          "settings": {
+            "number": "01",
+            "title": "Head Office",
+            "address": "495 Woodward Avenue, Unit 3 & 4. Hamilton, Ontario. Canada L8H 6N6"
+          }
+        },
+        {
+          "type": "office",
+          "settings": {
+            "number": "02",
+            "title": "British Columbia Office",
+            "address": "15531 24 Ave Unit 26B, Surrey, BC V4A 2J4"
+          }
+        },
+        {
+          "type": "office",
+          "settings": {
+            "number": "03",
+            "title": "USA Office",
+            "address": "1795 Baseline Rd Grand Island, NY, 14072"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
