@@ -1,0 +1,166 @@
+{% liquid
+  assign pt_desktop = section.settings.padding_top
+  assign pb_desktop = section.settings.padding_bottom
+  assign pt_mobile = section.settings.padding_top_mobile
+  assign pb_mobile = section.settings.padding_bottom_mobile
+%}
+
+{% style %}
+    #shopify-section-{{ section.id }} .pod-how-it-works{
+        padding-top:{{ pt_mobile }}px;
+        padding-bottom:{{ pb_mobile }}px;
+    }
+    @media screen and (min-width:750px){
+        #shopify-section-{{ section.id }} .pod-how-it-works{
+            padding-top:{{ pt_desktop }}px;
+            padding-bottom:{{ pb_desktop }}px;
+        }
+    }
+{% endstyle %}
+
+<div
+  class="pod-how-it-works"
+  style="
+    background: {{ section.settings.bg_color }};
+  "
+>
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="pod-how-it-works__heading">
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="pod-how-it-works__grid">
+      {% for block in section.blocks %}
+        <div class="pod-how-it-works__card" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <div class="pod-how-it-works__image">
+              {{
+                block.settings.image
+                | image_url: width: 700
+                | image_tag: loading: 'lazy', widths: '300,400,500,700', class: 'pod-how-it-works-img'
+              }}
+
+              <div class="pod-how-it-works__number">
+                {{ forloop.index }}
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="pod-how-it-works__content">
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <div class="rte">
+                {{ block.settings.text }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "POD How It Works",
+  "class": "section-pod-how-it-works",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Connect your store"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Add your description here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "POD How It Works",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
