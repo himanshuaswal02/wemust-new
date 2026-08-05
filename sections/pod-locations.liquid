@@ -1,0 +1,530 @@
+<style>
+    /* ─────────────────────────────────────────
+       LOCATIONS
+    ───────────────────────────────────────── */
+
+    .wemustpod-locations-section {
+        padding-top: var(--locations-section-padding-top);
+        padding-bottom: var(--locations-section-padding-bottom);
+        background: var(--locations-section-background);
+    }
+
+    .wemustpod-locations-header {
+        text-align: center;
+        max-width: 790px;
+        margin: 0 auto 30px;
+    }
+    
+    .wemustpod-locations-title {
+        font-size: 30px;
+        font-weight: 700;
+        color: #000000;
+        margin-bottom: 20px;
+    }
+    
+    .wemustpod-locations-text {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 26px;
+        color: #000000;
+        margin:0;   
+    }
+    
+    .wemustpod-locations-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        padding: 10px;
+        justify-content: center;
+
+    }
+
+    .wemustpod-location-card {
+        background: #861528;
+        overflow: hidden;
+        border-radius: 0px 30px 0px 30px;
+        box-shadow: rgba(0, 0, 0, 0.12) 5px 5px 7px -1px;
+        flex: 0 0 36.5%;
+        padding-bottom: 20px;
+    }
+    
+    .wemustpod-location-media {
+        position: relative;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+       
+    }
+    
+    .wemustpod-location-media img {
+        width: 100%;
+        height: 100%;
+        min-height: 238px;
+        object-fit: cover;
+    }
+    
+    .wemustpod-location-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        padding-left: 30px;
+        padding-right: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: flex-end;
+    }
+    
+    .wemustpod-location-city {
+        font-family: Inter, sans-serif;
+        font-size: 35px;
+        font-weight: 700;
+        line-height: 26px;
+        color: rgb(255, 255, 255);
+        margin: 0px;
+    }
+    
+    .wemustpod-location-address {
+        font-size: 16px;
+        font-weight: 400;
+        font-style: italic;
+        color: rgb(255, 255, 255);
+        padding: 0px 0px 20px;
+        margin: 0px;
+    }
+
+    {% comment %} .wemustpod-location-body {
+        padding: 22px 20px;
+    } {% endcomment %}
+    
+    .wemustpod-location-role {
+        text-align: start;
+        padding: 20px 0px 0px 30px;
+        font-family: Inter, sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 26px;
+        color: rgb(255, 255, 255);
+    }
+    
+    .wemustpod-location-serving {
+        text-align: start;
+        padding: 0px 0px 0px 30px;
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        font-style: italic;
+        line-height: 26px;
+        color: rgb(255, 255, 255);
+        margin: 0;
+    }
+    
+    .wemustpod-location-divider {
+        padding: 0px 0px 0px 30px;
+        text-align: left;
+        padding-block-start: 15px;
+        padding-block-end: 15px;
+    }
+    .wemustpod-location-divider  .divider-separator {
+        width: 90%;
+        margin: 0 auto;
+        margin-left: 0;
+    }
+
+    
+    .wemustpod-location-features {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 20px 20px 0px;
+    }
+    
+    .wemustpod-location-features li {
+        display: flex;
+        padding: 0px 0px 10px;
+        gap: 10px;
+        align-items: center;
+        font-size: 0.85rem;
+      
+    }
+    .wemustpod-location-features li  span{
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 26px;
+        color: #FFFFFF;
+        transition: color 0.3s;
+        padding-inline-start: 5px;
+    }
+    
+    .wemustpod-location-arrow {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+        color: #FFFFFF;
+    }
+    /* ==========================================
+   Tablet
+========================================== */
+
+@media screen and (max-width: 990px) {
+
+    .wemustpod-locations-grid{
+        gap:20px;
+        padding:0;
+    }
+
+    .wemustpod-location-card{
+        flex:0 0 calc(50% - 10px);
+    }
+
+    .wemustpod-location-media img{
+        min-height:220px;
+    }
+
+}
+
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media screen and (max-width: 767px){
+
+    .wemustpod-locations-section{
+        padding-top:calc(var(--locations-section-padding-top) / 2);
+        padding-bottom:calc(var(--locations-section-padding-bottom) / 2);
+    }
+
+    .wemustpod-locations-header{
+        max-width:100%;
+        margin-bottom:25px;
+    }
+
+    .wemustpod-locations-grid{
+        flex-direction:column;
+        gap:20px;
+        padding:0;
+    }
+
+    .wemustpod-location-card{
+        flex:0 0 100%;
+        width:100%;
+    }
+
+    .wemustpod-location-media{
+        aspect-ratio:16/10;
+    }
+
+    .wemustpod-location-media img{
+        min-height:auto;
+    }
+
+    .wemustpod-location-overlay{
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    .wemustpod-location-role,
+    .wemustpod-location-serving,
+    .wemustpod-location-divider{
+        padding-left:20px;
+    }
+
+    .wemustpod-location-features{
+        padding:10px 20px 20px;
+    }
+
+}
+
+
+/* ==========================================
+   Small Mobile
+========================================== */
+
+@media screen and (max-width:480px){
+
+    .wemustpod-location-card{
+        border-radius:0 20px 0 20px;
+    }
+
+    .wemustpod-location-overlay{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .wemustpod-location-role,
+    .wemustpod-location-serving,
+    .wemustpod-location-divider{
+        padding-left:15px;
+    }
+
+    .wemustpod-location-features{
+        padding:10px 15px 20px;
+    }
+
+}</style>
+<div
+    class="wemustpod-locations-section"
+    style="
+      --locations-section-background: {{ section.settings.background }};
+      --locations-section-padding-top: {{ section.settings.padding_top }}px;
+      --locations-section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    "
+  >
+    <div class="container">
+
+      <div class="wemustpod-locations-header">
+  
+        {% if section.settings.heading != blank %}
+          <h2 class="wemustpod-locations-title">
+            {{ section.settings.heading }}
+          </h2>
+        {% endif %}
+  
+        {% if section.settings.description != blank %}
+          <div class="wemustpod-locations-text rte">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+  
+      </div>
+  
+      <div class="wemustpod-locations-grid">
+  
+        {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'location' %}
+  
+          <article
+            class="wemustpod-location-card"
+            {{ block.shopify_attributes }}
+          >
+  
+            <div class="wemustpod-location-media">
+  
+              {% if block.settings.image != blank %}
+  
+                {{
+                  block.settings.image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'wemustpod-location-image',
+                    alt: block.settings.city
+                }}
+  
+              {% else %}
+  
+                {{ 'image' | placeholder_svg_tag }}
+  
+              {% endif %}
+  
+              <div class="wemustpod-location-overlay">
+  
+                {% if block.settings.city != blank %}
+                  <h3 class="wemustpod-location-city">
+                    {{ block.settings.city }}
+                  </h3>
+                {% endif %}
+  
+                {% if block.settings.address != blank %}
+                  <p class="wemustpod-location-address">
+                    {{ block.settings.address }}
+                  </p>
+                {% endif %}
+  
+              </div>
+  
+            </div>
+  
+            <div class="wemustpod-location-body">
+  
+              {% if block.settings.role != blank %}
+                <h4 class="wemustpod-location-role">
+                  {{ block.settings.role }}
+                </h4>
+              {% endif %}
+  
+              {% if block.settings.serving != blank %}
+                <p class="wemustpod-location-serving">
+                  {{ block.settings.serving }}
+                </p>
+              {% endif %}
+  
+              <div class="wemustpod-location-divider">
+                <span class="divider-separator"></span>
+              </div>
+  
+              <ul class="wemustpod-location-features">
+  
+                {% if block.settings.feature_1 != blank %}
+                <li>
+                    {% render 'icon-location-arrow' %}
+                  <span>{{ block.settings.feature_1 }}</span>
+                </li>
+                {% endif %}
+  
+                {% if block.settings.feature_2 != blank %}
+                <li>
+                  {% render 'icon-location-arrow' %}
+                  <span>{{ block.settings.feature_2 }}</span>
+                </li>
+                {% endif %}
+  
+                {% if block.settings.feature_3 != blank %}
+                <li>
+                  {% render 'icon-location-arrow' %}
+                  <span>{{ block.settings.feature_3 }}</span>
+                </li>
+                {% endif %}
+  
+              </ul>
+  
+            </div>
+  
+          </article>
+  
+          {% endcase %}
+        {% endfor %}
+  
+      </div>
+  
+    </div>
+</div>
+  {% schema %}
+{
+  "name": "POD Locations",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Two Locations. One North American Print Partner."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>With production in Canada and the US, We Must helps you ship domestically, reduce friction, and serve both markets more efficiently.</p>"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Location Image"
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Address"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role"
+        },
+        {
+          "type": "text",
+          "id": "serving",
+          "label": "Serving Text"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Feature 3"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "POD Locations",
+      "blocks": [
+        {
+          "type": "location",
+          "settings": {
+            "city": "Hamilton, Ontario",
+            "address": "495 Woodward Ave, Units 3 & 4",
+            "role": "Head Office + Primary POD Production",
+            "serving": "Serving Canada — Ontario, Eastern & Western",
+            "feature_1": "60+ G7-certified DTF printers",
+            "feature_2": "100+ Tajima embroidery heads",
+            "feature_3": "15 colour embroidery"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "city": "Grand Island, New York",
+            "address": "365 Lang Boulevard, NY 14072",
+            "role": "US fulfillment hub",
+            "serving": "Serving all 50 US states",
+            "feature_1": "100% domestic US shipping",
+            "feature_2": "US tracking numbers",
+            "feature_3": "No customs / duties"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
