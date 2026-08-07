@@ -51,7 +51,7 @@
   </script>
 
   <head>
-    <!-- Meta Pixel Code -->
+    {% comment %} <!-- Meta Pixel Code -->
     <script>
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
@@ -79,7 +79,7 @@
         style="display:none"
         src="https://www.facebook.com/tr?id=2401530703382473&ev=PageView&noscript=1"
     ></noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- End Meta Pixel Code --> {% endcomment %}
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -506,6 +506,7 @@
         or product.title == 'Hybrid Patch'
         or product.title == 'Digital Print Patch'
         or product.title == 'Reflective Patches'
+        or product.title == 'Embroidered Felt Patches'
       %}
         <script>
           document.addEventListener('DOMContentLoaded', function () {
