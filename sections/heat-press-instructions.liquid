@@ -46,7 +46,7 @@
   <div class="container">
     {%- if section_heading != blank -%}
       <div class="heat-press-instructions__header" data-cc-animate>
-        <h2 class="heat-press-instructions__title">{{ section_heading | escape }}</h2>
+        <h2 class="heat-press-instructions__title">{{  product.title | escape }}  {{ section_heading | escape }}</h2>
       </div>
     {%- endif -%}
 
