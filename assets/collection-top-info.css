@@ -1,0 +1,108 @@
+.collection-metaobject-hero {
+    background-image: url('https://cdn.shopify.com/s/files/1/0777/6976/9125/files/1770369117052_Frame_2147225559.png?v=1786471924');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    height: 100%;
+    margin-bottom: 20px;
+    padding: 90px 20px 20px;
+    width: 100%;
+}
+
+.collection-metaobject-hero__inner {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.collection-metaobject-hero__heading {
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.collection-metaobject-hero__description {
+    max-width: 1000px;
+    margin: 0 auto;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.collection-metaobject-hero__description p {
+  margin: 0;
+}
+
+.collection-metaobject-hero__features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.collection-metaobject-hero__feature {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background-color: initial;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+}
+
+.collection-metaobject-hero__check {
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.collection-metaobject-hero__feature-text {
+  display: inline-block;
+}
+
+@media screen and (max-width: 749px) {
+  .section-collection-metaobject-hero{
+    padding: 0px 15px;
+  }
+  .collection-metaobject-hero {
+    padding: 9px 20px 20px;    
+    background-size: cover;
+  }
+
+  .collection-metaobject-hero__heading {
+    margin: 30px auto 16px;
+    font-size: 25px;
+    max-width: 320px;
+  }
+
+  .collection-metaobject-hero__description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .collection-metaobject-hero__features {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+  }
+
+  .collection-metaobject-hero__feature {
+    width: auto;    
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .collection-metaobject-hero__check {
+    font-size: 18px;
+  }
+}

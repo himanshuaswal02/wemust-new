@@ -1,0 +1,352 @@
+{% assign collection_tabs = collection.metafields.custom.collection_tabs.value %}
+
+{% if collection_tabs != blank %}
+    {{ 'collection-tabs.css' | asset_url | stylesheet_tag }}
+  {% assign tab_count = 0 %}
+  {% if collection_tabs.tab_1_name != blank and collection_tabs.tab_1_collection.value != blank %}
+    {% assign tab_count = tab_count | plus: 1 %}
+  {% endif %}
+
+  {% if collection_tabs.tab_2_name != blank and collection_tabs.tab_2_collection.value != blank %}
+    {% assign tab_count = tab_count | plus: 1 %}
+  {% endif %}
+
+  {% if collection_tabs.tab_3_name != blank and collection_tabs.tab_3_collection.value != blank %}
+    {% assign tab_count = tab_count | plus: 1 %}
+  {% endif %}
+
+  {% if collection_tabs.tab_4_name != blank and collection_tabs.tab_4_collection.value != blank %}
+    {% assign tab_count = tab_count | plus: 1 %}
+  {% endif %}
+
+
+  <div class="collection-tabs container" data-collection-tabs>
+
+    {% comment %}
+      Show tabs ONLY when there is more than one valid tab.
+    {% endcomment %}
+
+    {% if tab_count > 1 %}
+      <div class="collection-tabs__navigation" role="tablist">
+
+        {% if collection_tabs.tab_1_name != blank and collection_tabs.tab_1_collection.value != blank %}
+          <button
+            type="button"
+            class="collection-tabs__tab is-active"
+            data-tab-button="1"
+            role="tab"
+            aria-selected="true"
+          >
+            {{ collection_tabs.tab_1_name | escape }}
+          </button>
+        {% endif %}
+
+        {% if collection_tabs.tab_2_name != blank and collection_tabs.tab_2_collection.value != blank %}
+          <button
+            type="button"
+            class="collection-tabs__tab"
+            data-tab-button="2"
+            role="tab"
+            aria-selected="false"
+          >
+            {{ collection_tabs.tab_2_name | escape }}
+          </button>
+        {% endif %}
+
+        {% if collection_tabs.tab_3_name != blank and collection_tabs.tab_3_collection.value != blank %}
+          <button
+            type="button"
+            class="collection-tabs__tab"
+            data-tab-button="3"
+            role="tab"
+            aria-selected="false"
+          >
+            {{ collection_tabs.tab_3_name | escape }}
+          </button>
+        {% endif %}
+
+        {% if collection_tabs.tab_4_name != blank and collection_tabs.tab_4_collection.value != blank %}
+          <button
+            type="button"
+            class="collection-tabs__tab"
+            data-tab-button="4"
+            role="tab"
+            aria-selected="false"
+          >
+            {{ collection_tabs.tab_4_name | escape }}
+          </button>
+        {% endif %}
+
+      </div>
+    {% endif %}
+
+
+    <div class="collection-tabs__content">
+
+      {% comment %}
+        TAB 1
+      {% endcomment %}
+
+      {% if collection_tabs.tab_1_name != blank and collection_tabs.tab_1_collection.value != blank %}
+        <div
+          class="collection-tabs__panel is-active"
+          data-tab-panel="1"
+          role="tabpanel"
+        >
+          <div class="collection-tabs__grid">
+
+            {% for product in collection_tabs.tab_1_collection.value.products limit: 50 %}
+              <div class="collection-tabs__card">
+
+                <a
+                  href="{{ product.url }}"
+                  class="collection-tabs__image-wrapper"
+                >
+                  {% if product.featured_image != blank %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '400, 600, 800',
+                        sizes: '(min-width: 990px) 33vw, 100vw',
+                        class: 'collection-tabs__image',
+                        alt: product.featured_image.alt | default: product.title
+                    }}
+                  {% endif %}
+                </a>
+
+                <div class="collection-tabs__card-content">
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-title"
+                  >
+                    {{ product.title | escape }}
+                  </a>
+
+                  <div class="collection-tabs__card-divider"></div>
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-link"
+                  >
+                    View product →
+                  </a>
+
+                </div>
+
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      {% endif %}
+
+
+      {% comment %}
+        TAB 2
+      {% endcomment %}
+
+      {% if collection_tabs.tab_2_name != blank and collection_tabs.tab_2_collection.value != blank %}
+        <div
+          class="collection-tabs__panel"
+          data-tab-panel="2"
+          role="tabpanel"
+          hidden
+        >
+          <div class="collection-tabs__grid">
+
+            {% for product in collection_tabs.tab_2_collection.value.products limit: 50 %}
+              <div class="collection-tabs__card">
+
+                <a
+                  href="{{ product.url }}"
+                  class="collection-tabs__image-wrapper"
+                >
+                  {% if product.featured_image != blank %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '400, 600, 800',
+                        sizes: '(min-width: 990px) 33vw, 100vw',
+                        class: 'collection-tabs__image',
+                        alt: product.featured_image.alt | default: product.title
+                    }}
+                  {% endif %}
+                </a>
+
+                <div class="collection-tabs__card-content">
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-title"
+                  >
+                    {{ product.title | escape }}
+                  </a>
+
+                  <div class="collection-tabs__card-divider"></div>
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-link"
+                  >
+                    View product →
+                  </a>
+
+                </div>
+
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      {% endif %}
+
+
+      {% comment %}
+        TAB 3
+      {% endcomment %}
+
+      {% if collection_tabs.tab_3_name != blank and collection_tabs.tab_3_collection.value != blank %}
+        <div
+          class="collection-tabs__panel"
+          data-tab-panel="3"
+          role="tabpanel"
+          hidden
+        >
+          <div class="collection-tabs__grid">
+
+            {% for product in collection_tabs.tab_3_collection.value.products limit: 50 %}
+              <div class="collection-tabs__card">
+
+                <a
+                  href="{{ product.url }}"
+                  class="collection-tabs__image-wrapper"
+                >
+                  {% if product.featured_image != blank %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '400, 600, 800',
+                        sizes: '(min-width: 990px) 33vw, 100vw',
+                        class: 'collection-tabs__image',
+                        alt: product.featured_image.alt | default: product.title
+                    }}
+                  {% endif %}
+                </a>
+
+                <div class="collection-tabs__card-content">
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-title"
+                  >
+                    {{ product.title | escape }}
+                  </a>
+
+                  <div class="collection-tabs__card-divider"></div>
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-link"
+                  >
+                    View product →
+                  </a>
+
+                </div>
+
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      {% endif %}
+
+
+      {% comment %}
+        TAB 4
+      {% endcomment %}
+
+      {% if collection_tabs.tab_4_name != blank and collection_tabs.tab_4_collection.value != blank %}
+        <div
+          class="collection-tabs__panel"
+          data-tab-panel="4"
+          role="tabpanel"
+          hidden
+        >
+          <div class="collection-tabs__grid">
+
+            {% for product in collection_tabs.tab_4_collection.value.products limit: 50 %}
+              <div class="collection-tabs__card">
+
+                <a
+                  href="{{ product.url }}"
+                  class="collection-tabs__image-wrapper"
+                >
+                  {% if product.featured_image != blank %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '400, 600, 800',
+                        sizes: '(min-width: 990px) 33vw, 100vw',
+                        class: 'collection-tabs__image',
+                        alt: product.featured_image.alt | default: product.title
+                    }}
+                  {% endif %}
+                </a>
+
+                <div class="collection-tabs__card-content">
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-title"
+                  >
+                    {{ product.title | escape }}
+                  </a>
+
+                  <div class="collection-tabs__card-divider"></div>
+
+                  <a
+                    href="{{ product.url }}"
+                    class="collection-tabs__product-link"
+                  >
+                    View product →
+                  </a>
+
+                </div>
+
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<script src="{{ 'collection-tabs.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Appearls Collection Tabs",
+  "tag": "section",
+  "class": "section-collection-tabs",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Appearls Collection Tabs"
+    }
+  ]
+}
+{% endschema %}

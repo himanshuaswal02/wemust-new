@@ -1,0 +1,126 @@
+.collection-tabs__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.collection-tabs__tab {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 8px 20px;
+  margin: 0;
+  border-radius: 5px;
+  color: #101828;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.collection-tabs__tab.is-active {
+  border-color: #d0d5dd;
+  background: #ffffff;
+  font-weight: 500;
+}
+
+.collection-tabs__panel[hidden] {
+  display: none;
+}
+.collection-tabs__content{
+  max-width: 1248px;
+  margin: 0px auto;
+}
+.collection-tabs__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.collection-tabs__card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.collection-tabs__image-wrapper {
+  display: block;
+  margin: 19px 20px 0;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.collection-tabs__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.collection-tabs__card-content {
+  padding: 13px 20px 20px;
+}
+
+.collection-tabs__product-title {
+  display: block;
+  color: #941329;
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.collection-tabs__card-divider {
+  width: 100%;
+  height: 1px;
+  margin: 8px 0 14px;
+  background: #e5e7eb;
+}
+
+.collection-tabs__product-link {
+  display: inline-block;
+  color: #941329;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 749px) {
+  .collection-tabs__navigation {
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .collection-tabs__navigation::-webkit-scrollbar {
+    display: none;
+  }
+
+  .collection-tabs__tab {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .collection-tabs__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .collection-tabs__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -339,6 +339,7 @@
   <body
     class="
       template-{{ template | split: '.' | first | handle }}
+      {%- if template.suffix == 'appearls' %} template-appearls{% endif -%}
       {%- if template.suffix %} template-suffix-{{ template.suffix }}{% endif -%}
       {%- if settings.swatch_enabled %} swatch-method-{{ settings.swatch_method }} swatch-style-{{ settings.swatch_style }}{% endif -%}
       {%- if settings.animations_enabled_desktop %} cc-animate-enabled{% endif -%}
