@@ -15,9 +15,17 @@
   else
     assign image_loading = 'lazy'
   endif
-   assign cart_min_quantity = blank
+
+  assign is_temporary_tattoos = false
+  if item.product.handle == 'temporary-tattoos' or item.product.title == 'Temporary Tattoos'
+    assign is_temporary_tattoos = true
+  endif
+
+  assign cart_min_quantity = blank
   if item.product.title == 'Embroidered Iron On Patches' or item.product.title == '3D Silicone Badges' or item.product.title == 'DTF Embroidered Patches' or item.product.title == '3D Embroidered Patches' or item.product.title == 'Faux Leather Patches' or item.product.title == 'Hybrid Patch' or item.product.title == 'Digital Print Patch' or item.product.title == 'Reflective Patches' or item.product.title == 'Embroidered Felt Patches'
     assign cart_min_quantity = 12
+  elsif is_temporary_tattoos
+    assign cart_min_quantity = 100
   endif
 -%}
 <div
@@ -181,6 +189,10 @@
         assign quantity = item.quantity | at_least: 1
       endif
 
+      if cart_min_quantity != blank
+        assign quantity = quantity | at_least: cart_min_quantity
+      endif
+
       if quantity_cap != blank
         assign quantity = quantity | at_most: quantity_cap
       endif
@@ -212,9 +224,12 @@
         -%}
           <a
             id="updates_dec_{{ forloop.index }}"
-            class="quantity-down"
-            href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ quantity | minus: 1 }}"
+            class="quantity-down{% if cart_min_quantity != blank and quantity <= cart_min_quantity %} disabled{% endif %}"
+            href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={% if cart_min_quantity != blank and quantity <= cart_min_quantity %}{{ quantity }}{% else %}{{ quantity | minus: 1 }}{% endif %}"
             aria-label="{{ 'cart.items.decrease_quantity' | t | escape }}"
+            {% if cart_min_quantity != blank and quantity <= cart_min_quantity %}
+              aria-disabled="true"
+            {% endif %}
           >
             {%- render 'icon-minus' -%}
           </a>
@@ -227,7 +242,7 @@
           name="updates[]"
           data-initial-value="{{ quantity }}"
           data-key="{{ item.key }}"
-          min="0"
+          min="{% if cart_min_quantity != blank %}{{ cart_min_quantity }}{% else %}0{% endif %}"
           {% if item_max_quantity != blank %}
             max="{{ item_max_quantity }}"
           {% endif %}
