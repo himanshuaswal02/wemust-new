@@ -1,0 +1,253 @@
+{% liquid
+    assign why_choose = collection.metafields.custom.why_choose_wemust.value
+  %}
+  
+  {% if why_choose != blank %}
+  
+    {{ 'why-choose-wemust.css' | asset_url | stylesheet_tag }}
+  
+    {% style %}
+      #WhyChooseWemust-{{ section.id }} {
+        --why-choose-padding-top: {{ section.settings.padding_top }}px;
+        --why-choose-padding-bottom: {{ section.settings.padding_bottom }}px;
+        --why-choose-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+        --why-choose-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      }
+  
+      #WhyChooseWemust-{{ section.id }} .why-choose-wemust__container {
+        max-width: {{ section.settings.content_width }}px;
+      }
+    {% endstyle %}
+  
+    <section
+      id="WhyChooseWemust-{{ section.id }}"
+      class="why-choose-wemust"
+      data-section-id="{{ section.id }}"
+    >
+  
+      <div class="why-choose-wemust__container">
+  
+        {% if why_choose.heading != blank %}
+          <h2 class="why-choose-wemust__heading">
+            {{ why_choose.heading | escape }}
+          </h2>
+        {% endif %}
+  
+  
+        <div class="why-choose-wemust__grid">
+  
+          {%- comment -%}
+            LEFT COLUMN
+          {%- endcomment -%}
+  
+          <div class="why-choose-wemust__left">
+  
+            {% if why_choose.first_description != blank
+              or why_choose.second_description != blank
+            %}
+  
+              <div class="why-choose-wemust__description">
+  
+                {% if why_choose.first_description != blank %}
+                  <div class="why-choose-wemust__description-item rte">
+                    {{ why_choose.first_description | metafield_tag }}
+                  </div>
+                {% endif %}
+  
+  
+                {% if why_choose.second_description != blank %}
+                  <div class="why-choose-wemust__description-item rte">
+                    {{ why_choose.second_description | metafield_tag }}
+                  </div>
+                {% endif %}
+  
+              </div>
+  
+            {% endif %}
+  
+  
+            {% if why_choose.image != blank %}
+  
+              <div class="why-choose-wemust__image-wrapper">
+  
+                {{
+                  why_choose.image
+                  | image_url: width: 1400
+                  | image_tag:
+                    widths: '400, 600, 800, 1000, 1200, 1400',
+                    sizes: '(min-width: 990px) 50vw, 100vw',
+                    loading: 'lazy',
+                    class: 'why-choose-wemust__image',
+                    alt: why_choose.image.alt | default: why_choose.heading
+                }}
+  
+              </div>
+  
+            {% endif %}
+  
+          </div>
+  
+  
+          {%- comment -%}
+            RIGHT COLUMN
+          {%- endcomment -%}
+  
+          <div class="why-choose-wemust__cards">
+  
+  
+            {% if why_choose.feature_1_title != blank
+              or why_choose.feature_1_description != blank
+            %}
+  
+              <article class="why-choose-wemust__card">
+  
+                {% if why_choose.feature_1_title != blank %}
+                  <h3 class="why-choose-wemust__card-title">
+                    {{ why_choose.feature_1_title | escape }}
+                  </h3>
+                {% endif %}
+  
+                {% if why_choose.feature_1_description != blank %}
+                  <div class="why-choose-wemust__card-text rte">
+                    {{ why_choose.feature_1_description | metafield_tag }}
+                  </div>
+                {% endif %}
+  
+              </article>
+  
+            {% endif %}
+  
+  
+  
+            {% if why_choose.feature_2_title != blank
+              or why_choose.feature_2_description != blank
+            %}
+  
+              <article class="why-choose-wemust__card">
+  
+                {% if why_choose.feature_2_title != blank %}
+                  <h3 class="why-choose-wemust__card-title">
+                    {{ why_choose.feature_2_title | escape }}
+                  </h3>
+                {% endif %}
+  
+                {% if why_choose.feature_2_description != blank %}
+                  <div class="why-choose-wemust__card-text rte">
+                    {{ why_choose.feature_2_description | metafield_tag }}
+                  </div>
+                {% endif %}
+  
+              </article>
+  
+            {% endif %}
+  
+  
+  
+            {% if why_choose.feature_3_title != blank
+              or why_choose.feature_3_description != blank
+            %}
+  
+              <article class="why-choose-wemust__card">
+  
+                {% if why_choose.feature_3_title != blank %}
+                  <h3 class="why-choose-wemust__card-title">
+                    {{ why_choose.feature_3_title | escape }}
+                  </h3>
+                {% endif %}
+  
+                {% if why_choose.feature_3_description != blank %}
+                  <div class="why-choose-wemust__card-text rte">
+                    {{ why_choose.feature_3_description | metafield_tag }}
+                  </div>
+                {% endif %}
+  
+              </article>
+  
+            {% endif %}
+  
+  
+          </div>
+  
+        </div>
+  
+      </div>
+  
+    </section>
+  
+  
+    <script
+      src="{{ 'why-choose-wemust.js' | asset_url }}"
+      defer
+    ></script>
+  
+  {% endif %}
+  
+  
+  {% schema %}
+  {
+    "name": "Why Choose Wemust",
+    "tag": "section",
+    "class": "section-why-choose-wemust",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "label": "Content width",
+        "min": 900,
+        "max": 1400,
+        "step": 20,
+        "unit": "px",
+        "default": 1120
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Desktop top spacing",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Desktop bottom spacing",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile top spacing",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile bottom spacing",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 36
+      }
+    ],
+    "presets": [
+      {
+        "name": "Why Choose Wemust"
+      }
+    ]
+  }
+  {% endschema %}

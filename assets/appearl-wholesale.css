@@ -1,0 +1,42 @@
+.wholesale-intro__container {
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+.wholesale-intro__heading {
+    margin: 0px 0px 24px;
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 700;
+    color: #861528;
+}
+.wholesale-intro__description {
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  max-width: 768px;
+  margin: 0 auto;
+}
+.wholesale-intro__description p {
+  margin: 0;
+}
+.wholesale-intro__description--second {
+  margin-top: 24px;
+}
+@media screen and (max-width: 749px) {
+  .wholesale-intro__container {
+    padding: 0 16px;
+  }
+  .wholesale-intro__heading {
+    margin-bottom: 20px;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .wholesale-intro__description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .wholesale-intro__description--second {
+    margin-top: 20px;
+  }
+}

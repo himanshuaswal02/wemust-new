@@ -457,11 +457,19 @@
     <main-navigation id="main-nav" class="desktop-only" data-proxy-nav="proxy-nav">
       <div class="navigation navigation--main" role="navigation" aria-label="{{ 'accessibility.main_navigation' | t }}">
         <div class="navigation__tier-1-container">
-          {% render 'main-nav-links',
-            link_list: section.settings.menu_linklist,
-            mobile: false,
-            featured_links: featured_links
-          %}
+          {% if template.suffix == 'appearls' %}
+            {% render 'main-nav-links',
+              link_list: "appearls-menu",
+              mobile: false,
+              featured_links: featured_links
+            %}
+          {% else %}
+            {% render 'main-nav-links',
+              link_list: section.settings.menu_linklist,
+              mobile: false,
+              featured_links: featured_links
+            %}
+          {% endif %}
         </div>
       </div>
 
@@ -475,7 +483,11 @@
                 <span class="mobile-nav-title">Products Menu</span>
                 <a href="#" class="mobile-nav-toggle"  aria-label="{{ 'general.navigation.close' | t }}">{% render 'icon-close', stroke_width: 2.3 %}</a>
               </div>
-              {% render 'mobile-main-nav-links', link_list: mobile_linklist, mobile: true, featured_links: featured_links %}
+              {% if template.suffix == 'appearls' %}
+                {% render 'mobile-main-nav-links', link_list: "appearls-menu", mobile: true, featured_links: featured_links %}
+              {% else %}
+                {% render 'mobile-main-nav-links', link_list: mobile_linklist, mobile: true, featured_links: featured_links %}
+              {% endif %}
               {% if section.settings.enable_nav_mob_products %}
                 <div class="navigation__mobile-products">
                   <div class="navigation__mobile-products-title">{{ section.settings.nav_mob_products_title | escape }}</div>

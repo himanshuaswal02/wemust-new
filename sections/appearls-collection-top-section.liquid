@@ -1,0 +1,50 @@
+{% liquid
+  assign collection_top_info = collection.metafields.custom.collection_top_info.value
+%}
+
+{% if collection_top_info != blank %}
+    {{ 'collection-top-info.css' | asset_url | stylesheet_tag }}
+    <div class="collection-metaobject-hero">
+        <div class="collection-metaobject-hero__inner">
+            {% if collection_top_info.heading != blank %}
+                <h2 class="collection-metaobject-hero__heading">
+                    {{ collection_top_info.heading | escape }}
+                </h2>
+            {% endif %}
+            {% if collection_top_info.description != blank %}
+            <div class="collection-metaobject-hero__description">
+                {{ collection_top_info.description | metafield_tag }}
+            </div>
+            {% endif %}
+            {% if collection_top_info.features != blank %}
+            <div class="collection-metaobject-hero__features">
+                {% assign features = collection_top_info.features | split: ',' %}
+                {% for feature in features %}
+                    {% assign feature = feature | strip %}
+                    {% if feature != blank %}
+                        <div class="collection-metaobject-hero__feature">
+                            <span class="collection-metaobject-hero__feature-text">
+                                {{ feature | escape }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection Top Info",
+  "tag": "section",
+  "class": "section-collection-metaobject-hero",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection Top Info"
+    }
+  ]
+}
+{% endschema %}

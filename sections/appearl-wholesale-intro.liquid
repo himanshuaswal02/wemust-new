@@ -1,0 +1,121 @@
+{% liquid
+  assign wholesale_intro = collection.metafields.custom.wholesale_intro.value
+%}
+{% style %}
+    #WholesaleIntro-{{ section.id }}{
+        padding-top: {{ section.settings.mobile_padding_top }}px;
+        padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+    @media (min-width: 768px){
+        #WholesaleIntro-{{ section.id }}{
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+    }
+    #WholesaleIntro-{{ section.id }} .wholesale-intro__container {
+        max-width: {{ section.settings.content_width }}px;
+    }
+{% endstyle %}
+{% if wholesale_intro != blank %}
+    {{ 'appearl-wholesale.css' | asset_url | stylesheet_tag }}
+    <div
+    class="wholesale-intro"
+    id="WholesaleIntro-{{ section.id }}"
+    >
+        <div class="wholesale-intro__container">
+
+            {% if wholesale_intro.heading != blank %}
+                <h2 class="wholesale-intro__heading">
+                    {{ wholesale_intro.heading }}
+                </h2>
+            {% endif %}
+
+            {% if wholesale_intro.first_description != blank %}
+                <div class="wholesale-intro__description wholesale-intro__description--first">
+                    {{ wholesale_intro.first_description | metafield_tag }}
+                </div>
+            {% endif %}
+
+            {% if wholesale_intro.second_description != blank %}
+                <div class="wholesale-intro__description wholesale-intro__description--second">
+                    {{ wholesale_intro.second_description | metafield_tag }}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Wholesale Intro",
+  "tag": "section",
+  "class": "section-wholesale-intro",
+  "settings": [    
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale Intro"
+    }
+  ]
+}
+{% endschema %}

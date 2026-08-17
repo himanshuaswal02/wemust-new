@@ -1,0 +1,180 @@
+{% liquid
+    assign collection_faq = collection.metafields.custom.collection_faq.value
+  %}
+  
+  {% if collection_faq != blank %}
+  
+    <link
+      rel="stylesheet"
+      href="{{ 'collapsible-tabs.css' | asset_url }}"
+      {%- render 'lazy-stylesheet-attrs' %}
+    >
+  
+    {% style %}
+      #CollectionFaqs-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+      #CollectionFaqs-{{ section.id }} .container {
+    max-width: {{ section.settings.section_width }}px;
+  }
+  
+      @media screen and (max-width: 749px) {
+        #CollectionFaqs-{{ section.id }} {
+          padding-top: {{ section.settings.mobile_padding_top }}px;
+          padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+        }
+      }
+    {% endstyle %}
+  
+    <section
+      id="CollectionFaqs-{{ section.id }}"
+      class="collection-faqs"
+      data-section-id="{{ section.id }}"
+    >
+  
+      <div class="container" data-cc-animate>
+  
+        <div class="collapsible-tabs">
+  
+          {% if section.settings.heading != blank %}
+            <h3 class="collapsible-tabs__heading collapsible-tabs__content section-heading">
+              {{ section.settings.heading | escape }}
+            </h3>
+          {% endif %}
+  
+  
+          <div class="collapsible-tabs__column">
+  
+            {% for i in (1..10) %}
+  
+              {% assign question_key = 'faq_' | append: i | append: '_question' %}
+              {% assign answer_key = 'faq_' | append: i | append: '_answer' %}
+  
+              {% assign question = collection_faq[question_key] %}
+              {% assign answer = collection_faq[answer_key] %}
+  
+  
+              {% if question != blank %}
+  
+                <div class="collapsible-tabs__block">
+  
+                  <div class="collapsible-tabs__tab">
+  
+                    <details-disclosure>
+  
+                      <details class="disclosure">
+  
+                        <summary class="disclosure__title">
+                          {{ question | escape }}
+                        </summary>
+  
+  
+                        {% if answer != blank %}
+  
+                          <div class="disclosure__panel has-motion">
+  
+                            <div class="disclosure__content rte">
+                              {{ answer | metafield_tag }}
+                            </div>
+  
+                          </div>
+  
+                        {% endif %}
+  
+                      </details>
+  
+                    </details-disclosure>
+  
+                  </div>
+  
+                </div>
+  
+              {% endif %}
+  
+            {% endfor %}
+  
+          </div>
+  
+        </div>
+  
+      </div>
+  
+    </section>
+  
+  {% endif %}
+  
+  
+  {% schema %}
+  {
+    "name": "Collection FAQs",
+    "class": "section-collection-faqs",
+    "settings": [
+        {
+            "type": "range",
+            "id": "section_width",
+            "label": "Section width",
+            "min": 600,
+            "max": 1600,
+            "step": 20,
+            "unit": "px",
+            "default": 1200
+          },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section heading",
+        "default": "Frequently Asked Questions"
+      },
+      {
+        "type": "header",
+        "content": "Section spacing"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Desktop top spacing",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Desktop bottom spacing",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile top spacing",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile bottom spacing",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 36
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection FAQs"
+      }
+    ]
+  }
+  {% endschema %}
