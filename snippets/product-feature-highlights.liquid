@@ -1,0 +1,56 @@
+{%- liquid
+  assign has_items = false
+  for index in (1..6)
+    assign text_key = 'item_' | append: index | append: '_text'
+    if block.settings[text_key] != blank
+      assign has_items = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if block.settings.badge_text != blank or has_items -%}
+  <div class="product-feature-highlights{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}">
+    {%- if block.settings.show_divider -%}
+      <hr class="product-feature-highlights__divider">
+    {%- endif -%}
+    {%- if block.settings.badge_text != blank -%}
+      <div class="product-feature-highlights__badge-row">
+        <span class="product-feature-highlights__badge">{{ block.settings.badge_text | escape }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if has_items -%}
+      <div class="product-feature-highlights__grid">
+        {%- for index in (1..6) -%}
+          {%- liquid
+            assign icon_key = 'item_' | append: index | append: '_icon'
+            assign text_key = 'item_' | append: index | append: '_text'
+            assign item_icon = block.settings[icon_key]
+            assign item_text = block.settings[text_key]
+          -%}
+          {%- if item_text != blank -%}
+            <div class="product-feature-highlights__item">
+              {%- if item_icon != blank -%}
+                <span class="product-feature-highlights__icon">
+                  <img
+                    src="{{ item_icon | image_url }}"
+                    alt=""
+                    loading="lazy"
+                    width="18"
+                    height="18"
+                  >
+                </span>
+              {%- endif -%}
+              <div class="product-feature-highlights__text">{{ item_text }}</div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.show_divider -%}
+      <hr class="product-feature-highlights__divider">
+    {%- endif -%}
+  </div>
+{%- endif -%}

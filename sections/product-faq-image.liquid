@@ -1,0 +1,369 @@
+{% liquid
+  assign faq_section = product.metafields.custom.faq_section.value
+%}
+
+{% if faq_section != blank and faq_section.left_image != blank %}
+  <link rel="stylesheet" href="{{ 'product-faq-image.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+  {{ 'product-faq-image.js' | asset_url | script_tag }}
+  {% style %}
+    #shopify-section-{{ section.id }} .product-faq-image-section{
+      padding-top:{{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.bg_color }};
+    }
+
+    #shopify-section-{{ section.id }} p,
+    #shopify-section-{{ section.id }} h2,
+    #shopify-section-{{ section.id }} h3,
+    #shopify-section-{{ section.id }} h4,
+    #shopify-section-{{ section.id }} h5,
+    #shopify-section-{{ section.id }} h6,
+    #shopify-section-{{ section.id }} a,
+    #shopify-section-{{ section.id }} span,
+    #shopify-section-{{ section.id }} div{
+      color: {{ section.settings.text_color }};
+    }
+
+    @media(max-width:767px){
+      #shopify-section-{{ section.id }} .product-faq-image-section{
+          padding-top:{{ section.settings.mobile_padding_top }}px;
+          padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
+      }
+    }
+  {% endstyle %}
+
+  <div class="product-faq-image-section">
+    <div class="container">
+      <div class="product-faq-image">
+        {% if faq_section.left_image != blank %}
+          <div class="product-faq-image__left">
+            {{
+              faq_section.left_image
+              | image_url: width: 1200
+              | image_tag: loading: 'lazy', widths: '400,600,800,1000,1200', class: 'faq-left-image'
+            }}
+          </div>
+        {% endif %}
+        <div class="product-faq-image__right">
+          {% if section.settings.heading != blank %}
+            <div class="product-faq-heading">
+              <h2>{{ section.settings.heading }}</h2>
+            </div>
+          {% endif %}
+          <div class="product-faq-accordion">
+            {% if faq_section.faq_1_question != blank and faq_section.faq_1_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_1_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_1_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if faq_section.faq_2_question != blank and faq_section.faq_2_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_2_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_2_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_3_question != blank and faq_section.faq_3_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_3_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_3_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_4_question != blank and faq_section.faq_4_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_4_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_4_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_5_question != blank and faq_section.faq_5_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_5_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_5_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_6_question != blank and faq_section.faq_6_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_6_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_6_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_7_question != blank and faq_section.faq_7_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_7_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_7_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_8_question != blank and faq_section.faq_8_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_8_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_8_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_9_question != blank and faq_section.faq_9_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_9_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_9_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_10_question != blank and faq_section.faq_10_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_10_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_10_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_11_question != blank and faq_section.faq_11_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_11_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_11_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_12_question != blank and faq_section.faq_12_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_12_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_12_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_13_question != blank and faq_section.faq_13_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_13_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_13_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_14_question != blank and faq_section.faq_14_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_14_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_14_answer | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if faq_section.faq_15_question != blank and faq_section.faq_15_answer != blank %}
+              <div class="faq-item">
+                <div class="faq-question">
+                  <div class="faq-title">{{ faq_section.faq_15_question }}</div>
+                  <div class="faq-icon">
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="faq-answer">
+                  <div class="faq-answer-inner">
+                    {{ faq_section.faq_15_answer | metafield_tag  }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product FAQ With Image",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FAQ's"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Bottom Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Bottom Padding",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQ With Image"
+    }
+  ]
+}
+{% endschema %}
