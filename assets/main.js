@@ -1068,6 +1068,8 @@ const CartForm = class extends HTMLElement {
     const quantityInput = item.querySelector('.cart-item__quantity-input');
 
     let newQuantity = parseInt(quantityInput.value, 10);
+    const minQuantity = parseInt(quantityInput.min, 10);
+    const maxQuantity = parseInt(quantityInput.max, 10);
     if (typeof change.to !== 'undefined') {
       newQuantity = change.to;
       quantityInput.value = newQuantity;
@@ -1079,10 +1081,38 @@ const CartForm = class extends HTMLElement {
       quantityInput.value = newQuantity;
     } else if (change.currentValue) ;
 
-    if (quantityInput.max && parseInt(quantityInput.value, 10) > parseInt(quantityInput.max, 10)) {
-      newQuantity = quantityInput.max;
+    if (!Number.isNaN(minQuantity) && parseInt(quantityInput.value, 10) < minQuantity) {
+      newQuantity = minQuantity;
+      quantityInput.value = newQuantity;
+    }
+
+    if (!Number.isNaN(maxQuantity) && parseInt(quantityInput.value, 10) > maxQuantity) {
+      newQuantity = maxQuantity;
       quantityInput.value = newQuantity;
       theme.showQuickPopup(theme.strings.cartItemsQuantityError.replace('[QUANTITY]', quantityInput.max), quantityInput);
+    }
+
+    const decreaseBtn = item.querySelector('.quantity-down');
+    const increaseBtn = item.querySelector('.quantity-up');
+
+    if (decreaseBtn && !Number.isNaN(minQuantity)) {
+      const isAtMin = parseInt(quantityInput.value, 10) <= minQuantity;
+      decreaseBtn.classList.toggle('disabled', isAtMin);
+      if (isAtMin) {
+        decreaseBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        decreaseBtn.removeAttribute('aria-disabled');
+      }
+    }
+
+    if (increaseBtn && !Number.isNaN(maxQuantity)) {
+      const isAtMax = parseInt(quantityInput.value, 10) >= maxQuantity;
+      increaseBtn.classList.toggle('unusable', isAtMax);
+      if (isAtMax) {
+        increaseBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        increaseBtn.removeAttribute('aria-disabled');
+      }
     }
 
     clearTimeout(this.adjustItemQuantityTimeout);

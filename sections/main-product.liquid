@@ -608,7 +608,7 @@
                           type="number"
                           name="quantity"
                           value="1"
-                          min="1"
+                          min="{% if product.handle == 'temporary-tattoos' or product.title == 'Temporary Tattoos' %}100{% else %}1{% endif %}"
                           {% if product.handle == 'digital-transfers-we-must' %}
                             max="100"
                           {% endif %}
